@@ -1,19 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from "react-router-dom";
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import { Provider } from "redux-bundler-react";
+import { getNavHelper } from "internal-nav-helper";
+import getStore from "./app-bundles";
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import App from "./App";
+import cache from "./cache";
+
+cache.getAll().then((initialData) => {
+  const store = getStore(initialData);
+
+  if (process.env.NODE_ENV === "development") window.store = store;
+
+  ReactDOM.render(
+    <Provider store={store}>
+      <div
+        onClick={getNavHelper((url) =>
+          store.doUpdateUrl(url, { maintainScrollPosition: true })
+        )}
+      >
+        <App />
+      </div>
+    </Provider>,
+    document.getElementById("root")
+  );
+});

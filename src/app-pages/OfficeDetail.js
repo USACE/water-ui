@@ -1,0 +1,70 @@
+import React, { useEffect } from "react";
+
+import Header from "../app-components/Header";
+import { connect } from "redux-bundler-react";
+
+import AOS from "aos";
+import { focusHandling } from "cruip-js-toolkit";
+
+const OfficeDetail = connect(
+  "selectPathname",
+  "selectOfficeByRoute",
+  "selectOfficeStatsActive",
+  "selectLocationItemsActive",
+  "selectWatershedItemsActive",
+  ({
+    pathname,
+    officeByRoute: office,
+    officeStatsActive: stats,
+    locationItemsActive: locations,
+    watershedItemsActive: watersheds,
+  }) => {
+    useEffect(() => {
+      AOS.init({
+        once: true,
+        disable: "phone",
+        duration: 700,
+        easing: "ease-out-cubic",
+      });
+    }, [pathname]);
+
+    useEffect(() => {
+      document.querySelector("html").style.scrollBehavior = "auto";
+      window.scroll({ top: 0 });
+      document.querySelector("html").style.scrollBehavior = "";
+      focusHandling("outline");
+    }, []); // triggered on route change
+
+    return (
+      <div className='flex flex-col min-h-screen overflow-hidden'>
+        {/*  Site header */}
+        <Header />
+
+        {/*  Page content */}
+        <main className='flex-grow'>
+          <section className='mx-4 relative pt-32 font-mono'>
+            <div className='text-2xl mb-12'>
+              Office Details Page: {office.name}
+            </div>
+            <div className='text-xl mb-4'>Office JSON</div>
+            <div className='mb-16'>{JSON.stringify(office)}</div>
+            <div className='text-xl mb-4'>Office Statistics</div>
+            <div className='mb-16'>{JSON.stringify(stats)}</div>
+            <div className='text-xl mb-4'>
+              Watersheds
+              <span className='px-4 text-xl'>({watersheds.length})</span>
+            </div>
+            <div className='mb-12'>{JSON.stringify(watersheds)}</div>
+            <div className='text-xl mb-4'>
+              CWMS Projects
+              <span className='px-4 text-xl'>({locations.length})</span>
+            </div>
+            <div>{JSON.stringify(locations)}</div>
+          </section>
+        </main>
+      </div>
+    );
+  }
+);
+
+export default OfficeDetail;
