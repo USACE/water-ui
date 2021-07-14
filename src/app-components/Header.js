@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SearchButton } from "../app-components/Search";
+import { SearchButton } from "../app-components/search";
 import { MapButton } from "../app-components/MapButton";
 import UserMenu from "../app-components/UserMenu";
 import USACELogo from "../images/USACE_logo.png";
