@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { connect } from "redux-bundler-react";
 import Modal from "./app-components/Modal";
-import { SearchModal } from "./app-components/Search";
+import { Search } from "./app-components/search";
 
 import "./css/style.scss";
 
@@ -13,7 +13,7 @@ const App = connect("selectRoute", "selectPathname", ({ route: Route }) => {
     <div ref={doc}>
       <Route />
       <Modal />
-      <SearchModal outerRef={doc} />
+      <Search outerRef={doc} />
     </div>
   );
 });

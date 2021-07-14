@@ -16,13 +16,19 @@ import locationDetailBundle from "./location-detail-bundle";
 import mapsBundle from "./maps-bundle";
 import modalBundle from "./modal-bundle";
 import modalMapBundle from "./modal-map-bundle";
-import searchBundle from "./search-bundle";
 import officeBundle from "./office-bundle";
 import officeStatsBundle from "./office-stats-bundle";
 import profileBundle from "./profile-bundle";
 import stateBundle from "./state-bundle";
 import stateStatsBundle from "./state-stats-bundle";
 import watershedBundle from "./watershed-bundle";
+
+// Search Bundles
+import createSearchBundle from "./create-search-bundle";
+import geocoderSearchBundle from "./geocoder-search-bundle";
+import locationSearchBundle from "./location-search-bundle";
+import officeSearchBundle from "./office-search-bundle";
+import watershedSearchBundle from "./watershed-search-bundle";
 
 // Include Token With GET Request on These Routes
 const includeTokenRoutes = {
@@ -47,7 +53,18 @@ export default composeBundles(
   officeStatsBundle,
   profileBundle,
   routeBundle,
-  searchBundle,
+  ///////////////////////////////////////////////////
+  // Unified Search Bundles
+  ///////////////////////////////////////////////////
+  createSearchBundle({
+    name: "search",
+    searchableBundles: [
+      officeSearchBundle,
+      locationSearchBundle,
+      watershedSearchBundle,
+      geocoderSearchBundle,
+    ],
+  }),
   stateBundle,
   stateStatsBundle,
   createAuthBundle({
