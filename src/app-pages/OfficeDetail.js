@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Header from '../app-components/Header';
+import Footer from '../app-components/Footer';
 import { connect } from 'redux-bundler-react';
 
 // import AOS from 'aos';
-import { focusHandling } from 'cruip-js-toolkit';
+//import { focusHandling } from 'cruip-js-toolkit';
 import Map from '../app-components/Map';
 import Select from 'react-select';
 
@@ -16,6 +17,8 @@ const OfficeDetail = connect(
   'selectOfficeStatsActive',
   'selectLocationItemsActive',
   'selectWatershedItemsActive',
+  'selectQueryObject',
+  'doUpdateQuery',
   ({
     doUpdateUrl,
     pathname,
@@ -25,6 +28,8 @@ const OfficeDetail = connect(
     officeItems: allOffices,
     locationItemsActive: locations,
     watershedItemsActive: watersheds,
+    queryObject,
+    doUpdateQuery,
   }) => {
     // useEffect(() => {
     //   AOS.init({
@@ -35,21 +40,30 @@ const OfficeDetail = connect(
     //   });
     // }, [pathname]);
 
-    useEffect(() => {
-      document.querySelector('html').style.scrollBehavior = 'auto';
-      window.scroll({ top: 0 });
-      document.querySelector('html').style.scrollBehavior = '';
-      focusHandling('outline');
-    }, []); // triggered on route change
+    // useEffect(() => {
+    //   document.querySelector('html').style.scrollBehavior = 'auto';
+    //   window.scroll({ top: 0 });
+    //   document.querySelector('html').style.scrollBehavior = '';
+    //   focusHandling('outline');
+    // }, []); // triggered on route change
 
     const [state, setState] = useState({
       show_office_select: false,
       menuIsOpen: false,
     });
 
+    const projects = locations.filter(
+      (item) => item.kind_id === '460ea73b-c65e-4fc8-907a-6e6fd2907a99'
+    );
+
+    const nonProjectLocations = locations.filter(
+      (item) => item.kind.indexOf('SITE', 'STREAM_LOCATION') > -1
+    );
+
     const OfficeStats = ({ s }) => {
       return s.map((stat, idx) => (
         <a
+          key={idx}
           href={stat.href}
           className="w-1/2 lg:w-1/4 p-3 bg-gray-100 border-2 border-gray-200 rounded-md cursor-pointer hover:shadow-md"
         >
@@ -91,6 +105,13 @@ const OfficeDetail = connect(
       </svg>
     );
 
+    const handleWatershedClick = (w) => {
+      doUpdateQuery({ ...queryObject, watershed: w.slug }, { replace: false });
+    };
+    const handleLocationClick = (l) => {
+      doUpdateQuery({ ...queryObject, location: l.id }, { replace: false });
+    };
+
     // const [payload, setPayload] = useState({
     //   office_symbol: office_symbol || null,
     // });
@@ -101,8 +122,8 @@ const OfficeDetail = connect(
         <Header />
 
         {/*  Page content */}
-        <main className="flex-grow bg-gray-100">
-          <section className="mt-20 bg-white">
+        <main className="flex-grow bg-gray-200">
+          <section className="mt-20 bg-white shadow-md mb-20">
             <div className="container mx-auto flex flex-wrap py-10 px-5">
               <div className="w-full lg:w-1/2 lg:p-5 mb-5">
                 <div className="mb-5 lg:mb-20">
@@ -181,15 +202,19 @@ const OfficeDetail = connect(
               </div>
             </div>
           </section>
-          <section className="mt-20">
-            <div className="container mx-auto flex flex-wrap py-10 px-5">
-              <h2 className="font-medium text-xl lg:text-2xl mb-5 lg:mb-20 text-gray-900">
-                Watersheds
+          <section className="">
+            <div className="container mx-auto flex flex-wrap py-10 px-5 bg-white shadow-md mb-5">
+              <h2 className="font-bold text-xl lg:text-2xl mb-5 lg:mb-10 text-gray-500">
+                Watersheds ({watersheds.length})
               </h2>
               <div className="flex flex-wrap xl:flex-nowrap gap-1 p-2 bg-blue-100 w-full">
                 {watersheds &&
-                  watersheds.map((w) => (
-                    <div className="bg-gray-200 border-2 border-gray-300 p-3 rounded-md w-full lg:w-auto justify-between">
+                  watersheds.map((w, idx) => (
+                    <div
+                      key={idx}
+                      onClick={(e) => handleWatershedClick(w)}
+                      className="cursor-pointer bg-gray-200 border-2 border-gray-300 p-3 rounded-md w-full lg:w-auto justify-between"
+                    >
                       {w.name}
                     </div>
                   ))}
@@ -197,17 +222,66 @@ const OfficeDetail = connect(
             </div>
           </section>
           <section className="mt-20">
-            <div className="container mx-auto flex flex-wrap py-10 px-5">
-              <h2 className="font-medium text-xl lg:text-2xl mb-5 lg:mb-20 text-gray-900">
-                Projects
+            <div className="container mx-auto flex flex-wrap py-10 px-5 bg-white shadow-md">
+              <h2 className="font-bold text-xl lg:text-2xl mb-5 lg:mb-10 text-gray-500 w-full">
+                Projects ({projects.length})
               </h2>
-              <div className="flex flex-wrap gap-1 p-2 bg-blue-100 w-full">
-                {locations.length &&
-                  locations.map((l) => (
-                    <div className="bg-gray-200 border-2 border-gray-300 p-3 rounded-md w-full lg:w-auto justify-between">
-                      {l.public_name}
-                    </div>
+              <div className="flex flex-wrap gap-1 p-3 w-full lg:w-1/3 h-96 overflow-y-scroll">
+                {projects.length &&
+                  projects.map((l, idx) => (
+                    <button
+                      onClick={(e) => handleLocationClick(l)}
+                      className="flex items-center w-full lg:w-full text-lg p-5 rounded border mb-3 bg-white shadow-md border-gray-200 hover:shadow-lg cursor-pointer"
+                    >
+                      <div
+                        className="font-bold leading-snug tracking-tight mb-1"
+                        key={idx}
+                      >
+                        {l.public_name}
+                      </div>
+                    </button>
                   ))}
+              </div>
+              <div className="w-full lg:w-2/3 bg-white p-5">
+                {locations &&
+                  queryObject['location'] &&
+                  JSON.stringify(
+                    locations.filter((l) => {
+                      return l.id === queryObject['location'];
+                    })
+                  )}
+              </div>
+            </div>
+          </section>
+          <section className="mt-20">
+            <div className="container mx-auto flex flex-wrap py-10 px-5 bg-white shadow-md">
+              <h2 className="font-bold text-xl lg:text-2xl mb-5 lg:mb-10 text-gray-500 w-full">
+                Locations ({nonProjectLocations.length})
+              </h2>
+              <div className="flex flex-wrap gap-1 p-3 w-full lg:w-1/3 h-96 overflow-y-scroll">
+                {nonProjectLocations.length &&
+                  nonProjectLocations.map((l, idx) => (
+                    <button
+                      onClick={(e) => handleLocationClick(l)}
+                      className="flex items-center w-full lg:w-full text-lg p-5 rounded border mb-3 bg-white shadow-md border-gray-200 hover:shadow-lg cursor-pointer"
+                    >
+                      <div
+                        className="font-bold leading-snug tracking-tight mb-1"
+                        key={idx}
+                      >
+                        {l.public_name}
+                      </div>
+                    </button>
+                  ))}
+              </div>
+              <div className="w-full lg:w-2/3 bg-white p-5">
+                {nonProjectLocations &&
+                  queryObject['location'] &&
+                  JSON.stringify(
+                    locations.filter((l) => {
+                      return l.id === queryObject['location'];
+                    })
+                  )}
               </div>
             </div>
           </section>
@@ -231,6 +305,8 @@ const OfficeDetail = connect(
             <div>{JSON.stringify(locations)}</div>
           </section>
         </main>
+        {/*  Site footer */}
+        <Footer />
       </div>
     );
   }
