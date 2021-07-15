@@ -1,30 +1,30 @@
-import { createSelector } from "redux-bundler";
-import createRestBundle from "./create-rest-bundle";
+import { createSelector } from 'redux-bundler';
+import createRestBundle from './create-rest-bundle';
 
 const apiUrl = process.env.REACT_APP_WATER_API_URL;
 
 export default createRestBundle({
-  name: "location",
-  uid: "slug",
+  name: 'location',
+  uid: 'slug',
   prefetch: true,
   staleAfter: 0, //5min
   persist: false,
-  routeParam: "",
-  getTemplate: `${apiUrl}/locations?kind_id=460ea73b-c65e-4fc8-907a-6e6fd2907a99&office_id=:officeId`,
-  putTemplate: "",
-  postTemplate: "",
-  deleteTemplate: "",
-  fetchActions: ["URL_UPDATED"],
-  urlParamSelectors: ["selectOfficeIdByRoute"],
+  routeParam: '',
+  getTemplate: `${apiUrl}/locations?office_id=:officeId`,
+  putTemplate: '',
+  postTemplate: '',
+  deleteTemplate: '',
+  fetchActions: ['URL_UPDATED'],
+  urlParamSelectors: ['selectOfficeIdByRoute'],
   forceFetchActions: [],
-  sortBy: "name",
+  sortBy: 'name',
   sortAsc: true,
   mergeItems: true,
   state: { _displayAll: false },
   addons: {
     selectLocationByOfficeId: createSelector(
-      "selectLocationItems",
-      "selectOfficeItemsObjectById",
+      'selectLocationItems',
+      'selectOfficeItemsObjectById',
       (locations, officeObj) => {
         if (!Object.keys(officeObj).length) {
           return {};
@@ -41,8 +41,8 @@ export default createRestBundle({
       }
     ),
     selectLocationItemsActive: createSelector(
-      "selectOfficeByRoute",
-      "selectLocationByOfficeId",
+      'selectOfficeByRoute',
+      'selectLocationByOfficeId',
       (office, locationByOffice) => {
         if (!locationByOffice || !Object.keys(locationByOffice).length) {
           return [];
@@ -55,12 +55,12 @@ export default createRestBundle({
     doLocationToggleDisplayAll:
       () =>
       ({ dispatch }) => {
-        dispatch({ type: "LOCATION_TOGGLE_DISPLAY_ALL" });
+        dispatch({ type: 'LOCATION_TOGGLE_DISPLAY_ALL' });
       },
   },
   reduceFurther: (state, { type, payload }) => {
     switch (type) {
-      case "LOCATION_TOGGLE_DISPLAY_ALL":
+      case 'LOCATION_TOGGLE_DISPLAY_ALL':
         return { ...state, _displayAll: !state._displayAll };
       default:
         return state;
