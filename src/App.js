@@ -4,6 +4,8 @@ import Modal from "./app-components/Modal";
 import { Search } from "./app-components/search";
 
 import "./css/style.scss";
+// import "ol/ol.css";
+// import "./css/ol.css";
 
 const App = connect("selectRoute", "selectPathname", ({ route: Route }) => {
   // OuterRef used to detect clickOutside in child components

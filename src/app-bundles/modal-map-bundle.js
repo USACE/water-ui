@@ -25,7 +25,7 @@ const modalMapBundle = {
       // If app started with directly visiting "/map",
       // this sets the url on close to "/"
       const closeUrl = p === "/map" ? "/" : p;
-      store.doUpdateUrl("/map");
+      store.doUpdateUrl({ pathname: "/map" });
       dispatch({
         type: "MODAL_MAP_OPEN",
         payload: {

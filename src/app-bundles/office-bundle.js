@@ -45,5 +45,14 @@ export default createRestBundle({
         return items;
       }
     ),
+    selectOfficeActive: createSelector(
+      "selectQueryObject",
+      "selectOfficeItemsObject",
+      (queryObj, officeObj) => {
+        return (
+          (queryObj.office && officeObj[queryObj.office.toUpperCase()]) || null
+        );
+      }
+    ),
   },
 });
