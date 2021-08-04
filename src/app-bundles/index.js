@@ -11,14 +11,15 @@ import routeBundle from "./route-bundle";
 
 import cache from "../cache";
 import locationBundle from "./location-bundle";
+import locationLayerBundle from "./location-layer-bundle";
 import locationByStateBundle from "./location-state-bundle";
 import locationDetailBundle from "./location-detail-bundle";
-import mapsBundle from "./maps-bundle";
 import modalBundle from "./modal-bundle";
 import modalMapBundle from "./modal-map-bundle";
 import officeBundle from "./office-bundle";
 import officeStatsBundle from "./office-stats-bundle";
 import profileBundle from "./profile-bundle";
+import settingsBundle from "./settings-bundle";
 import stateBundle from "./state-bundle";
 import stateStatsBundle from "./state-stats-bundle";
 import watershedBundle from "./watershed-bundle";
@@ -29,6 +30,11 @@ import geocoderSearchBundle from "./geocoder-search-bundle";
 import locationSearchBundle from "./location-search-bundle";
 import officeSearchBundle from "./office-search-bundle";
 import watershedSearchBundle from "./watershed-search-bundle";
+
+// Mapping Bundles
+import mapsBundle from "./maps-bundle";
+import layersBundle from "./layers-bundle";
+import createProjectionBundle from "./create-projection-bundle";
 
 // Include Token With GET Request on These Routes
 const includeTokenRoutes = {
@@ -44,15 +50,23 @@ export default composeBundles(
   createCacheBundle({ cacheFn: cache.set }),
   createUrlBundle,
   locationBundle,
+  locationLayerBundle,
   locationByStateBundle,
   locationDetailBundle,
-  mapsBundle,
   modalBundle,
   modalMapBundle,
   officeBundle,
   officeStatsBundle,
   profileBundle,
   routeBundle,
+  settingsBundle,
+  ///////////////////////////////////////////////////
+  // Maps Bundles
+  ///////////////////////////////////////////////////
+  mapsBundle,
+  layersBundle,
+  createProjectionBundle(),
+
   ///////////////////////////////////////////////////
   // Unified Search Bundles
   ///////////////////////////////////////////////////
@@ -67,6 +81,7 @@ export default composeBundles(
   }),
   stateBundle,
   stateStatsBundle,
+
   createAuthBundle({
     appId: "20a4794c-91c3-4080-a42c-d9c0bda332a4",
     redirectOnLogout: "/",

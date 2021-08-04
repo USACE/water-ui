@@ -33,6 +33,18 @@ const M = connect("selectModalMapIsOpen", ({ modalMapIsOpen: isOpen }) => {
       />
       <div className='pt-20'>
         <Map mapKey='main' />
+        <MapInfoPanel />
+      </div>
+    </div>
+  );
+});
+
+const MapInfoPanel = connect("selectLocationCount", ({ locationCount }) => {
+  return (
+    <div className='absolute bottom-0 left-0 right-0 max-w-sm h-16 bg-gray-800 text-white p-1 rounded-t-lg font-mono flex items-center'>
+      <div className='ml-4'>
+        <span className='text-xs pr-1'>projects</span>
+        <span className='text-xl border-l-2 pl-1'>{locationCount}</span>
       </div>
     </div>
   );

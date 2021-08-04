@@ -1,3 +1,5 @@
+import xhr from 'xhr'
+
 const arrayIze = (thing) => (!thing || Array.isArray(thing) ? thing : [thing]);
 
 const shouldSkipToken = (method, path, unless) => {
@@ -142,7 +144,26 @@ const createJwtApiBundle = (opts) => {
           }
           return fetch(url, options);
         },
-
+        // anonGet: (url, callback) => {
+        //   fetch(url).then(response => {
+        //     if (!response.ok) {
+        //       throw new Error(`Response Code Not OK: ${response.status}`)
+        //     }
+        //     return response
+        //   }).then(response => {
+        //     if (callback && typeof callback === 'function') {
+        //       callback(null, response, response.body)
+        //       return
+        //     }
+        //   })
+        //   .catch(err => callback(err))
+        // },
+        anonGet: (path, callback) => {
+          const options = {
+            url: path
+          }
+          xhr.get(options, callback)
+        },
         apiGet: (url, callback) => {
           const { unless, tokenSelector } = getCommonItems();
           const options = { method: 'GET' };

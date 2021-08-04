@@ -39,5 +39,11 @@ export default createRestBundle({
       (statsObj, states) =>
         statsObj && states.map((s) => ({ ...s, ...statsObj[s.id] }))
     ),
+    selectStateActive: createSelector(
+      "selectQueryObject",
+      "selectStateItemsObject",
+      (queryObj, stateObj) =>
+        (queryObj.state && stateObj[queryObj.state.toUpperCase()]) || null
+    ),
   },
 });

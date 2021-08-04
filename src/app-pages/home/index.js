@@ -50,7 +50,7 @@ const Home = connect(
     useEffect(() => {
       if (pathname === "/") {
         setTimeout(() => {
-          doUpdateUrl("/happening");
+          doUpdateUrl({ pathname: "/happening" });
         }, 2000);
       }
     }, [pathname, doUpdateUrl]);
