@@ -4,7 +4,7 @@ import {
   createUrlBundle,
 } from "redux-bundler";
 
-import createAuthBundle from "./create-auth-bundle";
+import createAuthBundle from "./create-keycloak-auth-bundle";
 import createJwtApiBundle from "./create-jwt-api-bundle";
 
 import routeBundle from "./route-bundle";
@@ -32,19 +32,14 @@ import officeSearchBundle from "./office-search-bundle";
 import watershedSearchBundle from "./watershed-search-bundle";
 
 // Mapping Bundles
-import mapsBundle from "./maps-bundle";
-import layersBundle from "./layers-bundle";
-import createProjectionBundle from "./create-projection-bundle";
+import mapsBundle from "./map_bundles/maps-bundle";
+import layersBundle from "./map_bundles/layers-bundle";
+import createProjectionBundle from "./map_bundles/create-projection-bundle";
 
 // Include Token With GET Request on These Routes
 const includeTokenRoutes = {
   "/downloads": true,
 };
-
-// const mockTokenExistingAdmin =
-//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwibmFtZSI6IlVzZXIuQWRtaW4iLCJpYXQiOjE1MTYyMzkwMjIsImV4cCI6MjAwMDAwMDAwMCwicm9sZXMiOlsiUFVCTElDLlVTRVIiXX0.4VAMamtH92GiIb5CpGKpP6LKwU6IjIfw5wS4qc8O8VM';
-
-const mockTokenPublicUser = null;
 
 export default composeBundles(
   createCacheBundle({ cacheFn: cache.set }),
@@ -81,13 +76,7 @@ export default composeBundles(
   }),
   stateBundle,
   stateStatsBundle,
-
-  createAuthBundle({
-    appId: "20a4794c-91c3-4080-a42c-d9c0bda332a4",
-    redirectOnLogout: "/",
-    mock: process.env.NODE_ENV === "development" ? true : false,
-    token: process.env.NODE_ENV === "development" ? mockTokenPublicUser : null,
-  }),
+  createAuthBundle(),
   createJwtApiBundle({
     root: process.env.REACT_APP_WATER_API_URL,
     unless: {
