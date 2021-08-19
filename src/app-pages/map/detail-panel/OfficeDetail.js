@@ -11,7 +11,7 @@ const OfficeDetail = connect(
           <SearchItemOffice uid={detail.symbol} name={detail.name} />
         </Wrapper.Title>
         <Wrapper.Image
-          src={detail.image || "http://localhost:3000/office.jpg"}
+          src={detail.image || `${process.env.PUBLIC_URL}/office.jpg`}
           alt='Selected Office'
         />
       </Wrapper>

@@ -12,7 +12,7 @@ const WatershedDetail = connect(
           <SearchItemWatershed uid={detail.slug} name={detail.name} />
         </Wrapper.Title>
         <Wrapper.Image
-          src={detail.image || "http://localhost:3000/watershed.jpg"}
+          src={detail.image || `${process.env.PUBLIC_URL}/watershed.jpg`}
           alt='Selected Watershed'
         />
       </Wrapper>
