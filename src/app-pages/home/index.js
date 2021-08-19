@@ -31,29 +31,29 @@ const Home = connect(
     }, [pathname]);
 
     // Auto Scroll Position
-    useEffect(() => {
-      // By Default; Scroll to "Happening Now" section
-      const pathnameToRef = {
-        "/happening": { ref: happeningRef, delay: 300 },
-        "/discovery": { ref: discoveryRef, delay: 300 },
-      };
+    // useEffect(() => {
+    //   // By Default; Scroll to "Happening Now" section
+    //   const pathnameToRef = {
+    //     "/happening": { ref: happeningRef, delay: 300 },
+    //     "/discovery": { ref: discoveryRef, delay: 300 },
+    //   };
 
-      if (!pathnameToRef[pathname] || hash !== "") return;
-      const { ref, delay } = pathnameToRef[pathname];
-      setTimeout(
-        () => ref && ref.current && ref.current.scrollIntoView(true),
-        delay
-      );
-    }, [pathname, hash]);
+    //   if (!pathnameToRef[pathname] || hash !== "") return;
+    //   const { ref, delay } = pathnameToRef[pathname];
+    //   setTimeout(
+    //     () => ref && ref.current && ref.current.scrollIntoView(true),
+    //     delay
+    //   );
+    // }, [pathname, hash]);
 
     // Scroll to Happening Now after 2 seconds from "/" landing
-    useEffect(() => {
-      if (pathname === "/") {
-        setTimeout(() => {
-          doUpdateUrl({ pathname: "/happening" });
-        }, 2000);
-      }
-    }, [pathname, doUpdateUrl]);
+    // useEffect(() => {
+    //   if (pathname === "/") {
+    //     setTimeout(() => {
+    //       doUpdateUrl({ pathname: "/happening" });
+    //     }, 2000);
+    //   }
+    // }, [pathname, doUpdateUrl]);
 
     return (
       <div className='flex flex-col min-h-screen overflow-hidden'>

@@ -14,6 +14,7 @@ const createSearchableBundle = (opts) => {
   // actions
   const baseType = config.searchEntity.toUpperCase();
   const actions = {
+    SEARCH_CLEAR: "SEARCH_CLEAR",
     SEARCH_START: `${baseType}_SEARCH_START`,
     SEARCH_ERROR: `${baseType}_SEARCH_ERROR`,
     SEARCH_FINISH: `${baseType}_SEARCH_FINISH`,
@@ -65,6 +66,11 @@ const createSearchableBundle = (opts) => {
             items: payload
               ? payload.map((t) => ({ provider: config.searchEntity, ...t }))
               : [],
+          };
+        case "SEARCH_CLEAR":
+          return {
+            ...state,
+            items: [],
           };
         default:
           return state;

@@ -12,13 +12,15 @@ import routeBundle from "./route-bundle";
 import cache from "../cache";
 import locationBundle from "./location-bundle";
 import locationLayerBundle from "./location-layer-bundle";
-import locationByStateBundle from "./location-state-bundle";
+// import locationByStateBundle from "./location-state-bundle";
 import locationDetailBundle from "./location-detail-bundle";
 import modalBundle from "./modal-bundle";
 import modalMapBundle from "./modal-map-bundle";
 import officeBundle from "./office-bundle";
+import officeDetailBundle from "./office-detail-bundle";
 import officeStatsBundle from "./office-stats-bundle";
 import profileBundle from "./profile-bundle";
+import selectedBundle from "./selected-bundle";
 import settingsBundle from "./settings-bundle";
 import stateBundle from "./state-bundle";
 import stateStatsBundle from "./state-stats-bundle";
@@ -35,6 +37,7 @@ import watershedSearchBundle from "./watershed-search-bundle";
 import mapsBundle from "./map_bundles/maps-bundle";
 import layersBundle from "./map_bundles/layers-bundle";
 import createProjectionBundle from "./map_bundles/create-projection-bundle";
+import watershedDetail from "./watershed-detail";
 
 // Include Token With GET Request on These Routes
 const includeTokenRoutes = {
@@ -46,15 +49,18 @@ export default composeBundles(
   createUrlBundle,
   locationBundle,
   locationLayerBundle,
-  locationByStateBundle,
+  // locationByStateBundle,
   locationDetailBundle,
   modalBundle,
   modalMapBundle,
   officeBundle,
+  officeDetailBundle,
   officeStatsBundle,
   profileBundle,
   routeBundle,
+  selectedBundle,
   settingsBundle,
+
   ///////////////////////////////////////////////////
   // Maps Bundles
   ///////////////////////////////////////////////////
@@ -98,5 +104,6 @@ export default composeBundles(
       },
     },
   }),
-  watershedBundle
+  watershedBundle,
+  watershedDetail
 );

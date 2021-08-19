@@ -35,11 +35,12 @@ const tileLayer = new Tile({
 });
 
 // Events
-const onMoveEnd = (doUpdateQuery) => (evt) => {
+const onMoveEnd = (selectQueryObject, doUpdateQuery) => (evt) => {
   const map = evt.map;
   const view = map.getView();
   const [x, y] = view.getCenter();
   doUpdateQuery({
+    ...selectQueryObject(),
     x: Math.round(x * 100) / 100,
     y: Math.round(y * 100) / 100,
     zoom: Math.round(view.getZoom() * 100) / 100,
@@ -90,7 +91,10 @@ const mapsBundle = {
       });
 
       // Register Listeners
-      map.on("moveend", onMoveEnd(store.doUpdateQuery));
+      map.on(
+        "moveend",
+        onMoveEnd(store.selectQueryObject, store.doUpdateQuery)
+      );
 
       dispatch({
         type: actions.MAPS_INITIALIZED,
@@ -209,29 +213,6 @@ const mapsBundle = {
       if (shouldUpdate && !isUpdating) {
         return { actionCreator: "doMapsUpdateLayers" };
       }
-    }
-  ),
-  reactMapsSyncCenterAndZoom: createSelector(
-    "selectMapsActive",
-    "selectQueryObject",
-    (maps, queryObj) => {
-      if (!maps || !Object.keys(maps).length) {
-        return null;
-      }
-      // Center and Zoom; URL Query Parameters
-      const { x, y, zoom } = queryObj;
-      if (!x || !y || !zoom) {
-        return null;
-      }
-      console.log(`\n\n\n\n\n\n\n\n\n\nURL: x: ${x}, y: ${y}, zoom: ${zoom}`);
-      // Center and Zoom; Map View
-      Object.values(maps).forEach((m) => {
-        const _view = m.getView();
-        const _center = _view.getCenter();
-        const _zoom = _view.getZoom();
-        const [_x, _y] = _center;
-        console.log(`ACTIVE MAP: x: ${_x}, y: ${_y}, zoom: ${_zoom}`);
-      });
     }
   ),
 };
