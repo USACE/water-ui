@@ -47,12 +47,15 @@ const createSearchBundle = (opts) => {
 
       return (state = initialState, { type, payload }) => {
         switch (type) {
+          case "SEARCH_CLEAR":
           case "SEARCH_FIRE":
           case "SEARCH_INITIALIZE_START":
           case "SEARCH_INITIALIZE_FINISH":
+          case "SEARCH_ITEM_SELECTED":
           case "SEARCH_OPEN":
           case "SEARCH_CLOSE":
           case "SEARCH_QUERY_UPDATE":
+          case "SEARCH_QUERY_CLEAR":
             return { ...state, ...payload };
           default:
             return state;
@@ -112,7 +115,6 @@ const createSearchBundle = (opts) => {
     doSearchFire:
       () =>
       ({ dispatch }) => {
-        // dispatch({ type: "SEARCH_FIRE", payload: { _shouldFire: false } });
         dispatch({ type: "SEARCH_FIRE" });
       },
 
@@ -124,9 +126,16 @@ const createSearchBundle = (opts) => {
           payload: { _query: str },
         });
       },
+    doSearchClear:
+      () =>
+      ({ dispatch }) => {
+        dispatch({
+          type: "SEARCH_CLEAR",
+          payload: { _query: "" },
+        });
+      },
     selectSearchInitialized: (state) => state.search._initialized,
     selectSearchIsInitializing: (state) => state.search._initializing,
-    // selectSearchShouldFire: (state) => state.search._shouldFire,
     selectSearchQuery: (state) => state.search._query,
     selectSearchIsOpen: (state) => state.search._isOpen,
     selectSearchItems: (state) => {
@@ -143,10 +152,6 @@ const createSearchBundle = (opts) => {
           ? { actionCreator: "doSearchInitialize" }
           : null
     ),
-    // reactSearchShouldFire: createSelector(
-    //   "selectSearchShouldFire",
-    //   (shouldFire) => (shouldFire ? { actionCreator: "doSearchFire" } : null)
-    // ),
   };
 };
 

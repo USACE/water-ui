@@ -2,21 +2,21 @@ import React from "react";
 
 import SearchItem from "./SearchItem";
 
-import LocationIcon from "../icons/LocationIcon";
+import ProjectIcon from "../icons/ProjectIcon";
 
-const SearchItemLocation = ({ uid, name, clickable }) => {
+const SearchItemProject = ({ uid, name, clickable }) => {
   return (
     <SearchItem
       clickable={clickable}
       uid={uid}
-      key={uid}
       provider='location'
-      icon={LocationIcon}
+      key={uid}
+      icon={ProjectIcon}
       name={name}
-      providerName='Location'
+      providerName={"Project"}
       buttons={<></>}
     />
   );
 };
 
-export default SearchItemLocation;
+export default SearchItemProject;

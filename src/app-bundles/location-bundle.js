@@ -46,9 +46,15 @@ export default createRestBundle({
       }
     ),
     selectLocationItemsActive: createSelector(
+      "selectQueryObject",
+      "selectLocationItemsObject",
       "selectOfficeByRoute",
       "selectLocationByOfficeId",
-      (office, locationByOffice) => {
+      (queryObj, locationObj, office, locationByOffice) => {
+        // If ?location=<slug> in the query, single location selected
+        if (queryObj && queryObj.location) {
+          return locationObj[queryObj.location];
+        }
         if (!locationByOffice || !Object.keys(locationByOffice).length) {
           return [];
         }
