@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef } from "react";
+import { connect } from "redux-bundler-react";
+import Modal from "./app-components/Modal";
+import { Search } from "./app-components/search";
 
-function App() {
+// import "ol/ol.css";
+// import "./css/ol.css";
+
+const App = connect("selectRoute", "selectPathname", ({ route: Route }) => {
+  // OuterRef used to detect clickOutside in child components
+  const doc = useRef(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div ref={doc}>
+      <Route />
+      <Modal />
+      <Search outerRef={doc} />
     </div>
   );
-}
+});
 
 export default App;
