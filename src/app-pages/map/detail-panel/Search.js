@@ -7,7 +7,7 @@ import SearchResults from "../../../app-components/search/SearchResults";
 const Search = connect("selectSearchItems", ({ searchItems }) => {
   return (
     <div
-      className={`rounded-tr-xl absolute left-1/2 transform -translate-x-1/2 mt-2 opacity-95 w-11/12 bg-white rounded shadow-lg ${
+      className={`mt-6 rounded-xl absolute left-1/2 transform -translate-x-1/2 mt-2 opacity-95 w-11/12 bg-white shadow-lg ${
         searchItems && searchItems.length ? "h-3/4 overflow-y-hidden" : ""
       }`}
     >

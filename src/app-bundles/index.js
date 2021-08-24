@@ -14,6 +14,7 @@ import locationBundle from "./location-bundle";
 import locationLayerBundle from "./location-layer-bundle";
 // import locationByStateBundle from "./location-state-bundle";
 import locationDetailBundle from "./location-detail-bundle";
+import mapDetailPanelBundle from "./map-detail-panel-bundle";
 import modalBundle from "./modal-bundle";
 import modalMapBundle from "./modal-map-bundle";
 import officeBundle from "./office-bundle";
@@ -51,6 +52,7 @@ export default composeBundles(
   locationLayerBundle,
   // locationByStateBundle,
   locationDetailBundle,
+  mapDetailPanelBundle,
   modalBundle,
   modalMapBundle,
   officeBundle,

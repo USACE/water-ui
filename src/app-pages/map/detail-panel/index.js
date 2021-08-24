@@ -6,19 +6,28 @@ import LocationDetail from "./LocationDetail";
 import OfficeDetail from "./OfficeDetail";
 import WatershedDetail from "./WatershedDetail";
 
+const providers = {
+  location: <LocationDetail />,
+  watershed: <WatershedDetail />,
+  office: <OfficeDetail />,
+};
+
 const DetailPanel = connect(
+  "selectMapDetailPanelHeight",
   "selectSelectedProvider",
-  ({ selectedProvider: provider }) => {
+  ({ mapDetailPanelHeight: height, selectedProvider: provider }) => {
+    const heightClass = {
+      low: "h-24",
+      medium: "h-1/2",
+      high: "h-5/6",
+    };
     return (
-      <div className='absolute bottom-0 w-11/12 h-3/5 left-1/2 transform -translate-x-1/2 md:w-4/12 md:transform-none md:left-0 md:h-full xl:w-3/12 bg-gray-800 font-mono overflow-y-auto overflow-x-hidden rounded-t-lg md:rounded-l-none md:rounded-r-xl'>
-        {!provider && (
-          <div className='mt-2'>
-            <Search />
-          </div>
-        )}
-        {provider && provider === "location" && <LocationDetail />}
-        {provider && provider === "watershed" && <WatershedDetail />}
-        {provider && provider === "office" && <OfficeDetail />}
+      <div
+        className={`absolute bottom-0 left-0 right-0 rounded-t-2xl ${heightClass[height]} bg-gray-600 overflow-hidden`}
+      >
+        <div className='w-full overflow-auto'>
+          {!provider ? <Search /> : providers[provider]}
+        </div>
       </div>
     );
   }

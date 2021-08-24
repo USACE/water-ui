@@ -7,7 +7,7 @@ const Wrapper = ({ children }) => (
 );
 
 const Title = ({ children }) => (
-  <div className='mx-2 mr-2 flex items-center justify-between'>
+  <div className='mx-2 mr-2 flex items-center justify-between py-3'>
     {children}
     <div className='flex justify-around w-16'>
       <ClearSelectedButton />

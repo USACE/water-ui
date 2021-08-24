@@ -15,15 +15,34 @@ const actions = {
 };
 
 // Default Background Map
-
-const tileLayerInfo = {
-  id: "CartoDBPositron",
-  name: "CartoDB Positron",
-  url: "https://cartodb-basemaps-{a-c}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
-  attributions:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributionss">CartoDB</a>',
-  maxZoom: 19,
+const tileLayers = {
+  CartoDBPositron: {
+    id: "CartoDBPositron",
+    name: "CartoDB Positron",
+    url: "https://cartodb-basemaps-{a-c}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+    attributions:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributionss">CartoDB</a>',
+    maxZoom: 19,
+  },
+  CartoDBDarkMatter: {
+    id: "CartoDBDarkMatter",
+    name: "CartoDB Dark Matter",
+    url: "https://cartodb-basemaps-{a-c}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
+    attributions:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributionss">CartoDB</a>',
+    maxZoom: 19,
+  },
+  OpenStreetMap: {
+    id: "OpenStreetMap",
+    name: "OpenStreetMap",
+    url: "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    maxZoom: 19,
+    attributions:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  },
 };
+
+const tileLayerInfo = tileLayers.OpenStreetMap;
 
 const tileLayer = new Tile({
   source: new XYZ({

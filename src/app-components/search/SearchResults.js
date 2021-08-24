@@ -7,10 +7,11 @@ import SearchItemOffice from "./SearchItemOffice";
 import SearchItemProject from "./SearchItemProject";
 import SearchItemWatershed from "./SearchItemWatershed";
 
+// TODO: Make this a map rather than a switch/case
 const SearchResults = connect("selectSearchItems", ({ searchItems }) =>
   searchItems && searchItems.length ? (
     <>
-      <div className='text-xs font-semibold text-gray-400 uppercase px-2 mb-2'>
+      <div className='text-xs font-semibold text-gray-400 uppercase px-2 my-2'>
         Search Results
       </div>
       <ul className='absolute inset-0 top-20 inset-y-1 overflow-auto text-sm'>

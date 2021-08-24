@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from "react";
+import React, { useRef, useMemo } from "react";
 import { connect } from "redux-bundler-react";
 import debounce from "lodash/debounce";
 
@@ -6,7 +6,8 @@ const SearchBar = connect(
   "selectSearchQuery",
   "doSearchQueryUpdate",
   "doSearchFire",
-  ({ searchQuery, doSearchQueryUpdate, doSearchFire }) => {
+  "doSearchFocus",
+  ({ searchQuery, doSearchQueryUpdate, doSearchFire, doSearchFocus }) => {
     const searchInput = useRef(null);
 
     // debounced search fire function
@@ -16,12 +17,12 @@ const SearchBar = connect(
     );
 
     // set focus on input
-    useEffect(() => {
-      searchInput.current.focus();
-    });
+    // useEffect(() => {
+    //   searchInput.current.focus();
+    // });
 
     return (
-      <form className='border-b border-gray-200'>
+      <form className=''>
         <div className='relative'>
           <label htmlFor='modal-search' className='sr-only'>
             Search
@@ -29,14 +30,19 @@ const SearchBar = connect(
           <input
             id='modal-search'
             autoComplete='off'
-            className='w-full border-0 focus:ring-transparent placeholder-gray-400 py-3 pl-10 pr-4'
+            className={`w-full focus:outline-none focus:ring focus:border-blue-300 py-3 pl-10 rounded-t-xl ${
+              searchQuery.length < 2 && "rounded-b-xl"
+            }`}
             type='search'
-            placeholder='Search Anything…'
+            placeholder='Search…'
             value={searchQuery || ""}
             ref={searchInput}
             onChange={(e) => {
               doSearchQueryUpdate(e.target.value);
               debouncedSearchFire();
+            }}
+            onFocus={(e) => {
+              doSearchFocus();
             }}
           />
           <button

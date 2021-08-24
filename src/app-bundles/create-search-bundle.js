@@ -49,6 +49,7 @@ const createSearchBundle = (opts) => {
         switch (type) {
           case "SEARCH_CLEAR":
           case "SEARCH_FIRE":
+          case "SEARCH_FOCUS":
           case "SEARCH_INITIALIZE_START":
           case "SEARCH_INITIALIZE_FINISH":
           case "SEARCH_ITEM_SELECTED":
@@ -111,6 +112,11 @@ const createSearchBundle = (opts) => {
             _isOpen: false,
           },
         });
+      },
+    doSearchFocus:
+      () =>
+      ({ dispatch }) => {
+        dispatch({ type: "SEARCH_FOCUS" });
       },
     doSearchFire:
       () =>
