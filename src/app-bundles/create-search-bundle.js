@@ -1,5 +1,11 @@
 import { createSelector } from "redux-bundler";
 
+// @todo; This should be dynamic from plugin
+import SearchItemGeocoder from "../app-plugins/geocoder/SearchItem";
+import SearchItemLocation from "../app-plugins/location/SearchItemLocation";
+import SearchItemOffice from "../app-plugins/office/SearchItemOffice";
+import SearchItemWatershed from "../app-plugins/watershed/SearchItemWatershed";
+
 // Helper Function; Uppercase first letter of camel case
 const camelHelper = (name) => `${name[0].toUpperCase().concat(name.slice(1))}`;
 // Action Name Patterns for Search Bundles
@@ -150,6 +156,12 @@ const createSearchBundle = (opts) => {
         .flat();
       return items;
     },
+    selectSearchItemComponentMap: (state) => ({
+      location: SearchItemLocation,
+      office: SearchItemOffice,
+      watershed: SearchItemWatershed,
+      geocoder: SearchItemGeocoder,
+    }),
     reactSearchInitialize: createSelector(
       "selectSearchInitialized",
       "selectSearchIsInitializing",

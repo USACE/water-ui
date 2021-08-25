@@ -1,13 +1,14 @@
 import React from "react";
 import GeocoderIcon from "../../icons/GeocoderIcon";
-import SearchItem from "../search/SearchItem";
+import { SearchItem } from "../../app-components/search";
 
-const SearchItemGeocoder = ({ name, clickable }) => {
+const SearchItemGeocoder = ({ provider, display_name }) => {
   return (
     <SearchItem
-      clickable={clickable}
-      name={name}
+      clickable={false}
+      name={display_name}
       icon={GeocoderIcon}
+      provider={provider}
       providerName='PLACE | MAPBOX GEOCODING'
       buttons={<></>}
     />

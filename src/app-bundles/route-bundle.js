@@ -1,6 +1,6 @@
 import { createRouteBundle } from "redux-bundler";
 
-import Home from "../app-pages/home";
+// import Home from "../app-pages/home";
 // import SignIn from "../app-pages/SignIn";
 // import SignUp from "../app-pages/SignUp";
 // import ResetPassword from "../app-pages/ResetPassword";
@@ -10,8 +10,7 @@ import Home from "../app-pages/home";
 import Map from "../app-pages/map";
 
 export default createRouteBundle({
-  "/": Home,
-  "/map": Map,
+  "/": Map,
   // "/happening": Home,
   // "/discovery": Home,
   // "/signin": SignIn,

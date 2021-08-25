@@ -14,7 +14,7 @@ import locationBundle from "./location-bundle";
 import locationLayerBundle from "./location-layer-bundle";
 // import locationByStateBundle from "./location-state-bundle";
 import locationDetailBundle from "./location-detail-bundle";
-import mapDetailPanelBundle from "./map-detail-panel-bundle";
+import detailPanelBundle from "./detail-panel-bundle";
 import modalBundle from "./modal-bundle";
 import modalMapBundle from "./modal-map-bundle";
 import officeBundle from "./office-bundle";
@@ -29,10 +29,10 @@ import watershedBundle from "./watershed-bundle";
 
 // Search Bundles
 import createSearchBundle from "./create-search-bundle";
-import geocoderSearchBundle from "./geocoder-search-bundle";
-import locationSearchBundle from "./location-search-bundle";
-import officeSearchBundle from "./office-search-bundle";
-import watershedSearchBundle from "./watershed-search-bundle";
+import geocoderSearchBundle from "../app-plugins/geocoder/searchable-bundle";
+import locationSearchBundle from "../app-plugins/location/searchable-bundle";
+import officeSearchBundle from "../app-plugins/office/searchable-bundle";
+import watershedSearchBundle from "../app-plugins/watershed/searchable-bundle";
 
 // Mapping Bundles
 import mapsBundle from "./map_bundles/maps-bundle";
@@ -52,7 +52,7 @@ export default composeBundles(
   locationLayerBundle,
   // locationByStateBundle,
   locationDetailBundle,
-  mapDetailPanelBundle,
+  detailPanelBundle,
   modalBundle,
   modalMapBundle,
   officeBundle,

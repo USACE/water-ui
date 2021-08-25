@@ -1,4 +1,4 @@
-import createSearchableBundle from "./create-searchable-bundle";
+import createSearchableBundle from "../../app-bundles/create-searchable-bundle";
 
 export default createSearchableBundle({
   searchEntity: "office",

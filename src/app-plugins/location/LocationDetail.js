@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "redux-bundler-react";
-import SearchItemProject from "../../../app-components/search/SearchItemProject";
+import SearchItemProject from "./SearchItemProject";
 
-import Wrapper from "./Wrapper";
+import { Wrapper } from "../../app-components/detail-panel";
 
 const LocationDetail = connect(
   "selectLocationDetailSelected",

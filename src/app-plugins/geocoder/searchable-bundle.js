@@ -1,4 +1,4 @@
-import createSearchableBundle from "./create-searchable-bundle";
+import createSearchableBundle from "../../app-bundles/create-searchable-bundle";
 
 const zoomScales = {
   region: 8,
@@ -40,7 +40,6 @@ export default createSearchableBundle({
               payload: json.features.map((f) => ({
                 display_name: f.place_name,
                 place_type: f.place_type,
-
                 center: f.center,
                 zoom: zoomScales[f.place_type[0]] || 11,
                 geometry: f.geometry,

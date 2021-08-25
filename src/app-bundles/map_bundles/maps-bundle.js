@@ -42,7 +42,7 @@ const tileLayers = {
   },
 };
 
-const tileLayerInfo = tileLayers.OpenStreetMap;
+const tileLayerInfo = tileLayers.CartoDBDarkMatter;
 
 const tileLayer = new Tile({
   source: new XYZ({

@@ -1,14 +1,14 @@
 import React from "react";
 import OfficeIcon from "../../icons/OfficeIcon";
-import SearchItem from "./SearchItem";
+import { SearchItem } from "../../app-components/search";
 
-const SearchItemOffice = ({ uid, name, clickable }) => {
+const SearchItemOffice = ({ provider, symbol, name }) => {
   return (
     <SearchItem
-      clickable={clickable}
-      provider='office'
-      uid={uid}
-      key={uid}
+      clickable={true}
+      provider={provider}
+      uid={symbol}
+      key={symbol}
       icon={OfficeIcon}
       name={name}
       providerName='Office / Area of responsibility'

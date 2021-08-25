@@ -1,14 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { connect } from "redux-bundler-react";
 
 import { Provider } from "redux-bundler-react";
 import { getNavHelper } from "internal-nav-helper";
 import getStore from "./app-bundles";
 
-import App from "./App";
 import cache from "./cache";
+import "./index.css";
 
-import "./index.css"
+// Application Components
+import Modal from "./app-components/Modal";
+
+const App = connect(
+  "selectRoute",
+  "doUpdateUrl",
+  ({ route: Route, doUpdateUrl }) => {
+    return (
+      <div onClick={getNavHelper((url) => doUpdateUrl(url))}>
+        <Route />
+        <Modal />
+      </div>
+    );
+  }
+);
 
 cache.getAll().then((initialData) => {
   const store = getStore(initialData);
@@ -17,13 +32,7 @@ cache.getAll().then((initialData) => {
 
   ReactDOM.render(
     <Provider store={store}>
-      <div
-        onClick={getNavHelper((url) =>
-          store.doUpdateUrl(url)
-        )}
-      >
-        <App />
-      </div>
+      <App />
     </Provider>,
     document.getElementById("root")
   );

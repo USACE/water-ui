@@ -1,7 +1,9 @@
 import React from "react";
 import { connect } from "redux-bundler-react";
-import SearchItemOffice from "../../../app-components/search/SearchItemOffice";
-import Wrapper from "./Wrapper";
+
+import SearchItemOffice from "./SearchItemOffice";
+import { Wrapper } from "../../app-components/detail-panel";
+
 const OfficeDetail = connect(
   "selectOfficeDetailSelected",
   ({ officeDetailSelected: detail }) => {

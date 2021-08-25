@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "redux-bundler-react";
-import SearchItemWatershed from "../../../app-components/search/SearchItemWatershed";
-import Wrapper from "./Wrapper";
+import SearchItemWatershed from "./SearchItemWatershed";
+import { Wrapper } from "../../app-components/detail-panel";
 
 const WatershedDetail = connect(
   "selectWatershedDetailSelected",

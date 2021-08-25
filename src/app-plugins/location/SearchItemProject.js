@@ -1,6 +1,6 @@
 import React from "react";
 
-import SearchItem from "./SearchItem";
+import { SearchItem } from "../../app-components/search";
 
 import ProjectIcon from "../../icons/ProjectIcon";
 
