@@ -13,7 +13,9 @@ const SearchResults = connect(
         <ul className='absolute inset-0 top-20 inset-y-1 overflow-auto text-sm'>
           {searchItems.map((t) => {
             const func = componentMap[t.provider];
-            return func && typeof func === "function" ? func(t) : null;
+            return func && typeof func === "function"
+              ? func({ ...t, clickable: true })
+              : null;
           })}
         </ul>
       </>

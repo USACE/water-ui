@@ -10,35 +10,54 @@ import createJwtApiBundle from "./create-jwt-api-bundle";
 import routeBundle from "./route-bundle";
 
 import cache from "../cache";
-import locationBundle from "./location-bundle";
-import locationLayerBundle from "./location-layer-bundle";
-// import locationByStateBundle from "./location-state-bundle";
-import locationDetailBundle from "./location-detail-bundle";
+
+// App Bundles
 import detailPanelBundle from "./detail-panel-bundle";
 import modalBundle from "./modal-bundle";
 import modalMapBundle from "./modal-map-bundle";
-import officeBundle from "./office-bundle";
-import officeDetailBundle from "./office-detail-bundle";
-import officeStatsBundle from "./office-stats-bundle";
+
 import profileBundle from "./profile-bundle";
 import selectedBundle from "./selected-bundle";
 import settingsBundle from "./settings-bundle";
+
 import stateBundle from "./state-bundle";
 import stateStatsBundle from "./state-stats-bundle";
-import watershedBundle from "./watershed-bundle";
 
 // Search Bundles
 import createSearchBundle from "./create-search-bundle";
-import geocoderSearchBundle from "../app-plugins/geocoder/searchable-bundle";
-import locationSearchBundle from "../app-plugins/location/searchable-bundle";
-import officeSearchBundle from "../app-plugins/office/searchable-bundle";
-import watershedSearchBundle from "../app-plugins/watershed/searchable-bundle";
 
 // Mapping Bundles
+import basemapBundle from "./map_bundles/basemap-bundle";
 import mapsBundle from "./map_bundles/maps-bundle";
 import layersBundle from "./map_bundles/layers-bundle";
 import createProjectionBundle from "./map_bundles/create-projection-bundle";
-import watershedDetail from "./watershed-detail";
+
+// Settings Bundles
+import basemapSettingsBundle from "./basemap-settings-bundle";
+
+/////////////////
+// Plugin Bundles
+/////////////////
+
+// Geocoder
+import geocoderSearchBundle from "../app-plugins/geocoder/searchable-bundle";
+
+// Projects
+import projectSearchBundle from "../app-plugins/project/searchable-bundle";
+import projectItemsBundle from "../app-plugins/project/items-bundle";
+import projectDetailBundle from "../app-plugins/project/detail-bundle";
+import projectLayerBundle from "../app-plugins/project/layer-bundle";
+
+// Offices
+import officeSearchBundle from "../app-plugins/office/searchable-bundle";
+import officeBundle from "../app-plugins/office/items-bundle";
+import officeDetailBundle from "../app-plugins/office/detail-bundle";
+import officeStatsBundle from "./office-stats-bundle";
+
+// Watersheds
+import watershedSearchBundle from "../app-plugins/watershed/searchable-bundle";
+import watershedBundle from "../app-plugins/watershed/watershed-bundle";
+import watershedDetail from "../app-plugins/watershed/watershed-detail";
 
 // Include Token With GET Request on These Routes
 const includeTokenRoutes = {
@@ -48,42 +67,14 @@ const includeTokenRoutes = {
 export default composeBundles(
   createCacheBundle({ cacheFn: cache.set }),
   createUrlBundle,
-  locationBundle,
-  locationLayerBundle,
-  // locationByStateBundle,
-  locationDetailBundle,
+  // Application Bundles
   detailPanelBundle,
   modalBundle,
   modalMapBundle,
-  officeBundle,
-  officeDetailBundle,
-  officeStatsBundle,
   profileBundle,
   routeBundle,
   selectedBundle,
   settingsBundle,
-
-  ///////////////////////////////////////////////////
-  // Maps Bundles
-  ///////////////////////////////////////////////////
-  mapsBundle,
-  layersBundle,
-  createProjectionBundle(),
-
-  ///////////////////////////////////////////////////
-  // Unified Search Bundles
-  ///////////////////////////////////////////////////
-  createSearchBundle({
-    name: "search",
-    searchableBundles: [
-      officeSearchBundle,
-      locationSearchBundle,
-      watershedSearchBundle,
-      geocoderSearchBundle,
-    ],
-  }),
-  stateBundle,
-  stateStatsBundle,
   createAuthBundle(),
   createJwtApiBundle({
     root: process.env.REACT_APP_WATER_API_URL,
@@ -106,6 +97,43 @@ export default composeBundles(
       },
     },
   }),
+  // ####################
+  // Application; Mapping
+  // ####################
+  basemapBundle,
+  layersBundle,
+  mapsBundle,
+  createProjectionBundle(),
+  // ###################
+  // Application; Search
+  // ###################
+  createSearchBundle({
+    name: "search",
+    searchableBundles: [
+      officeSearchBundle, // from plugin offices
+      projectSearchBundle, // from plugin projects
+      watershedSearchBundle, // from plugin watershed
+      geocoderSearchBundle, // from plugin geocoder
+    ],
+  }),
+  // ##############
+  // Plugin Bundles
+  // ##############
+  // Projects
+  projectItemsBundle,
+  projectLayerBundle,
+  projectDetailBundle,
+  // Offices
+  officeBundle,
+  officeDetailBundle,
+  officeStatsBundle,
+  // Watersheds
   watershedBundle,
-  watershedDetail
+  watershedDetail,
+  // ################
+  // Settings Bundles
+  // ################
+  basemapSettingsBundle,
+  stateBundle,
+  stateStatsBundle
 );

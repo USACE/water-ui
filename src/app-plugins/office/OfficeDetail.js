@@ -10,7 +10,7 @@ const OfficeDetail = connect(
     return !detail ? null : (
       <Wrapper>
         <Wrapper.Title>
-          <SearchItemOffice uid={detail.symbol} name={detail.name} />
+          <SearchItemOffice {...detail} clickable={false} />
         </Wrapper.Title>
         <Wrapper.Image
           src={detail.image || `${process.env.PUBLIC_URL}/office.jpg`}

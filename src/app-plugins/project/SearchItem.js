@@ -4,16 +4,16 @@ import { SearchItem } from "../../app-components/search";
 
 import ProjectIcon from "../../icons/ProjectIcon";
 
-const SearchItemProject = ({ uid, name, clickable }) => {
+const SearchItemProject = ({ provider, slug, public_name, clickable }) => {
   return (
     <SearchItem
       clickable={clickable}
-      uid={uid}
-      provider='location'
-      key={uid}
+      uid={slug}
+      key={slug}
+      provider={provider}
       icon={ProjectIcon}
-      name={name}
-      providerName={"Project"}
+      name={public_name}
+      providerName={provider}
       buttons={<></>}
     />
   );

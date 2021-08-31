@@ -9,7 +9,11 @@ const WatershedDetail = connect(
     return !detail ? null : (
       <Wrapper>
         <Wrapper.Title>
-          <SearchItemWatershed uid={detail.slug} name={detail.name} />
+          <SearchItemWatershed
+            uid={detail.slug}
+            name={detail.name}
+            clickable={false}
+          />
         </Wrapper.Title>
         <Wrapper.Image
           src={detail.image || `${process.env.PUBLIC_URL}/watershed.jpg`}

@@ -6,8 +6,8 @@ import { Vector as VectorSource } from "ol/source";
 import { Vector as VectorLayer } from "ol/layer";
 import { Circle as CircleStyle, Style, Text, Fill } from "ol/style";
 
-const locationLayerBundle = {
-  name: "locationLayer",
+const projectLayerBundle = {
+  name: "projectLayer",
   reducer: (
     state = {
       _isUpdating: false,
@@ -17,15 +17,15 @@ const locationLayerBundle = {
     { type, payload }
   ) => {
     switch (type) {
-      case "SETTINGS_LOCATION_NAME_CHANGE":
-      case "LOCATION_FETCH_FINISHED":
+      case "SETTINGS_PROJECT_NAME_CHANGE":
+      case "PROJECT_FETCH_FINISHED":
         return {
           ...state,
           _shouldUpdate: true,
         };
-      case "LOCATION_LAYER_UPDATE_START":
-      case "LOCATION_LAYER_UPDATE_FINISH":
-      case "LOCATION_LAYER_UPDATE_BAIL":
+      case "PROJECT_LAYER_UPDATE_START":
+      case "PROJECT_LAYER_UPDATE_FINISH":
+      case "PROJECT_LAYER_UPDATE_BAIL":
         return {
           ...state,
           ...payload,
@@ -34,11 +34,11 @@ const locationLayerBundle = {
         return state;
     }
   },
-  doLocationLayerUpdate:
+  doProjectLayerUpdate:
     () =>
     ({ dispatch, store }) => {
       dispatch({
-        type: "LOCATION_LAYER_UPDATE_START",
+        type: "PROJECT_LAYER_UPDATE_START",
         payload: { _shouldUpdate: false, _isUpdating: true },
       });
 
@@ -47,7 +47,7 @@ const locationLayerBundle = {
 
       const vectorSource = new VectorSource({
         features: new GeoJSON().readFeatures(
-          store.selectLocationItemsGeoJSON(),
+          store.selectProjectItemsGeoJSON(),
           {
             dataProjection: store.selectProjectionGeo(),
             featureProjection: store.selectProjectionMap(),
@@ -55,7 +55,7 @@ const locationLayerBundle = {
         ),
       });
 
-      const layerId = "locations";
+      const layerId = "projects";
 
       const vectorLayer = new VectorLayer({
         id: layerId,
@@ -86,24 +86,24 @@ const locationLayerBundle = {
       });
 
       dispatch({
-        type: "LOCATION_LAYER_UPDATE_FINISH",
+        type: "PROJECT_LAYER_UPDATE_FINISH",
         payload: {
           _isUpdating: false,
           lastUpdate: new Date(),
         },
       });
     },
-  selectLocationLayerShouldUpdate: (store) => store.locationLayer._shouldUpdate,
-  selectLocationLayerIsUpdating: (store) => store.locationLayer._isUpdating,
-  reactLocationLayerShouldUpdate: createSelector(
-    "selectLocationLayerShouldUpdate",
-    "selectLocationLayerIsUpdating",
+  selectProjectLayerShouldUpdate: (store) => store.projectLayer._shouldUpdate,
+  selectProjectLayerIsUpdating: (store) => store.projectLayer._isUpdating,
+  reactProjectLayerShouldUpdate: createSelector(
+    "selectProjectLayerShouldUpdate",
+    "selectProjectLayerIsUpdating",
     (shouldUpdate, isUpdating) => {
       if (shouldUpdate && !isUpdating) {
-        return { actionCreator: "doLocationLayerUpdate" };
+        return { actionCreator: "doProjectLayerUpdate" };
       }
     }
   ),
 };
 
-export default locationLayerBundle;
+export default projectLayerBundle;

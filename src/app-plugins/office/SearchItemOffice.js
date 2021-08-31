@@ -2,10 +2,10 @@ import React from "react";
 import OfficeIcon from "../../icons/OfficeIcon";
 import { SearchItem } from "../../app-components/search";
 
-const SearchItemOffice = ({ provider, symbol, name }) => {
+const SearchItemOffice = ({ provider, symbol, name, clickable }) => {
   return (
     <SearchItem
-      clickable={true}
+      clickable={clickable}
       provider={provider}
       uid={symbol}
       key={symbol}

@@ -1,5 +1,5 @@
 import { createSelector } from "redux-bundler";
-import createRestBundle from "./create-rest-bundle";
+import createRestBundle from "../../app-bundles/create-rest-bundle";
 
 const apiUrl = process.env.REACT_APP_CUMULUS_API_URL;
 

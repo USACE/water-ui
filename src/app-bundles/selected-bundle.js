@@ -5,7 +5,7 @@ const selectedBundle = {
 
   reducer: (
     state = {
-      _selectable: ["location", "office", "watershed"],
+      _selectable: ["project", "office", "watershed"],
     },
     { type, payload }
   ) => {

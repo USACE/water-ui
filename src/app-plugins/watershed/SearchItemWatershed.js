@@ -2,16 +2,16 @@ import React from "react";
 import { SearchItem } from "../../app-components/search";
 import WatershedIcon from "../../icons/WatershedIcon";
 
-const SearchItemWatershed = ({ uid, name }) => {
+const SearchItemWatershed = ({ provider, slug, name, clickable }) => {
   return (
     <SearchItem
-      clickable={true}
-      provider='watershed'
-      uid={uid}
-      key={uid}
+      clickable={clickable}
+      provider={provider}
+      uid={slug}
+      key={slug}
       name={name}
       icon={WatershedIcon}
-      providerName='Watershed'
+      providerName={provider}
       buttons={<></>}
     />
   );

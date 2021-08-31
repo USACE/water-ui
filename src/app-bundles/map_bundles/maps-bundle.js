@@ -5,53 +5,12 @@ import olMap from "ol/Map.js";
 import View from "ol/View";
 import ScaleBar from "ol/control/ScaleLine";
 import { transform } from "ol/proj";
-import { XYZ } from "ol/source";
-import { Tile } from "ol/layer";
 
 const actions = {
   MAPS_INITIALIZED: `MAPS_INITIALIZED`,
   MAPS_SHUTDOWN: `MAPS_SHUTDOWN`,
   MAPS_UPDATED: `MAPS_UPDATED`,
 };
-
-// Default Background Map
-const tileLayers = {
-  CartoDBPositron: {
-    id: "CartoDBPositron",
-    name: "CartoDB Positron",
-    url: "https://cartodb-basemaps-{a-c}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
-    attributions:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributionss">CartoDB</a>',
-    maxZoom: 19,
-  },
-  CartoDBDarkMatter: {
-    id: "CartoDBDarkMatter",
-    name: "CartoDB Dark Matter",
-    url: "https://cartodb-basemaps-{a-c}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
-    attributions:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributionss">CartoDB</a>',
-    maxZoom: 19,
-  },
-  OpenStreetMap: {
-    id: "OpenStreetMap",
-    name: "OpenStreetMap",
-    url: "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    maxZoom: 19,
-    attributions:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  },
-};
-
-const tileLayerInfo = tileLayers.CartoDBDarkMatter;
-
-const tileLayer = new Tile({
-  source: new XYZ({
-    url: tileLayerInfo.url,
-    crossOrigin: true,
-    attributions: tileLayerInfo.attributions,
-    maxZoom: tileLayerInfo.maxZoom,
-  }),
-});
 
 // Events
 const onMoveEnd = (selectQueryObject, doUpdateQuery) => (evt) => {
@@ -105,7 +64,7 @@ const mapsBundle = {
             store.selectMapsUrlCenter() || [-11000000, 4600000],
           zoom: (options && options.zoom) || store.selectMapsUrlZoom() || 4,
         }),
-        layers: [tileLayer, ...layers],
+        layers: [...layers],
         ...options,
       });
 

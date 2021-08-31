@@ -1,6 +1,6 @@
 import { createSelector } from "redux-bundler";
 
-import LocationDetail from "../app-plugins/location/LocationDetail";
+import ProjectDetail from "../app-plugins/project/Detail";
 import OfficeDetail from "../app-plugins/office/OfficeDetail";
 import WatershedDetail from "../app-plugins/watershed/WatershedDetail";
 
@@ -24,19 +24,22 @@ const detailPanel = {
   },
   doDetailPanelUpdateHeight:
     (height) =>
-    ({ dispatch }) => {
-      dispatch({
-        type: "DETAIL_PANEL_UPDATE_HEIGHT",
-        payload: {
-          height: height,
-        },
-      });
+    ({ dispatch, store }) => {
+      const currentHeight = store.selectDetailPanelHeight();
+      if (height !== currentHeight) {
+        dispatch({
+          type: "DETAIL_PANEL_UPDATE_HEIGHT",
+          payload: {
+            height: height,
+          },
+        });
+      }
     },
   selectDetailPanelRaw: (state) => state.detailPanel,
   selectDetailPanelHeight: (state) => state.detailPanel.height,
   // @todo: Should make this configurable via a plugin
   selectDetailPanelProviderComponentMap: (state) => ({
-    location: LocationDetail,
+    project: ProjectDetail,
     watershed: WatershedDetail,
     office: OfficeDetail,
   }),

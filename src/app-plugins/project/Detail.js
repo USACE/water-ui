@@ -1,16 +1,16 @@
 import React from "react";
 import { connect } from "redux-bundler-react";
-import SearchItemProject from "./SearchItemProject";
+import SearchItemProject from "./SearchItem";
 
-import { Wrapper } from "../../app-components/detail-panel";
+import Wrapper from "../../app-components/detail-panel/Wrapper";
 
-const LocationDetail = connect(
-  "selectLocationDetailSelected",
-  ({ locationDetailSelected: detail }) => {
+const ProjectDetail = connect(
+  "selectProjectDetailSelected",
+  ({ projectDetailSelected: detail }) => {
     return !detail ? null : (
       <Wrapper>
         <Wrapper.Title>
-          <SearchItemProject uid={detail.slug} name={detail.public_name} />
+          <SearchItemProject {...detail} clickable={false} />
         </Wrapper.Title>
         <Wrapper.Image
           src={detail.image || `${process.env.PUBLIC_URL}/dam.jpg`}
@@ -21,4 +21,4 @@ const LocationDetail = connect(
   }
 );
 
-export default LocationDetail;
+export default ProjectDetail;

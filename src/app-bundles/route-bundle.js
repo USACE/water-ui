@@ -11,16 +11,6 @@ import Map from "../app-pages/map";
 
 export default createRouteBundle({
   "/": Map,
-  // "/happening": Home,
-  // "/discovery": Home,
-  // "/signin": SignIn,
-  // "/signup": SignUp,
-  // "/reset-password": ResetPassword,
-  // "/offices/:officeSymbol": OfficeDetail,
-  // "/states/:stateSymbol": StateDetail,
-  // "/watersheds/:watershedSlug": WatershedDetail,
   "*": () => <div>Not Found; 404</div>,
-  // '/locations/:slug': LocationSummary,
-  // '/offices/:officeSymbol/locations/:slug': LocationSummary,
   // '/admin': AdminDashboard,
 });

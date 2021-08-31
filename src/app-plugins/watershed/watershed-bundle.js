@@ -1,15 +1,15 @@
-import createRestBundle from './create-rest-bundle';
-import { createSelector } from 'redux-bundler';
+import createRestBundle from "../../app-bundles/create-rest-bundle";
+import { createSelector } from "redux-bundler";
 
 const apiUrl = process.env.REACT_APP_CUMULUS_API_URL;
 
 export default createRestBundle({
-  name: 'watershed',
-  uid: 'slug',
+  name: "watershed",
+  uid: "slug",
   prefetch: true,
   staleAfter: 30000, //5min
   persist: false,
-  routeParam: 'watershedSlug',
+  routeParam: "watershedSlug",
   getTemplate: `${apiUrl}/watersheds`,
   putTemplate: `${apiUrl}/watersheds/:item.id`,
   postTemplate: `${apiUrl}/watersheds`,
@@ -17,12 +17,12 @@ export default createRestBundle({
   fetchActions: [],
   urlParamSelectors: [],
   forceFetchActions: [],
-  sortBy: 'name',
+  sortBy: "name",
   sortAsc: true,
   addons: {
     // @TODO: this should use office_id, but requires API work on the Cumulus API
     selectWatershedByOfficeSymbol: createSelector(
-      'selectWatershedItems',
+      "selectWatershedItems",
       (watersheds) => {
         const obj = {};
         watersheds.forEach((w) => {
@@ -37,10 +37,10 @@ export default createRestBundle({
     ),
     // @TODO: this should use office_id, but requires API work on the Cumulus API
     selectWatershedItemsActive: createSelector(
-      'selectOfficeByRoute',
-      'selectWatershedByOfficeSymbol',
-      'selectWatershedItemsObject',
-      'selectQueryObject',
+      "selectOfficeByRoute",
+      "selectWatershedByOfficeSymbol",
+      "selectWatershedItemsObject",
+      "selectQueryObject",
       (office, watershedByOffice, watershedObj, queryObject) => {
         if (
           !watershedByOffice ||
@@ -51,7 +51,7 @@ export default createRestBundle({
           return [];
         }
         //If query param has 'watershed', return watershed for given slug
-        if (queryObject.hasOwnProperty('watershed')) {
+        if (queryObject.hasOwnProperty("watershed")) {
           return [watershedObj[queryObject.watershed]];
         }
 

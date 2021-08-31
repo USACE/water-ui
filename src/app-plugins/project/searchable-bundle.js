@@ -1,16 +1,16 @@
 import createSearchableBundle from "../../app-bundles/create-searchable-bundle";
 
 export default createSearchableBundle({
-  searchEntity: "location",
+  searchEntity: "project",
   doSearch:
     () =>
     ({ dispatch, store, apiGet }) => {
-      dispatch({ type: "LOCATION_SEARCH_START" });
+      dispatch({ type: "PROJECT_SEARCH_START" });
       // Do not fire request if fewer than 2 characters in search
       const q = store.selectSearchQuery();
       // Do not fire request if fewer than 2 characters in search
       if (q.length < 2) {
-        dispatch({ type: "LOCATION_SEARCH_FINISH", payload: [] });
+        dispatch({ type: "PROJECT_SEARCH_FINISH", payload: [] });
         return;
       }
       apiGet(
@@ -22,12 +22,12 @@ export default createSearchableBundle({
         (err, json) => {
           if (err) {
             dispatch({
-              type: "LOCATION_SEARCH_ERROR",
+              type: "PROJECT_SEARCH_ERROR",
               payload: err,
             });
           } else {
             dispatch({
-              type: "LOCATION_SEARCH_FINISH",
+              type: "PROJECT_SEARCH_FINISH",
               payload: json,
             });
           }
