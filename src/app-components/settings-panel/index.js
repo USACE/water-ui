@@ -31,7 +31,7 @@ const SettingsPanelButton = connect(
             doSettingsPanelToggleOpen();
           }}
         >
-          <CogIcon className='text-purple-800' />
+          <CogIcon className='w-12 h-12 text-purple-800' />
         </button>
       </Transition>
     );
