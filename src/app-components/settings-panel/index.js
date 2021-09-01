@@ -23,7 +23,7 @@ const SettingsPanelButton = connect(
         leaveTo='transform opacity-0 scale-95'
       >
         <button
-          tabindex={0}
+          tabIndex={0}
           className={`focus:ring-2 focus:ring-purple-600 focus:border-transparent border-2 border-purple-700 flex justify-center items-center bg-white hover:bg-purple-300 p-2 cursor-pointer w-11 h-11 rounded-xl ${
             isOpen && "hidden"
           }`}
@@ -68,18 +68,17 @@ const SettingsPanelContent = connect(
           {/* Settings Title */}
           <div className='flex h-12 justify-between w-full px-4 py-2 font-light text-left text-purple-900 border-b-2 border-purple-800 mb-4'>
             <div className='font-mono'>Settings</div>
-            <div className='flex flex-col justify-center'>
-              <XIcon
-                onClick={(e) => {
-                  doSettingsPanelClose();
-                }}
-                className='cursor-pointer -mr-2 h-7 w-7'
-                aria-hidden='true'
-              />
-            </div>
+            <button
+              onClick={(e) => {
+                doSettingsPanelClose();
+              }}
+              className='flex flex-col justify-center cursor-pointer'
+            >
+              <XIcon className='-mr-2 h-7 w-7' aria-hidden='true' />
+            </button>
           </div>
           {/* Basemap Section */}
-          <SectionBasemap tabindex={1} />
+          <SectionBasemap />
         </div>
       </Transition>
     );

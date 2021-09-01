@@ -33,7 +33,7 @@ const SectionBasemap = connect(
           <>
             <Menu.Button as='div'>
               <div
-                tabindex={0}
+                tabIndex={0}
                 onClick={() => {
                   doBasemapSettingsToggleCollapse();
                 }}

@@ -1,5 +1,4 @@
 import React from "react";
-
 import ClearSelectedButton from "./ClearSelectedButton";
 
 const Wrapper = ({ children }) => (
