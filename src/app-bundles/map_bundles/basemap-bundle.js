@@ -36,6 +36,8 @@ const basemapBundle = {
           return { ...state, ...payload };
         case "MAPS_INITIALIZED":
           return { ...state, shouldInitialize: true };
+        case "MAPS_SHUTDOWN":
+          return { ...state, active: null };
         default:
           return state;
       }

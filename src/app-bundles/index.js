@@ -15,6 +15,8 @@ import cache from "../cache";
 import detailPanelBundle from "./detail-panel-bundle";
 import modalBundle from "./modal-bundle";
 import modalMapBundle from "./modal-map-bundle";
+import screensizeBundle from "./screensize-bundle";
+import panelgroupBundle from "./panelgroup-bundle";
 
 import profileBundle from "./profile-bundle";
 import selectedBundle from "./selected-bundle";
@@ -72,8 +74,10 @@ export default composeBundles(
   modalBundle,
   modalMapBundle,
   profileBundle,
+  panelgroupBundle,
   routeBundle,
   selectedBundle,
+  screensizeBundle,
   settingsBundle,
   createAuthBundle(),
   createJwtApiBundle({

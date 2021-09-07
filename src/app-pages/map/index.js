@@ -1,19 +1,50 @@
 import React from "react";
+import { connect } from "redux-bundler-react";
+import debounce from "lodash/debounce";
 
-// import Header from "../../app-components/Header";
+import PanelGroup from "react-panelgroup";
 import Map from "../../app-components/Map";
 import { DetailPanel } from "../../app-components/detail-panel";
-// import BasemapSwitcher from "../../app-components/basemap-switcher";
 import { SettingsPanel } from "../../app-components/settings-panel";
 
-const M = () => {
-  return (
-    <div>
-      <Map mapKey='main' />
-      <DetailPanel />
-      <SettingsPanel />
-    </div>
-  );
-};
+const Mobile = connect(
+  "selectPanelgroupWidths",
+  "doPanelgroupUpdateWidths",
+  ({ panelgroupWidths: panelWidths, doPanelgroupUpdateWidths }) => {
+    const debouncedUpdate = debounce((widths) => {
+      doPanelgroupUpdateWidths(widths);
+    }, 300);
+
+    return (
+      <>
+        {/* Map, Detail Split Panel; HIDDEN FOR SCREEN SIZES ABOVE MD*/}
+        <div className='h-screen'>
+          <PanelGroup
+            direction='column'
+            panelWidths={panelWidths}
+            onUpdate={debouncedUpdate}
+          >
+            {/* Panel 1; Map Contains Div Wrapper */}
+            <Map mapKey='main' />
+            {/* Panel 2; DetailPanel Contains Div Wrapper */}
+            <DetailPanel />
+          </PanelGroup>
+        </div>
+        <SettingsPanel />
+      </>
+    );
+  }
+);
+
+const Desktop = () => (
+  <div>
+    <Map mapKey='main' />
+    <DetailPanel />
+  </div>
+);
+
+const M = connect("selectScreensizePx", ({ screensizePx: px }) =>
+  !px ? <></> : px >= 768 ? <Desktop /> : <Mobile />
+);
 
 export default M;

@@ -10,6 +10,7 @@ const actions = {
   MAPS_INITIALIZED: `MAPS_INITIALIZED`,
   MAPS_SHUTDOWN: `MAPS_SHUTDOWN`,
   MAPS_UPDATED: `MAPS_UPDATED`,
+  MAPS_UPDATE_SIZE: `MAPS_UPDATE_SIZE`,
 };
 
 // Events
@@ -30,6 +31,7 @@ const mapsBundle = {
 
   getReducer: () => {
     const initialData = {
+      _shouldUpdateSize: false,
       _shouldUpdateLayers: false,
       _layersUpdating: false,
     };
@@ -38,11 +40,14 @@ const mapsBundle = {
       switch (type) {
         case "LAYER_UPDATED":
           return { ...state, _shouldUpdateLayers: true };
+        case "PANELGROUP_UPDATE_WIDTHS":
+          return { ...state, _shouldUpdateSize: true };
         case actions.MAPS_UPDATED:
         case actions.MAPS_INITIALIZED:
         case actions.MAPS_SHUTDOWN:
         case "MAPS_UPDATE_LAYERS_START":
         case "MAPS_UPDATE_LAYERS_FINISH":
+        case "MAPS_UPDATE_SIZE":
           return { ...state, ...payload };
         default:
           return state;
@@ -138,6 +143,19 @@ const mapsBundle = {
         payload: { _layersUpdating: false },
       });
     },
+  doMapsUpdateSize:
+    () =>
+    ({ dispatch, store }) => {
+      dispatch({
+        type: "MAPS_UPDATE_SIZE",
+        payload: { _shouldUpdateSize: false },
+      });
+      // Select Active Maps
+      const activeMaps = store.selectMapsActive();
+      Object.values(activeMaps).forEach((m) => {
+        m.updateSize();
+      });
+    },
   selectMapsState: (state) => {
     return state.maps;
   },
@@ -193,6 +211,8 @@ const mapsBundle = {
       }
     }
   ),
+  reactMapsShouldUpdateSize: (store) =>
+    store.maps._shouldUpdateSize ? { actionCreator: "doMapsUpdateSize" } : null,
 };
 
 export default mapsBundle;
