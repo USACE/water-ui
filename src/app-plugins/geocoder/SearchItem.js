@@ -5,6 +5,7 @@ import { SearchItem } from "../../app-components/search";
 const SearchItemGeocoder = ({ provider, display_name }) => {
   return (
     <SearchItem
+      key={`${provider}-${display_name}`}
       clickable={false}
       name={display_name}
       icon={GeocoderIcon}
