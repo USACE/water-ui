@@ -30,21 +30,24 @@ const selectedBundle = {
       dispatch({ type: "SELECTED_ITEM_CLEAR", payload: keys });
     },
   doSelectedSelect:
-    ({ provider, uid }) =>
+    ({ provider, uid, goTo }) =>
     ({ dispatch, store }) => {
-      const q = store.selectQueryObject();
+      const { x, y, zoom } = store.selectQueryObject();
       store.doUpdateQuery(
         {
-          x: q.x,
-          y: q.y,
-          zoom: q.zoom,
+          x: goTo ? goTo.center[0] : x,
+          y: goTo ? goTo.center[1] : y,
+          zoom: goTo ? goTo.zoom : zoom,
           [provider]: uid,
         },
         true
       );
+      if (goTo) {
+        store.doMapsGoTo("main", goTo.center, goTo.zoom);
+      }
       dispatch({
         type: "SELECTED_ITEM",
-        payload: { provider: provider, uid: uid },
+        payload: { provider: provider, uid: uid, goTo: goTo },
       });
     },
   selectSelectedRaw: (state) => state.selected,

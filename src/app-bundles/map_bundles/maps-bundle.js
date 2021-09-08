@@ -1,7 +1,6 @@
 /* eslint-disable no-mixed-operators */
 import { createSelector } from "redux-bundler";
 
-import { fromLonLat } from "ol/proj";
 import olMap from "ol/Map.js";
 import View from "ol/View";
 import ScaleBar from "ol/control/ScaleLine";
@@ -174,16 +173,43 @@ const mapsBundle = {
         m.updateSize();
       });
     },
-  doMapsZoomTo:
+  doMapsGoTo:
     (mapKey, lonLat, zoom) =>
     ({ store }) => {
       const map = store.selectMapsObject()[mapKey];
-      if (!!map) {
+      if (map) {
         const view = map.getView();
-        view.animate({
-          zoom: zoom || 10,
-          center: fromLonLat(lonLat),
-        });
+        const currentCenter = view.getCenter();
+        const currentZoom = view.getZoom();
+
+        // Set Min Zoom to 6
+        let _zoomOutMax = currentZoom - 3;
+        // If zoomOut from current map zoom is less than
+        // zoom of new target, set zoomOut to same as zoomTarget
+        if (zoom < _zoomOutMax) {
+          _zoomOutMax = zoom;
+        }
+
+        view.animate(
+          // Zoom Out at Current Center
+          {
+            zoom: _zoomOutMax,
+            center: currentCenter,
+            duration: 1200,
+          },
+          // Pan to New Location at Current Zoom Level
+          {
+            zoom: _zoomOutMax,
+            center: lonLat,
+            duration: 2400,
+          },
+          // Zoom to New Location
+          {
+            zoom: zoom,
+            center: lonLat,
+            duration: 1200,
+          }
+        );
       }
     },
   selectMapsState: (state) => {

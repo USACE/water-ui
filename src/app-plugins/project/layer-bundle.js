@@ -45,14 +45,14 @@ const projectLayerBundle = {
       // Get Setting; Location Name Preference
       const nameKey = store.selectSettingsLocationName();
 
+      const _g = store.selectProjectItemsGeoJSON();
       const vectorSource = new VectorSource({
-        features: new GeoJSON().readFeatures(
-          store.selectProjectItemsGeoJSON(),
-          {
-            dataProjection: store.selectProjectionGeo(),
-            featureProjection: store.selectProjectionMap(),
-          }
-        ),
+        features: _g
+          ? new GeoJSON().readFeatures(_g, {
+              dataProjection: store.selectProjectionGeo(),
+              featureProjection: store.selectProjectionMap(),
+            })
+          : null,
       });
 
       const layerId = "projects";

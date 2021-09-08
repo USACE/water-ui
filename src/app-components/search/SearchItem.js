@@ -16,13 +16,18 @@ const SearchItem = connect(
     provider,
     uid,
     clickable = false,
+    goTo,
   }) => (
     <div
       onClick={
         !clickable
           ? null
           : () => {
-              doSelectedSelect({ provider: provider, uid: uid });
+              doSelectedSelect({
+                provider: provider,
+                uid: uid,
+                goTo: goTo,
+              });
               doSearchClose();
               doSearchClear();
             }

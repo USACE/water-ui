@@ -40,6 +40,7 @@ const Desktop = () => (
   <div>
     <Map mapKey='main' />
     <DetailPanel />
+    <SettingsPanel />
   </div>
 );
 

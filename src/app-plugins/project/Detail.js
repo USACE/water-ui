@@ -13,7 +13,7 @@ const ProjectDetail = connect(
           <SearchItemProject {...detail} clickable={false} />
         </Wrapper.Title>
         <Wrapper.Image
-          src={detail.image || `${process.env.PUBLIC_URL}/dam.jpg`}
+          src={`${process.env.PUBLIC_URL}/dam.jpg`}
           alt='Selected Location'
         />
       </Wrapper>
