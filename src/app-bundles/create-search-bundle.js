@@ -58,7 +58,6 @@ const createSearchBundle = (opts) => {
           case "SEARCH_FOCUS":
           case "SEARCH_INITIALIZE_START":
           case "SEARCH_INITIALIZE_FINISH":
-          case "SEARCH_ITEM_SELECTED":
           case "SEARCH_OPEN":
           case "SEARCH_CLOSE":
           case "SEARCH_QUERY_UPDATE":

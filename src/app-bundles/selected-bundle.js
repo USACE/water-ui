@@ -35,14 +35,17 @@ const selectedBundle = {
       const q = store.selectQueryObject();
       store.doUpdateQuery(
         {
-          x: q["x"],
-          y: q["y"],
-          zoom: q["zoom"],
+          x: q.x,
+          y: q.y,
+          zoom: q.zoom,
           [provider]: uid,
         },
         true
       );
-      dispatch({ type: "SELECTED_ITEM" });
+      dispatch({
+        type: "SELECTED_ITEM",
+        payload: { provider: provider, uid: uid },
+      });
     },
   selectSelectedRaw: (state) => state.selected,
   selectSelectedSelectables: (state) => state.selected._selectable,

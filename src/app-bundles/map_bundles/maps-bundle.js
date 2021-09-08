@@ -1,6 +1,7 @@
 /* eslint-disable no-mixed-operators */
 import { createSelector } from "redux-bundler";
 
+import { fromLonLat } from "ol/proj";
 import olMap from "ol/Map.js";
 import View from "ol/View";
 import ScaleBar from "ol/control/ScaleLine";
@@ -18,12 +19,29 @@ const onMoveEnd = (selectQueryObject, doUpdateQuery) => (evt) => {
   const map = evt.map;
   const view = map.getView();
   const [x, y] = view.getCenter();
-  doUpdateQuery({
-    ...selectQueryObject(),
-    x: Math.round(x * 100) / 100,
-    y: Math.round(y * 100) / 100,
-    zoom: Math.round(view.getZoom() * 100) / 100,
-  });
+  const zoom = view.getZoom();
+
+  // Rounded values from current map state
+  const xRound = Math.round(x * 100) / 100;
+  const yRound = Math.round(y * 100) / 100;
+  const zoomRound = Math.round(zoom * 100) / 100;
+
+  // x,y,zoom values from Current URL;
+  // If map state values are different than current URL settings, call doUpdateQuery
+  // Otherwise, we want to avoid the dispatch to the store and any potential dependent actions
+  const { x: _x, y: _y, zoom: _zoom } = selectQueryObject();
+  if (
+    xRound !== parseFloat(_x) ||
+    yRound !== parseFloat(_y) ||
+    zoomRound !== parseFloat(_zoom)
+  ) {
+    doUpdateQuery({
+      ...selectQueryObject(),
+      x: xRound,
+      y: yRound,
+      zoom: zoomRound,
+    });
+  }
 };
 
 const mapsBundle = {
@@ -155,6 +173,18 @@ const mapsBundle = {
       Object.values(activeMaps).forEach((m) => {
         m.updateSize();
       });
+    },
+  doMapsZoomTo:
+    (mapKey, lonLat, zoom) =>
+    ({ store }) => {
+      const map = store.selectMapsObject()[mapKey];
+      if (!!map) {
+        const view = map.getView();
+        view.animate({
+          zoom: zoom || 10,
+          center: fromLonLat(lonLat),
+        });
+      }
     },
   selectMapsState: (state) => {
     return state.maps;

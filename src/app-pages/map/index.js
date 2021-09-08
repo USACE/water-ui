@@ -13,7 +13,7 @@ const Mobile = connect(
   ({ panelgroupWidths: panelWidths, doPanelgroupUpdateWidths }) => {
     const debouncedUpdate = debounce((widths) => {
       doPanelgroupUpdateWidths(widths);
-    }, 300);
+    }, 80);
 
     return (
       <>

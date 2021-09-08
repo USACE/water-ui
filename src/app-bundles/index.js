@@ -14,7 +14,6 @@ import cache from "../cache";
 // App Bundles
 import detailPanelBundle from "./detail-panel-bundle";
 import modalBundle from "./modal-bundle";
-import modalMapBundle from "./modal-map-bundle";
 import screensizeBundle from "./screensize-bundle";
 import panelgroupBundle from "./panelgroup-bundle";
 
@@ -72,7 +71,6 @@ export default composeBundles(
   // Application Bundles
   detailPanelBundle,
   modalBundle,
-  modalMapBundle,
   profileBundle,
   panelgroupBundle,
   routeBundle,
