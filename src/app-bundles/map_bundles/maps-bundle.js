@@ -179,22 +179,22 @@ const mapsBundle = {
       const map = store.selectMapsObject()[mapKey];
       if (map) {
         const view = map.getView();
-        const currentCenter = view.getCenter();
-        const currentZoom = view.getZoom();
+        const _center = view.getCenter();
+        const _zoom = view.getZoom();
 
         // Set Min Zoom to 6
-        let _zoomOutMax = currentZoom - 3;
+        let _zoomOutMax = _zoom - 3;
         // If zoomOut from current map zoom is less than
         // zoom of new target, set zoomOut to same as zoomTarget
-        if (zoom < _zoomOutMax) {
-          _zoomOutMax = zoom;
+        if (_zoomOutMax < 4) {
+          _zoomOutMax = 4;
         }
 
         view.animate(
           // Zoom Out at Current Center
           {
             zoom: _zoomOutMax,
-            center: currentCenter,
+            center: _center,
             duration: 1200,
           },
           // Pan to New Location at Current Zoom Level
