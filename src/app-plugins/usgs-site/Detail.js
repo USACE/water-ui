@@ -9,16 +9,12 @@ const UsgsSiteDetail = connect(
     return !detail ? null : (
       <Wrapper>
         <Wrapper.Title>
-          <SearchItemUsgsSite
-            uid={detail.site_number}
-            name={detail.name}
-            clickable={false}
-          />
+          <SearchItemUsgsSite {...detail} clickable={false} />
         </Wrapper.Title>
         <Wrapper.Image
           // Default Image Attribution (USGS Public Domain)
           // https://www.usgs.gov/media/images/pack-creek-pack-creek-road-bridge-river-gage
-          src={detail.image || `${process.env.PUBLIC_URL}/usgssite.jpg`}
+          src={detail.image || `${process.env.PUBLIC_URL}/usgssite.jpeg`}
           alt='US Geological Survey Gage Location'
         />
       </Wrapper>
