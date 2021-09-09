@@ -7,6 +7,7 @@ import Map from "../../app-components/Map";
 import { DetailPanel } from "../../app-components/detail-panel";
 import { SettingsPanel } from "../../app-components/settings-panel";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/outline";
+import Navbar from "../../app-components/Navbar";
 
 const Mobile = connect(
   "selectPanelgroupWidths",
@@ -29,6 +30,7 @@ const Mobile = connect(
           >
             {/* Panel 1; Map Contains Div Wrapper */}
             <div>
+              <Navbar />
               <Map mapKey='main' />
               <div className='absolute bottom-0 -mb-1 w-5 text-purple-700 animate-pulse'>
                 <ChevronUpIcon />
@@ -52,6 +54,7 @@ const Mobile = connect(
 
 const Desktop = () => (
   <div>
+    <Navbar />
     <Map mapKey='main' />
     <DetailPanel />
     <SettingsPanel />

@@ -77,6 +77,14 @@ const mapsBundle = {
     ({ dispatch, store }) => {
       const projection = store.selectProjectionMap();
       const layers = store.selectLayersItems();
+
+      // Get Map Padding Here
+      // @todo - revisit; would like to refactor so this logic is not present here
+      // Putting the logic here feels like too tight of coupling between UI layout
+      // and bundle logic.  Passing padding as an option to the map component (first alternative tried)
+      // resulted in too many map renders, as map initialized/shutdown every time window resized (debounced)
+      const padding = store.selectDetailPanelMapPadding();
+
       const map = new olMap({
         controls: [new ScaleBar({ units: "us" })],
         target: el,
@@ -85,6 +93,7 @@ const mapsBundle = {
           center: (options && options.center) ||
             store.selectMapsUrlCenter() || [-11000000, 4600000],
           zoom: (options && options.zoom) || store.selectMapsUrlZoom() || 4,
+          padding: (options && options.padding) || padding,
         }),
         layers: [...layers],
         ...options,

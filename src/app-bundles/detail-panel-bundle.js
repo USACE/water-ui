@@ -33,6 +33,38 @@ const detailPanel = {
     "selectDetailPanelProviderComponentMap",
     (selected, componentMap) => componentMap[selected] || null
   ),
+  selectDetailPanelLayout: createSelector("selectScreensizePx", (px) => {
+    if (!px) {
+      return null;
+    }
+    return px >= 768 ? "desktop" : "mobile";
+  }),
+  selectDetailPanelWidth: createSelector("selectScreensizePx", (px) => {
+    if (!px) {
+      return null;
+    }
+    // Full Screen Width on Mobile; md:w-1/3; lg:w-1/4 on mobile
+    if (px < 768) {
+      return px;
+    } else if (px < 1024) {
+      return Math.round(px / 3);
+    } else {
+      return Math.round(px / 4);
+    }
+  }),
+  selectDetailPanelMapPadding: createSelector(
+    "selectDetailPanelLayout",
+    "selectDetailPanelWidth",
+    (layout, panelWidth) => {
+      if (!layout || !panelWidth) {
+        return null;
+      }
+      if (layout === "desktop") {
+        return [0, 0, 0, panelWidth];
+      }
+      return [0, 0, 0, 0];
+    }
+  ),
 };
 
 export default detailPanel;
