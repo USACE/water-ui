@@ -38,7 +38,7 @@ const SearchItem = connect(
         <Icon />
         {/* Text */}
         <div className='flex flex-col'>
-          <div className='font-normal text-medium'>{name}</div>
+          <div className='font-normal text-medium capitalize'>{name}</div>
           <div className='uppercase font-thin opacity-50 text-xs'>
             {providerName}
           </div>

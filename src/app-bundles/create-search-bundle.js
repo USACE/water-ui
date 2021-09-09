@@ -5,6 +5,7 @@ import SearchItemGeocoder from "../app-plugins/geocoder/SearchItem";
 import SearchItemProject from "../app-plugins/project/SearchItem";
 import SearchItemOffice from "../app-plugins/office/SearchItemOffice";
 import SearchItemWatershed from "../app-plugins/watershed/SearchItemWatershed";
+import SearchItemUsgsSite from "../app-plugins/usgs-site/SearchItem";
 
 // Helper Function; Uppercase first letter of camel case
 const camelHelper = (name) => `${name[0].toUpperCase().concat(name.slice(1))}`;
@@ -155,11 +156,13 @@ const createSearchBundle = (opts) => {
         .flat();
       return items;
     },
+    // @todo; need to avoid changing this bundle when new entities are added
     selectSearchItemComponentMap: (state) => ({
       project: SearchItemProject,
       office: SearchItemOffice,
       watershed: SearchItemWatershed,
       geocoder: SearchItemGeocoder,
+      usgsSite: SearchItemUsgsSite,
     }),
     reactSearchInitialize: createSelector(
       "selectSearchInitialized",

@@ -3,6 +3,7 @@ import { createSelector } from "redux-bundler";
 const createSearchableBundle = (opts) => {
   const defaults = {
     searchEntity: "entity",
+    actionPrefix: "ENTITY",
     searchAction: "SEARCH_FIRE",
     doSearch: () => () => {
       console.error("doSearch action not provided for this bundle");
@@ -12,12 +13,11 @@ const createSearchableBundle = (opts) => {
   const config = { ...defaults, ...opts };
 
   // actions
-  const baseType = config.searchEntity.toUpperCase();
   const actions = {
     SEARCH_CLEAR: "SEARCH_CLEAR",
-    SEARCH_START: `${baseType}_SEARCH_START`,
-    SEARCH_ERROR: `${baseType}_SEARCH_ERROR`,
-    SEARCH_FINISH: `${baseType}_SEARCH_FINISH`,
+    SEARCH_START: `${config.actionPrefix}_SEARCH_START`,
+    SEARCH_ERROR: `${config.actionPrefix}_SEARCH_ERROR`,
+    SEARCH_FINISH: `${config.actionPrefix}_SEARCH_FINISH`,
   };
 
   // Bundle Name is combination of searchEntity + "Search"

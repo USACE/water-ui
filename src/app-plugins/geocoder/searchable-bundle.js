@@ -14,6 +14,7 @@ const zoomScales = {
 
 export default createSearchableBundle({
   searchEntity: "geocoder",
+  actionPrefix: "GEOCODER",
   doSearch:
     () =>
     ({ dispatch, store, apiGet }) => {
