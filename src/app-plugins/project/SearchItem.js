@@ -22,7 +22,7 @@ const SearchItemProject = ({
       provider={provider}
       icon={ProjectIcon}
       name={public_name}
-      providerName={provider}
+      providerName='project'
       buttons={<></>}
       goTo={{ center: fromLonLat(center), zoom: 13 }}
     />

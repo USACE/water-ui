@@ -40,7 +40,7 @@ const SearchItem = connect(
         <div className='flex flex-col'>
           <div className='font-normal text-medium capitalize'>{name}</div>
           <div className='uppercase font-thin opacity-50 text-xs'>
-            {providerName}
+            {providerName || "CHEESE"}
           </div>
         </div>
       </div>
