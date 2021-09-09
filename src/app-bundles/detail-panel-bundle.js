@@ -3,6 +3,7 @@ import { createSelector } from "redux-bundler";
 import ProjectDetail from "../app-plugins/project/Detail";
 import OfficeDetail from "../app-plugins/office/OfficeDetail";
 import WatershedDetail from "../app-plugins/watershed/WatershedDetail";
+import UsgsSiteDetail from "../app-plugins/usgs-site/Detail";
 
 const detailPanel = {
   name: "detailPanel",
@@ -25,6 +26,7 @@ const detailPanel = {
     project: ProjectDetail,
     watershed: WatershedDetail,
     office: OfficeDetail,
+    usgsSite: UsgsSiteDetail,
   }),
   selectDetailPanelSelectedComponent: createSelector(
     "selectSelectedProvider",

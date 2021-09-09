@@ -60,6 +60,10 @@ import watershedSearchBundle from "../app-plugins/watershed/searchable-bundle";
 import watershedBundle from "../app-plugins/watershed/watershed-bundle";
 import watershedDetail from "../app-plugins/watershed/watershed-detail";
 
+// USGS Sites
+import usgsSiteSearchBundle from "../app-plugins/usgs-site/searchable-bundle";
+import usgsSiteDetailBundle from "../app-plugins/usgs-site/detail-bundle";
+
 // Include Token With GET Request on These Routes
 const includeTokenRoutes = {
   "/downloads": true,
@@ -114,6 +118,7 @@ export default composeBundles(
     searchableBundles: [
       officeSearchBundle, // from plugin offices
       projectSearchBundle, // from plugin projects
+      usgsSiteSearchBundle, // from plugin usgs-site
       watershedSearchBundle, // from plugin watershed
       geocoderSearchBundle, // from plugin geocoder
     ],
@@ -129,6 +134,8 @@ export default composeBundles(
   officeBundle,
   officeDetailBundle,
   officeStatsBundle,
+  // USGS Sites
+  usgsSiteDetailBundle,
   // Watersheds
   watershedBundle,
   watershedDetail,

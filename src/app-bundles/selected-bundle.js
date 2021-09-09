@@ -5,7 +5,9 @@ const selectedBundle = {
 
   reducer: (
     state = {
-      _selectable: ["project", "office", "watershed"],
+      // @todo; accept selectable entities as a config parameter to avoid
+      // having to make changes to this bundle directly
+      _selectable: ["project", "office", "watershed", "usgsSite"],
     },
     { type, payload }
   ) => {

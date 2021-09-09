@@ -2,6 +2,7 @@ import createSearchableBundle from "../../app-bundles/create-searchable-bundle";
 
 export default createSearchableBundle({
   searchEntity: "watershed",
+  actionPrefix: "WATERSHED",
   doSearch:
     () =>
     ({ dispatch, store }) => {
