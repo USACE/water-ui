@@ -62,7 +62,9 @@ import watershedDetail from "../app-plugins/watershed/watershed-detail";
 
 // USGS Sites
 import usgsSiteSearchBundle from "../app-plugins/usgs-site/searchable-bundle";
+import usgsSiteItemsBundle from "../app-plugins/usgs-site/items-bundle";
 import usgsSiteDetailBundle from "../app-plugins/usgs-site/detail-bundle";
+import usgsSiteLayerBundle from "../app-plugins/usgs-site/layer-bundle";
 
 // Include Token With GET Request on These Routes
 const includeTokenRoutes = {
@@ -135,7 +137,9 @@ export default composeBundles(
   officeDetailBundle,
   officeStatsBundle,
   // USGS Sites
+  usgsSiteItemsBundle,
   usgsSiteDetailBundle,
+  usgsSiteLayerBundle,
   // Watersheds
   watershedBundle,
   watershedDetail,

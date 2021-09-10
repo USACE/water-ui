@@ -1,8 +1,9 @@
 import React from "react";
+import { connect } from "redux-bundler-react";
 
 import UsaceLogo from "../images/USACE_logo.png";
 
-const Navbar = () => {
+const Navbar = connect("selectBasemapIsDark", ({ basemapIsDark }) => {
   return (
     <button
       onClick={() => {
@@ -16,13 +17,23 @@ const Navbar = () => {
         alt='US Army Corps of Engineers Logo'
       />
       <div className='flex flex-col'>
-        <div className='text-xl leading-none'>Access to Water</div>
-        <div className='text-xs font-mono ml-2 text-gray-500'>
+        <div
+          className={`text-xl leading-none ${
+            basemapIsDark ? "text-gray-300" : "text-gray-800"
+          }`}
+        >
+          Access to Water
+        </div>
+        <div
+          className={`text-xs font-mono ml-2 ${
+            basemapIsDark ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
           v2.0.0 pre-alpha
         </div>
       </div>
     </button>
   );
-};
+});
 
 export default Navbar;

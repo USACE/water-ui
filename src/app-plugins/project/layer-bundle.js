@@ -6,6 +6,33 @@ import { Vector as VectorSource } from "ol/source";
 import { Vector as VectorLayer } from "ol/layer";
 import { Circle as CircleStyle, Style, Text, Fill } from "ol/style";
 
+const config = {
+  id: "projects",
+  zIndex: 6,
+};
+
+const getStyleFn =
+  (nameKey, darkMode = false) =>
+  (feature, resolution) =>
+    new Style({
+      image: new CircleStyle({
+        radius: resolution < 300 ? 6 : 5.5,
+        fill: new Fill({
+          color: "#7C3AED",
+        }),
+        stroke: null,
+      }),
+      text: new Text({
+        text: resolution < 800 ? feature.get(nameKey) : "",
+        textAlign: "start",
+        offsetX: 6,
+        offsetY: -6,
+        // Tailwind CSS Colors; Cool Gray Family
+        // https://tailwindcss.com/docs/customizing-colors
+        fill: new Fill({ color: darkMode ? "#F9FAFB" : "#1F2937" }),
+      }),
+    });
+
 const projectLayerBundle = {
   name: "projectLayer",
   reducer: (
@@ -17,6 +44,8 @@ const projectLayerBundle = {
     { type, payload }
   ) => {
     switch (type) {
+      // Change to dark basemap requires new layer style
+      case "BASEMAP_CHANGED":
       case "SETTINGS_PROJECT_NAME_CHANGE":
       case "PROJECT_FETCH_FINISHED":
         return {
@@ -55,34 +84,22 @@ const projectLayerBundle = {
           : null,
       });
 
-      const layerId = "projects";
+      // Style
+      const basemapIsDark = store.selectBasemapIsDark();
 
       const vectorLayer = new VectorLayer({
-        id: layerId,
+        id: config.id,
         source: vectorSource,
-        style: (feature, resolution) =>
-          new Style({
-            image: new CircleStyle({
-              radius: resolution < 300 ? 6 : 4,
-              fill: new Fill({
-                color: [20, 184, 166, 0.9],
-              }),
-              stroke: null,
-            }),
-            text: new Text({
-              text: resolution < 800 ? feature.get(nameKey) : "",
-              textAlign: "start",
-              offsetX: 3,
-              offsetY: -3,
-            }),
-          }),
+        style: getStyleFn(nameKey, basemapIsDark),
         declutter: false,
       });
+
+      vectorLayer.setZIndex(config.zIndex);
 
       // Dispatch for other bundles listening
       dispatch({
         type: "LAYER_UPDATED",
-        payload: { [layerId]: vectorLayer },
+        payload: { [config.id]: vectorLayer },
       });
 
       dispatch({

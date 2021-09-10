@@ -1,5 +1,6 @@
 import { XYZ } from "ol/source";
 import { Tile } from "ol/layer";
+import { createSelector } from "redux-bundler";
 
 const getXyzSource = ({ url, crossOrigin, attributions, maxZoom }) =>
   new XYZ({
@@ -83,6 +84,15 @@ const basemapBundle = {
   selectBasemapActiveIdx: (state) => {
     return state.basemap.idx;
   },
+  selectBasemapActiveId: createSelector(
+    "selectBasemapActiveIdx",
+    "selectBasemapList",
+    (idx, list) => idx && list[idx].id
+  ),
+  selectBasemapIsDark: createSelector(
+    "selectBasemapActiveId",
+    (id) => ["CartoDBDarkMatter", "MapBoxAerial"].indexOf(id) !== -1
+  ),
   selectBasemapList: (state) => [
     {
       id: "CartoDBPositron",
@@ -111,6 +121,34 @@ const basemapBundle = {
       maxZoom: 19,
       attributions:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    },
+    {
+      id: "MapBoxStreets",
+      name: "MapBox Streets",
+      // @todo; Create actual thumbnail of MapBoxStreets map for Basemap Selector
+      thumbnail: `${process.env.PUBLIC_URL}/basemap-thumbnails/OpenStreetMap.png`,
+      url: "https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidXNhY2UiLCJhIjoiY2o1MDZscms4MDI4MjMycG1wa3puc212MCJ9.CW7edZMtlx5vFLNF5P-zTA",
+      attributions:
+        'Imagery from <a href="https://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      visible: false,
+    },
+    {
+      id: "MapBoxAerial",
+      name: "MapBox Aerial",
+      // @todo; Create actual thumbnail of MapBoxAerial map for Basemap Selector
+      thumbnail: `${process.env.PUBLIC_URL}/basemap-thumbnails/OpenStreetMap.png`,
+      url: "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidXNhY2UiLCJhIjoiY2o1MDZscms4MDI4MjMycG1wa3puc212MCJ9.CW7edZMtlx5vFLNF5P-zTA",
+      attributions:
+        'Imagery from <a href="https://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    },
+    {
+      id: "MapBoxOutdoor",
+      name: "MapBox Outdoor",
+      // @todo; Create actual thumbnail of MapBoxOutdoor map for Basemap Selector
+      thumbnail: `${process.env.PUBLIC_URL}/basemap-thumbnails/OpenStreetMap.png`,
+      url: "https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidXNhY2UiLCJhIjoiY2o1MDZscms4MDI4MjMycG1wa3puc212MCJ9.CW7edZMtlx5vFLNF5P-zTA",
+      attributions:
+        'Imagery from <a href="https://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     },
   ],
   reactBasemapShouldInitialize: (state) => {
