@@ -30,6 +30,7 @@ import createSearchBundle from "./create-search-bundle";
 // Mapping Bundles
 import basemapBundle from "./map_bundles/basemap-bundle";
 import mapsBundle from "./map_bundles/maps-bundle";
+import mapsPositionBundle from "./map_bundles/maps-position-bundle";
 import layersBundle from "./map_bundles/layers-bundle";
 import createProjectionBundle from "./map_bundles/create-projection-bundle";
 
@@ -111,6 +112,7 @@ export default composeBundles(
   basemapBundle,
   layersBundle,
   mapsBundle,
+  mapsPositionBundle,
   createProjectionBundle(),
   // ###################
   // Application; Search

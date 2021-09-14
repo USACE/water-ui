@@ -1,19 +1,10 @@
-import { fromLonLat } from "ol/proj";
 import React from "react";
 
 import { SearchItem } from "../../app-components/search";
 
 import ProjectIcon from "../../icons/ProjectIcon";
 
-const SearchItemProject = ({
-  provider,
-  slug,
-  public_name,
-  clickable,
-  geometry,
-}) => {
-  const { coordinates: center } = geometry;
-
+const SearchItemProject = ({ provider, slug, public_name, clickable }) => {
   return (
     <SearchItem
       clickable={clickable}
@@ -24,7 +15,6 @@ const SearchItemProject = ({
       name={public_name}
       providerName='project'
       buttons={<></>}
-      goTo={{ center: fromLonLat(center), zoom: 13 }}
     />
   );
 };

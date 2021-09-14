@@ -1,6 +1,6 @@
 import { createSelector } from "redux-bundler";
 
-import ProjectDetail from "../app-plugins/project/Detail";
+import ProjectDetail from "../app-plugins/project/detail";
 import OfficeDetail from "../app-plugins/office/OfficeDetail";
 import WatershedDetail from "../app-plugins/watershed/WatershedDetail";
 import UsgsSiteDetail from "../app-plugins/usgs-site/Detail";

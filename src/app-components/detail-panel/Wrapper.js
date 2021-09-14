@@ -2,7 +2,7 @@ import React from "react";
 import ClearSelectedButton from "./ClearSelectedButton";
 
 const Wrapper = ({ children }) => (
-  <div className='text-gray-100'>{children}</div>
+  <div className='text-gray-100 flex flex-col max-h-full'>{children}</div>
 );
 
 const Title = ({ children }) => (
@@ -16,7 +16,12 @@ const Title = ({ children }) => (
 
 const Image = ({ src, alt }) => <img src={src} alt={alt} />;
 
+const ScrollableContent = ({ children }) => (
+  <div className='overflow-y-auto'>{children}</div>
+);
+
 Wrapper.Title = Title;
 Wrapper.Image = Image;
+Wrapper.ScrollableContent = ScrollableContent;
 
 export default Wrapper;

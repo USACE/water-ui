@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "redux-bundler-react";
-import SearchItemProject from "./SearchItem";
+import SearchItemProject from "../SearchItem";
+import KPIChart from "./kpi-chart";
 
-import Wrapper from "../../app-components/detail-panel/Wrapper";
+import Wrapper from "../../../app-components/detail-panel/Wrapper";
 
 const ProjectDetail = connect(
   "selectProjectDetailSelected",
@@ -12,10 +13,13 @@ const ProjectDetail = connect(
         <Wrapper.Title>
           <SearchItemProject {...detail} clickable={false} />
         </Wrapper.Title>
-        <Wrapper.Image
-          src={`${process.env.PUBLIC_URL}/dam.jpg`}
-          alt='Selected Location'
-        />
+        <Wrapper.ScrollableContent>
+          <Wrapper.Image
+            src={`${process.env.PUBLIC_URL}/dam.jpg`}
+            alt='Selected Location'
+          />
+          <KPIChart />
+        </Wrapper.ScrollableContent>
       </Wrapper>
     );
   }

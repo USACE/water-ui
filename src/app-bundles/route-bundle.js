@@ -11,6 +11,7 @@ import Map from "../app-pages/map";
 
 export default createRouteBundle({
   "/": Map,
+  "/:provider/:uid": Map,
   "*": () => <div>Not Found; 404</div>,
   // '/admin': AdminDashboard,
 });

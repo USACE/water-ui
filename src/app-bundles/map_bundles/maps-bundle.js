@@ -13,36 +13,6 @@ const actions = {
   MAPS_UPDATE_SIZE: `MAPS_UPDATE_SIZE`,
 };
 
-// Events
-const onMoveEnd = (selectQueryObject, doUpdateQuery) => (evt) => {
-  const map = evt.map;
-  const view = map.getView();
-  const [x, y] = view.getCenter();
-  const zoom = view.getZoom();
-
-  // Rounded values from current map state
-  const xRound = Math.round(x * 100) / 100;
-  const yRound = Math.round(y * 100) / 100;
-  const zoomRound = Math.round(zoom * 100) / 100;
-
-  // x,y,zoom values from Current URL;
-  // If map state values are different than current URL settings, call doUpdateQuery
-  // Otherwise, we want to avoid the dispatch to the store and any potential dependent actions
-  const { x: _x, y: _y, zoom: _zoom } = selectQueryObject();
-  if (
-    xRound !== parseFloat(_x) ||
-    yRound !== parseFloat(_y) ||
-    zoomRound !== parseFloat(_zoom)
-  ) {
-    doUpdateQuery({
-      ...selectQueryObject(),
-      x: xRound,
-      y: yRound,
-      zoom: zoomRound,
-    });
-  }
-};
-
 const mapsBundle = {
   name: "maps",
 
@@ -71,7 +41,30 @@ const mapsBundle = {
       }
     };
   },
+  doMapsOnMoveEnd:
+    (evt) =>
+    ({ dispatch, store }) => {
+      const map = evt.map;
+      const view = map.getView();
+      const [x, y] = view.getCenter();
+      const zoom = view.getZoom();
 
+      // Rounded values from current map state
+      const xRound = Math.round(x * 100) / 100;
+      const yRound = Math.round(y * 100) / 100;
+      const zoomRound = Math.round(zoom * 100) / 100;
+      const newQuery = { x: xRound, y: yRound, zoom: zoomRound };
+
+      // If there is no selected provider; Always sync x,y,zoom query parameters w/ map state
+      if (!store.selectRouteParams().provider) {
+        store.doUpdateQuery({
+          ...store.selectQueryObject(),
+          ...newQuery,
+        });
+        return;
+      } else {
+      }
+    },
   doMapsInitialize:
     (key, el, options) =>
     ({ dispatch, store }) => {
@@ -100,10 +93,7 @@ const mapsBundle = {
       });
 
       // Register Listeners
-      map.on(
-        "moveend",
-        onMoveEnd(store.selectQueryObject, store.doUpdateQuery)
-      );
+      map.on("moveend", store.doMapsOnMoveEnd);
 
       dispatch({
         type: actions.MAPS_INITIALIZED,
@@ -119,7 +109,7 @@ const mapsBundle = {
       const map = store.selectMapsObject()[key];
 
       // Unregister Listeners
-      map.un("moveend", onMoveEnd(store.doUpdateQuery));
+      map.un("moveend", store.doMapsOnMoveEnd);
 
       dispatch({
         type: actions.MAPS_SHUTDOWN,
@@ -182,45 +172,6 @@ const mapsBundle = {
         m.updateSize();
       });
     },
-  doMapsGoTo:
-    (mapKey, lonLat, zoom) =>
-    ({ store }) => {
-      const map = store.selectMapsObject()[mapKey];
-      if (map) {
-        const view = map.getView();
-        const _center = view.getCenter();
-        const _zoom = view.getZoom();
-
-        // Set Min Zoom to 6
-        let _zoomOutMax = _zoom - 3;
-        // If zoomOut from current map zoom is less than
-        // zoom of new target, set zoomOut to same as zoomTarget
-        if (_zoomOutMax < 4) {
-          _zoomOutMax = 4;
-        }
-
-        view.animate(
-          // Zoom Out at Current Center
-          {
-            zoom: _zoomOutMax,
-            center: _center,
-            duration: 1200,
-          },
-          // Pan to New Location at Current Zoom Level
-          {
-            zoom: _zoomOutMax,
-            center: lonLat,
-            duration: 2400,
-          },
-          // Zoom to New Location
-          {
-            zoom: zoom,
-            center: lonLat,
-            duration: 1200,
-          }
-        );
-      }
-    },
   selectMapsState: (state) => {
     return state.maps;
   },
@@ -267,6 +218,23 @@ const mapsBundle = {
     }
     return parseFloat(zoom);
   }),
+  selectMapsXYZoom: (state) => {
+    const map = state.maps["main"];
+    if (!map) {
+      return null;
+    }
+    const view = map.getView();
+    const [x, y] = view.getCenter();
+    const zoom = view.getZoom();
+    const xRound = Math.round(x * 100) / 100;
+    const yRound = Math.round(y * 100) / 100;
+    const zoomRound = Math.round(zoom * 100) / 100;
+    return {
+      x: xRound,
+      y: yRound,
+      zoom: zoomRound,
+    };
+  },
   reactMapsShouldUpdateLayers: createSelector(
     "selectMapsShouldUpdateLayers",
     "selectMapsLayersUpdating",

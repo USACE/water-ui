@@ -1,4 +1,5 @@
 import { createSelector } from "redux-bundler";
+import { fromLonLat } from "ol/proj";
 
 const selectedBundle = {
   name: "selected",
@@ -8,44 +9,57 @@ const selectedBundle = {
       // @todo; accept selectable entities as a config parameter to avoid
       // having to make changes to this bundle directly
       _selectable: ["project", "office", "watershed", "usgsSite"],
+      _shouldInitialize: true,
+      provider: null,
+      uid: null,
+      goTo: null,
     },
     { type, payload }
   ) => {
     switch (type) {
-      case "SELECTED_ITEM":
       case "SELECTED_ITEM_CLEAR":
+        return { ...state, provider: null, uid: null, goTo: null };
+      case "SELECTED_INITIALIZE_START":
+      case "SELECTED_INITIALIZE_FINISH":
+      case "SELECTED_ITEM":
         return { ...state, ...payload };
       default:
         return state;
     }
   },
+  doSelectedInitialize:
+    () =>
+    ({ dispatch, store }) => {
+      dispatch({
+        type: "SELECTED_INITIALIZE_START",
+        payload: { _shouldInitialize: false },
+      });
+      // Get selected info from URL route params and set in state
+      const { provider = null, uid = null } = store.selectRouteParams();
+      dispatch({
+        type: "SELECTED_INITIALIZE_FINISH",
+        payload: { provider: provider, uid: uid },
+      });
+    },
   doSelectedClear:
     () =>
     ({ dispatch, store }) => {
-      const queryObj = store.selectQueryObject();
-      const keys = store.selectSelectedKeys();
+      store.doUpdateUrl({
+        ...store.selectUrlObject(),
+        pathname: "/",
+      });
 
-      // Remove
-      delete queryObj[keys.provider];
-      store.doUpdateQuery(queryObj, true);
       // Notify
-      dispatch({ type: "SELECTED_ITEM_CLEAR", payload: keys });
+      dispatch({ type: "SELECTED_ITEM_CLEAR" });
     },
   doSelectedSelect:
     ({ provider, uid, goTo }) =>
     ({ dispatch, store }) => {
-      const { x, y, zoom } = store.selectQueryObject();
-      store.doUpdateQuery(
-        {
-          x: goTo ? goTo.center[0] : x,
-          y: goTo ? goTo.center[1] : y,
-          zoom: goTo ? goTo.zoom : zoom,
-          [provider]: uid,
-        },
-        true
-      );
+      if (provider && uid) {
+        store.doUpdateUrl(`/${provider}/${uid}`, true);
+      }
       if (goTo) {
-        store.doMapsGoTo("main", goTo.center, goTo.zoom);
+        store.doMapsPositionGoTo("main", goTo.center, goTo.zoom);
       }
       dispatch({
         type: "SELECTED_ITEM",
@@ -53,24 +67,43 @@ const selectedBundle = {
       });
     },
   selectSelectedRaw: (state) => state.selected,
-  selectSelectedSelectables: (state) => state.selected._selectable,
-  selectSelectedKeys: createSelector(
-    "selectQueryObject",
-    "selectSelectedSelectables",
-    (queryObj, valid) => {
-      // Return first found valid selectable
-      const provider = valid.find((v) => queryObj[v]);
-      return !provider ? {} : { provider: provider, uid: queryObj[provider] };
+  selectSelectedKeys: createSelector("selectRouteParams", (routeParams) => {
+    const provider = routeParams.provider;
+    const uid = routeParams.uid;
+    if (!provider || !uid) {
+      return {};
     }
+    return { provider: provider, uid: uid };
+  }),
+  selectSelectedProvider: (state) => state.selected.provider,
+  selectSelectedUid: (state) => state.selected.uid,
+  selectSelectedDetail: (state) =>
+    !state.selected.provider || !state.selected.uid
+      ? null
+      : state[`${state.selected.provider}Detail`],
+  selectSelectedDetailItem: createSelector(
+    "selectSelectedDetail",
+    "selectSelectedUid",
+    (detail, uid) => (!detail || !uid || !detail[uid] ? null : detail[uid])
   ),
-  selectSelectedProvider: createSelector(
-    "selectSelectedKeys",
-    (keys) => keys.provider || null
-  ),
-  selectSelectedUid: createSelector(
-    "selectSelectedKeys",
-    (keys) => keys.uid || null
-  ),
+  selectSelectedXYZoom: createSelector("selectSelectedDetailItem", (item) => {
+    if (!item || !item.geometry) {
+      return null;
+    }
+    // GeoJSON POINT
+    const [x, y] = fromLonLat(item.geometry.coordinates).map(
+      (val) => Math.round(val * 100) / 100
+    );
+    return {
+      x: x,
+      y: y,
+      zoom: 13,
+    };
+  }),
+  reactSelectedInitialize: (state) =>
+    !state.selected._shouldInitialize
+      ? null
+      : { actionCreator: "doSelectedInitialize" },
 };
 
 export default selectedBundle;
