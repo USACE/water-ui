@@ -1,4 +1,4 @@
-import { createRouteBundle } from "redux-bundler";
+import { createRouteBundle } from 'redux-bundler';
 
 // import Home from "../app-pages/home";
 // import SignIn from "../app-pages/SignIn";
@@ -7,11 +7,13 @@ import { createRouteBundle } from "redux-bundler";
 // import OfficeDetail from "../app-pages/OfficeDetail";
 // import StateDetail from "../app-pages/StateDetail";
 // import WatershedDetail from "../app-pages/WatershedDetail";
-import Map from "../app-pages/map";
+import Map from '../app-pages/map';
+import DocsApi from '../app-pages/docs/api';
 
 export default createRouteBundle({
-  "/": Map,
-  "/:provider/:uid": Map,
-  "*": () => <div>Not Found; 404</div>,
+  '/docs/api': DocsApi,
+  '/': Map,
+  '/:provider/:uid': Map,
+  '*': () => <div>Not Found; 404</div>,
   // '/admin': AdminDashboard,
 });
