@@ -13,6 +13,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "internal-nav-helper": "^3.1.0",
+    "mobx": "^6.3.3",
     "money-clip": "^3.0.5",
     "nivo": "^0.31.0",
     "ol": "^6.6.1",
