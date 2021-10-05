@@ -8,6 +8,7 @@ import { Circle as CircleStyle, Style, Text, Fill } from "ol/style";
 
 const config = {
   id: "projects",
+  name: "USACE Projects",
   zIndex: 6,
 };
 
@@ -99,7 +100,8 @@ const projectLayerBundle = {
       // Dispatch for other bundles listening
       dispatch({
         type: "LAYER_UPDATED",
-        payload: { [config.id]: vectorLayer },
+        payload: { id: config.id, name: config.name, layer: vectorLayer },
+        // payload: { [config.id]: vectorLayer },
       });
 
       dispatch({

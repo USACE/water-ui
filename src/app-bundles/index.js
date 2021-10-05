@@ -36,6 +36,7 @@ import createProjectionBundle from "./map_bundles/create-projection-bundle";
 
 // Settings Bundles
 import basemapSettingsBundle from "./basemap-settings-bundle";
+import layerSettingsBundle from "./layer-settings-bundle";
 
 /////////////////
 // Plugin Bundles
@@ -149,6 +150,7 @@ export default composeBundles(
   // Settings Bundles
   // ################
   basemapSettingsBundle,
+  layerSettingsBundle,
   stateBundle,
   stateStatsBundle
 );

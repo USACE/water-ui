@@ -9,6 +9,7 @@ import WebGLPointsLayer from "ol/layer/WebGLPoints";
 
 const config = {
   id: "usgsSites",
+  name: "USGS Sites",
   zIndex: 5,
 };
 
@@ -98,7 +99,7 @@ const usgsSiteLayerBundle = {
       // Dispatch for other bundles listening
       dispatch({
         type: "LAYER_UPDATED",
-        payload: { [config.id]: vectorLayer },
+        payload: { id: config.id, name: config.name, layer: vectorLayer },
       });
 
       dispatch({

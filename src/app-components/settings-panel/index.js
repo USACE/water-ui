@@ -7,6 +7,7 @@ import { connect } from "redux-bundler-react";
 import useClickOutside from "../../hooks/useClickOutside";
 
 import SectionBasemap from "./SectionBasemap";
+import SectionLayers from "./SectionLayers";
 
 const SettingsPanelButton = connect(
   "doSettingsPanelToggleOpen",
@@ -77,8 +78,12 @@ const SettingsPanelContent = connect(
               <XIcon className='-mr-2 h-7 w-7' aria-hidden='true' />
             </button>
           </div>
-          {/* Basemap Section */}
-          <SectionBasemap />
+          <div className='space-y-1'>
+            {/* Layers Section */}
+            <SectionLayers />
+            {/* Basemap Section */}
+            <SectionBasemap />
+          </div>
         </div>
       </Transition>
     );
