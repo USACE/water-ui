@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     env:
-      PUBLIC_URL: https://water.rsgis.dev
+      PUBLIC_URL: https://water.corps.cloud
       REACT_APP_SHOW_LOGIN: no
       REACT_APP_CUMULUS_API_URL: https://cumulus-api.rsgis.dev
       REACT_APP_SHARED_API_URL: https://shared-api.rsgis.dev
@@ -32,7 +32,7 @@ jobs:
 
       - name: Deploy to Stable
         env:
-          AWS_DEFAULT_REGION: ${{ secrets.CWBICI_DEVELOP_AWS_REGION }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.CWBICI_DEVELOP_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.CWBICI_DEVELOP_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.CASTLECI_AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.CASTLECI_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.CASTLECI_AWS_SECRET_ACCESS_KEY }}
         run: npm run deploy-stable

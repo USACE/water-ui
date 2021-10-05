@@ -34,8 +34,8 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "deploy-develop": "aws s3 rm s3://cwbi-apps-develop/water --recursive && aws s3 cp ./build/ s3://cwbi-apps-develop/water --recursive",
-    "deploy-stable": "aws s3 rm s3://cwbi-apps-stable/water --recursive && aws s3 cp ./build/ s3://cwbi-apps-stable/water --recursive"
+    "deploy-develop": "aws s3 rm s3://$CASTLECI_S3_BUCKET_APPS_DEVELOP/water --recursive && aws s3 cp ./build/ s3://$CASTLECI_S3_BUCKET_APPS_DEVELOP/water --recursive",
+    "deploy-stable": "aws s3 rm s3://$CASTLECI_S3_BUCKET_APPS_STABLE/water --recursive && aws s3 cp ./build/ s3://$CASTLECI_S3_BUCKET_APPS_STABLE/water --recursive"
   },
   "eslintConfig": {
     "extends": [
