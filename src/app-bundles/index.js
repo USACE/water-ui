@@ -17,7 +17,6 @@ import modalBundle from './modal-bundle';
 import screensizeBundle from './screensize-bundle';
 import panelgroupBundle from './panelgroup-bundle';
 
-import profileBundle from './profile-bundle';
 import selectedBundle from './selected-bundle';
 import settingsBundle from './settings-bundle';
 
@@ -74,7 +73,6 @@ export default composeBundles(
   // Application Bundles
   detailPanelBundle,
   modalBundle,
-  profileBundle,
   panelgroupBundle,
   routeBundle,
   selectedBundle,
@@ -86,7 +84,7 @@ export default composeBundles(
     realm: 'water',
     client: 'a2w',
     redirectUrl: process.env.REACT_APP_AUTH_REDIRECT_URL,
-    refreshInterval: 180,
+    refreshInterval: 120,
     sessionEndWarning: 600,
   }),
   createJwtApiBundle({

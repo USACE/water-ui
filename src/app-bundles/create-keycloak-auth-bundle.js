@@ -29,11 +29,12 @@ const authBundle = (options) => {
   const doLogout = `do${uCaseName}Logout`;
   const selectIsLoggedIn = `select${uCaseName}IsLoggedIn`;
   const selectToken = `select${uCaseName}Token`;
+  const selectTokenExp = `select${uCaseName}TokenExp`;
+  const selectTokenIsExpired = `select${uCaseName}TokenIsExpired`;
   const selectTokenHeader = `select${uCaseName}TokenHeader`;
   const selectTokenPayload = `select${uCaseName}TokenPayload`;
   const selectUsername = `select${uCaseName}Username`;
   const selectUserInitials = `select${uCaseName}UserInitials`;
-
   const selectRoles = `select${uCaseName}Roles`;
 
   // Actions
@@ -41,6 +42,7 @@ const authBundle = (options) => {
   const ACTIONS = {
     UPDATED: `${capsName}_UPDATED`,
     LOGGED_OUT: `${capsName}_LOGGED_OUT`,
+    VERIFY_TOKEN: `${capsName}_VERIFY_TOKEN`,
   };
 
   return {
@@ -54,10 +56,23 @@ const authBundle = (options) => {
           return state;
       }
     },
+    [doLogin]:
+      () =>
+      ({ dispatch, store }) => {
+        keycloak.directGrantX509Authenticate();
+      },
+    [doLogout]:
+      () =>
+      ({ dispatch, store }) => {
+        dispatch({ type: ACTIONS.LOGGED_OUT, payload: { token: null } });
+      },
     [doUpdate]:
       (token) =>
       ({ dispatch, store }) => {
-        dispatch({ type: ACTIONS.UPDATED, payload: { token: token } });
+        dispatch({
+          type: ACTIONS.UPDATED,
+          payload: { token: token },
+        });
       },
     [selectToken]: (state) => state[config.name].token,
 
@@ -70,7 +85,14 @@ const authBundle = (options) => {
       if (!token) return {};
       return JSON.parse(window.atob(getTokenPart(token, 1)));
     }),
-
+    [selectTokenExp]: createSelector(
+      selectTokenPayload,
+      (payload) => (payload && payload.exp) || null
+    ),
+    [selectTokenIsExpired]: createSelector(selectTokenExp, (exp) => {
+      if (!exp) return true;
+      return exp < Math.floor(Date.now() / 1000);
+    }),
     [selectRoles]: createSelector(selectTokenPayload, (payload) => {
       if (!Object.keys(payload).length || !config.client) {
         return [];
@@ -98,16 +120,6 @@ const authBundle = (options) => {
     [selectIsLoggedIn]: createSelector(selectToken, (token) => {
       return token ? true : false;
     }),
-    [doLogin]:
-      () =>
-      ({ dispatch, store }) => {
-        keycloak.directGrantX509Authenticate();
-      },
-    [doLogout]:
-      () =>
-      ({ dispatch, store }) => {
-        dispatch({ type: ACTIONS.LOGGED_OUT, payload: { token: null } });
-      },
     init: (store) => {
       keycloak = new Keycloak({
         keycloakUrl: config.host,
@@ -123,14 +135,32 @@ const authBundle = (options) => {
           console.error('#################################');
           console.error(err);
           console.error('#################################');
-          store[doUpdate](null);
+          store[doLogout]();
         },
         onSessionEnding: (remainingTime) => {
-          console.log(`Remaining Session Time: ${remainingTime}`);
+          console.log(
+            `Remaining Session Time: ${remainingTime}; Logging out in 10s`
+          );
+          window.setTimeout(store[doLogout], 10000);
         },
       });
-      keycloak.checkForSession();
+      // If User Logged-In With Cached Credentials
+      //   1. If token expired, logout immediately
+      //   2. Otherwise, logout 10 seconds before token expiration
+      if (store[selectIsLoggedIn]()) {
+        if (store[selectTokenIsExpired]()) {
+          // Logout Immediately
+          store[doLogout]();
+        } else {
+          // Logout 10 seconds before token expires
+          window.setTimeout(
+            store[doLogout],
+            store[selectTokenExp]() * 1000 - Date.now() - 10000
+          );
+        }
+      }
     },
+    persistActions: [ACTIONS.UPDATED, ACTIONS.LOGGED_OUT],
   };
 };
 
