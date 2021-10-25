@@ -1,28 +1,28 @@
-import xhr from 'xhr'
+import xhr from 'xhr';
 
 const arrayIze = (thing) => (!thing || Array.isArray(thing) ? thing : [thing]);
 
-const shouldSkipToken = (method, path, unless) => {
+const shouldSkipToken = (method, url, config) => {
   let skip = false;
   // check for method
-  if (unless && unless.method) {
-    const methods = arrayIze(unless.method);
+  if (config && config.method) {
+    const methods = arrayIze(config.method);
     if (methods.indexOf(method) !== -1) skip = true;
   }
 
-  // check for path
+  // check for url
   if (!skip) {
-    if (unless && unless.path) {
-      const paths = arrayIze(unless.path);
-      if (paths.indexOf(path) !== -1) skip = true;
+    if (config && config.url) {
+      const urls = arrayIze(config.url);
+      if (urls.indexOf(url) !== -1) skip = true;
     }
   }
 
   // check custom
   if (!skip) {
-    if (unless && unless.custom) {
-      if (typeof unless.custom === 'function') {
-        skip = unless.custom({ method: method, path: path });
+    if (config && config.custom) {
+      if (typeof config.custom === 'function') {
+        skip = config.custom({ method: method, url: url });
       }
     }
   }
@@ -96,7 +96,7 @@ const createJwtApiBundle = (opts) => {
   const defaults = {
     name: 'api',
     tokenSelector: 'selectAuthToken',
-    unless: null,
+    skipTokenConfig: null,
   };
 
   const config = Object.assign({}, defaults, opts);
@@ -104,7 +104,7 @@ const createJwtApiBundle = (opts) => {
   const uCaseName = config.name.charAt(0).toUpperCase() + config.name.slice(1);
 
   // selectors
-  const selectUnless = `select${uCaseName}Unless`;
+  const selectSkipTokenConfig = `select${uCaseName}SkipTokenConfig`;
   const selectTokenSelector = `select${uCaseName}TokenSelector`;
 
   return {
@@ -112,19 +112,19 @@ const createJwtApiBundle = (opts) => {
 
     getReducer: () => {
       const initialData = {
-        unless: config.unless,
+        skipTokenConfig: config.skipTokenConfig,
         tokenSelector: config.tokenSelector,
       };
 
       return (state = initialData) => state;
     },
 
-    [selectUnless]: (state) => state[config.name].unless,
+    [selectSkipTokenConfig]: (state) => state[config.name].skipTokenConfig,
     [selectTokenSelector]: (state) => state[config.name].tokenSelector,
 
     getExtraArgs: (store) => {
       const getCommonItems = () => ({
-        unless: store[selectUnless](),
+        skipTokenConfig: store[selectSkipTokenConfig](),
         tokenSelector: store[selectTokenSelector](),
       });
 
@@ -134,8 +134,8 @@ const createJwtApiBundle = (opts) => {
 
       return {
         apiFetch: (url, options = {}) => {
-          const { unless, tokenSelector } = getCommonItems();
-          if (!shouldSkipToken(options.method, url, unless)) {
+          const { skipTokenConfig, tokenSelector } = getCommonItems();
+          if (!shouldSkipToken(options.method, url, skipTokenConfig)) {
             const token = store[tokenSelector]();
             if (!token) return null;
             else {
@@ -160,14 +160,14 @@ const createJwtApiBundle = (opts) => {
         // },
         anonGet: (path, callback) => {
           const options = {
-            url: path
-          }
-          xhr.get(options, callback)
+            url: path,
+          };
+          xhr.get(options, callback);
         },
         apiGet: (url, callback) => {
-          const { unless, tokenSelector } = getCommonItems();
+          const { skipTokenConfig, tokenSelector } = getCommonItems();
           const options = { method: 'GET' };
-          if (!shouldSkipToken(options.method, url, unless)) {
+          if (!shouldSkipToken(options.method, url, skipTokenConfig)) {
             const token = store[tokenSelector]();
             if (!token) return null;
             else {
@@ -178,14 +178,14 @@ const createJwtApiBundle = (opts) => {
         },
 
         apiPut: (url, payload, callback) => {
-          const { unless, tokenSelector } = getCommonItems();
+          const { skipTokenConfig, tokenSelector } = getCommonItems();
           const options = {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
             },
           };
-          if (!shouldSkipToken(options.method, url, unless)) {
+          if (!shouldSkipToken(options.method, url, skipTokenConfig)) {
             const token = store[tokenSelector]();
             if (!token) return null;
             else {
@@ -202,14 +202,14 @@ const createJwtApiBundle = (opts) => {
         },
 
         apiPost: (url, payload, callback) => {
-          const { unless, tokenSelector } = getCommonItems();
+          const { skipTokenConfig, tokenSelector } = getCommonItems();
           const options = {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
           };
-          if (!shouldSkipToken(options.method, url, unless)) {
+          if (!shouldSkipToken(options.method, url, skipTokenConfig)) {
             const token = store[tokenSelector]();
             if (!token) return null;
             else {
@@ -227,11 +227,11 @@ const createJwtApiBundle = (opts) => {
         },
 
         apiDelete: (url, callback) => {
-          const { unless, tokenSelector } = getCommonItems();
+          const { skipTokenConfig, tokenSelector } = getCommonItems();
           const options = {
             method: 'DELETE',
           };
-          if (!shouldSkipToken(options.method, url, unless)) {
+          if (!shouldSkipToken(options.method, url, skipTokenConfig)) {
             const token = store[tokenSelector]();
             if (!token) return null;
             else {

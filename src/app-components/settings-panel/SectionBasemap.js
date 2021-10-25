@@ -63,10 +63,7 @@ const SectionBasemap = connect(
                 leaveFrom='transform scale-100 opacity-100'
                 leaveTo='transform scale-95 opacity-0 -translate-y-8'
               >
-                <Menu.Items
-                  className='origin-top-right focus:outline-none'
-                  static
-                >
+                <Menu.Items className='origin-top-right focus:outline-none'>
                   {basemapList.map((b, idx) => (
                     <Menu.Item
                       key={idx}
