@@ -1,105 +1,54 @@
-import React, { useRef } from "react";
+import React from 'react';
 
-import { Transition } from "@headlessui/react";
-import { CogIcon, XIcon } from "@heroicons/react/outline";
-import { connect } from "redux-bundler-react";
+import { Transition } from '@headlessui/react';
+import { CogIcon } from '@heroicons/react/outline';
+import { Fragment } from 'react';
+import { Menu } from '@headlessui/react';
 
-import useClickOutside from "../../hooks/useClickOutside";
-
-import SectionBasemap from "./SectionBasemap";
-import SectionLayers from "./SectionLayers";
-
-const SettingsPanelButton = connect(
-  "doSettingsPanelToggleOpen",
-  "selectSettingsPanelIsOpen",
-  ({ doSettingsPanelToggleOpen, settingsPanelIsOpen: isOpen }) => {
-    return (
-      <Transition
-        show={!isOpen}
-        enter='transition ease-out duration-75'
-        enterFrom='transform opacity-0 scale-95'
-        enterTo='transform opacity-100 scale-100'
-        leave='transition ease-in duration-100'
-        leaveFrom='transform opacity-100 scale-100'
-        leaveTo='transform opacity-0 scale-95'
-      >
-        <button
-          tabIndex={0}
-          className={`focus:ring-2 focus:ring-purple-600 focus:border-transparent border-2 border-purple-700 flex justify-center items-center bg-white hover:bg-purple-300 p-2 cursor-pointer w-11 h-11 rounded-xl ${
-            isOpen && "hidden"
-          }`}
-          onClick={(e) => {
-            doSettingsPanelToggleOpen();
-          }}
-        >
-          <CogIcon className='w-12 h-12 text-purple-800' />
-        </button>
-      </Transition>
-    );
-  }
-);
-
-// Started w/ copy from example code: https://headlessui.dev/react/disclosure
-const SettingsPanelContent = connect(
-  "selectSettingsPanelIsOpen",
-  "doSettingsPanelClose",
-  ({ settingsPanelIsOpen: isOpen, doSettingsPanelClose }) => {
-    const ref = useRef();
-
-    useClickOutside(ref, () => {
-      doSettingsPanelClose();
-    });
-
-    // @todo; Handle escape keydown event; call doSettingsPanelClose();
-
-    return (
-      <Transition
-        show={isOpen}
-        enter='transition ease-out duration-100'
-        enterFrom='transform opacity-0 scale-95'
-        enterTo='transform opacity-100 scale-100'
-        leave='transition ease-in duration-75'
-        leaveFrom='transform opacity-100 scale-100'
-        leaveTo='transform opacity-0 scale-95'
-      >
-        <div
-          ref={ref}
-          className='w-full max-w-md p-2 mx-auto bg-white rounded-xl border-2 border-purple-900'
-        >
-          {/* Settings Title */}
-          <div className='flex h-12 justify-between w-full px-4 py-2 font-light text-left text-purple-900 border-b-2 border-purple-800 mb-4'>
-            <div className='font-mono'>Settings</div>
-            <button
-              onClick={(e) => {
-                doSettingsPanelClose();
-              }}
-              className='flex flex-col justify-center cursor-pointer'
-            >
-              <XIcon className='-mr-2 h-7 w-7' aria-hidden='true' />
-            </button>
-          </div>
-          <div className='space-y-1'>
-            {/* Layers Section */}
-            <SectionLayers />
-            {/* Basemap Section */}
-            <SectionBasemap />
-          </div>
-        </div>
-      </Transition>
-    );
-  }
-);
+import SectionBasemap from './SectionBasemap';
+import SectionLayers from './SectionLayers';
 
 const SettingsPanel = () => {
+  /* This example requires Tailwind CSS v2.0+ */
+
   return (
-    <div className='items-end'>
-      <div className='absolute top-2 right-2'>
-        <SettingsPanelButton />
-      </div>
-      <div className='top-2 right-2 absolute w-72'>
-        <SettingsPanelContent />
-      </div>
-    </div>
+    <Menu as="div" className="relative inline-block text-left">
+      {({ open }) => (
+        <>
+          <div>
+            <Menu.Button className="inline-flex w-11 h-11 justify-center items-center rounded-2xl border border-purple-700 bg-purple-200 bg-opacity-30 text-sm font-medium text-gray-700 hover:bg-purple-400 hover:bg-opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-purple-600 focus:ring-indigo-500">
+              <CogIcon className="h-5 w-5 text-purple-600" aria-hidden="true" />
+            </Menu.Button>
+          </div>
+
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items
+              className="w-72 origin-top-right absolute right-0 mt-2 w-56 rounded-xl shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+              static
+            >
+              <div className="py-1">
+                <div className="w-full max-w-md p-2 mx-auto bg-white rounded-xl">
+                  <div className="space-y-1">
+                    {/* Layers Section */}
+                    <SectionLayers />
+                    {/* Basemap Section */}
+                    <SectionBasemap />
+                  </div>
+                </div>
+              </div>
+            </Menu.Items>
+          </Transition>
+        </>
+      )}
+    </Menu>
   );
 };
 
