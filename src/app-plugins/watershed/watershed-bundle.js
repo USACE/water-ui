@@ -1,7 +1,7 @@
 import createRestBundle from '../../app-bundles/create-rest-bundle';
 import { createSelector } from 'redux-bundler';
 
-const apiUrl = process.env.REACT_APP_CUMULUS_API_URL;
+const apiUrl = process.env.REACT_APP_WATER_API_URL;
 
 export default createRestBundle({
   name: 'watershed',
