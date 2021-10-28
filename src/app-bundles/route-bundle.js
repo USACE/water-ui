@@ -9,9 +9,14 @@ import { createRouteBundle } from 'redux-bundler';
 // import WatershedDetail from "../app-pages/WatershedDetail";
 import Map from '../app-pages/map';
 import DocsApi from '../app-pages/docs/api';
+import ConfigManager from '../app-pages/config-manager/index.js';
 
 export default createRouteBundle({
   '/docs/api': DocsApi,
+  '/manage': ConfigManager,
+  '/manage/profile': ConfigManager,
+  '/manage/watersheds': ConfigManager,
+  '/manage/data-acquisition': ConfigManager,
   '/': Map,
   '/:provider/:uid': Map,
   '*': () => <div>Not Found; 404</div>,
