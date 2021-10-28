@@ -1,30 +1,30 @@
-import { createSelector } from "redux-bundler";
-import createRestBundle from "../../app-bundles/create-rest-bundle";
+import { createSelector } from 'redux-bundler';
+import createRestBundle from '../../app-bundles/create-rest-bundle';
 
-const apiUrl = process.env.REACT_APP_CUMULUS_API_URL;
+const apiUrl = process.env.REACT_APP_WATER_API_URL;
 
 export default createRestBundle({
-  name: "watershedDetail",
-  uid: "slug",
+  name: 'watershedDetail',
+  uid: 'slug',
   prefetch: true,
   staleAfter: 0, //5min
   persist: false,
-  routeParam: "watershedSlug",
+  routeParam: 'watershedSlug',
   getTemplate: `${apiUrl}/watersheds`,
   putTemplate: `:/`,
   postTemplate: `:/`,
   deleteTemplate: `:/`,
-  fetchActions: [""],
+  fetchActions: [''],
   urlParamSelectors: [],
   forceFetchActions: [],
-  sortBy: "name",
+  sortBy: 'name',
   sortAsc: true,
   addons: {
     selectWatershedDetailSelected: createSelector(
-      "selectWatershedDetailItemsObject",
-      "selectSelectedKeys",
+      'selectWatershedDetailItemsObject',
+      'selectSelectedKeys',
       (obj, keys) => {
-        if (keys.provider !== "watershed" || !obj[keys.uid]) {
+        if (keys.provider !== 'watershed' || !obj[keys.uid]) {
           return null;
         }
         return obj[keys.uid];
