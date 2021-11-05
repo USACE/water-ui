@@ -15,8 +15,8 @@ jobs:
       REACT_APP_SHOW_LOGIN: yes
       REACT_APP_AUTH_HOST: https://develop-auth.corps.cloud/auth
       REACT_APP_AUTH_REDIRECT_URL: https://develop-water.corps.cloud
-      REACT_APP_CUMULUS_API_URL: https://develop-cumulus-api.rsgis.dev
-      REACT_APP_SHARED_API_URL: https://develop-shared-api.rsgis.dev
+      REACT_APP_CUMULUS_API_URL: https://develop-cumulus-api.corps.cloud
+      REACT_APP_SHARED_API_URL: https://develop-shared-api.corps.cloud
       REACT_APP_WATER_API_URL: https://develop-water-api.corps.cloud
     runs-on: ubuntu-latest
     strategy:
@@ -29,9 +29,9 @@ jobs:
         if: ${{ always() }}
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.CASTLECI_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.CASTLECI_AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.CASTLECI_AWS_REGION }}
+          aws-access-key-id: ${{ secrets.CASTLECI_DEVELOP_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.CASTLECI_DEVELOP_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.CASTLECI_DEVELOP_AWS_REGION }}
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
@@ -42,8 +42,8 @@ jobs:
 
       - name: Deploy to Dev
         env:
-          AWS_REGION: ${{ secrets.CASTLECI_AWS_REGION }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.CASTLECI_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.CASTLECI_AWS_SECRET_ACCESS_KEY }}
-          CASTLECI_S3_BUCKET_APPS_DEVELOP: ${{ secrets.CASTLECI_S3_BUCKET_APPS_DEVELOP }}
+          AWS_REGION: ${{ secrets.CASTLECI_DEVELOP_AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.CASTLECI_DEVELOP_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.CASTLECI_DEVELOP_AWS_SECRET_ACCESS_KEY }}
+          CASTLECI_DEVELOP_S3_BUCKET_APPS: ${{ secrets.CASTLECI_DEVELOP_S3_BUCKET_APPS }}
         run: npm run deploy-develop
