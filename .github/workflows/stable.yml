@@ -12,7 +12,7 @@ jobs:
   build:
     env:
       PUBLIC_URL: https://water.corps.cloud
-      REACT_APP_SHOW_LOGIN: no
+      REACT_APP_SHOW_LOGIN: yes
       REACT_APP_AUTH_HOST: https://auth.corps.cloud/auth
       REACT_APP_AUTH_REDIRECT_URL: https://water.corps.cloud
       REACT_APP_CUMULUS_API_URL: https://cumulus-api.corps.cloud
