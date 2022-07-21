@@ -9,8 +9,10 @@ import { createRouteBundle } from 'redux-bundler';
 // import WatershedDetail from "../app-pages/WatershedDetail";
 import Map from '../app-pages/map';
 import DocsApi from '../app-pages/docs/api';
+import GageStats from '../app-pages/gages';
 
 export default createRouteBundle({
+  '/gages/stats': GageStats,
   '/docs/api': DocsApi,
   '/': Map,
   '/:provider/:uid': Map,

@@ -66,6 +66,7 @@ import usgsSiteSearchBundle from '../app-plugins/usgs-site/searchable-bundle';
 import usgsSiteItemsBundle from '../app-plugins/usgs-site/items-bundle';
 import usgsSiteDetailBundle from '../app-plugins/usgs-site/detail-bundle';
 import usgsSiteLayerBundle from '../app-plugins/usgs-site/layer-bundle';
+import gagesBundle from '../app-plugins/gage/gages-bundle';
 
 export default composeBundles(
   createCacheBundle({ cacheFn: cache.set }),
@@ -78,6 +79,7 @@ export default composeBundles(
   selectedBundle,
   screensizeBundle,
   settingsBundle,
+  gagesBundle,
   createAuthBundle({
     name: 'auth',
     host: process.env.REACT_APP_AUTH_HOST,
