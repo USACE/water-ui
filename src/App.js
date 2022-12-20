@@ -1,14 +1,25 @@
-import React from 'react';
+import Layout from './app-components/layout.js';
+import { useConnect } from 'redux-bundler-hook';
 
-function App() {
+// import Login from './app-pages/login.js';
+
+// Primary .scss stylesheet for the application
+// import './scss/pico-bootstrap-grid.scss';
+
+export default function App() {
+  const {
+    route: Route,
+    pathname,
+    //authIsLoggedIn: isLoggedIn,
+  } = useConnect('selectRoute', 'selectPathname');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        <p>Initial React App</p>
-      </header>
-    </div>
+    <Layout>
+      <Layout.Header showBreadcrumb={pathname !== '/'}></Layout.Header>
+      <Layout.Main>
+        <Route />
+      </Layout.Main>
+      <Layout.Footer />
+    </Layout>
   );
 }
-
-export default App;
