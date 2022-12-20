@@ -1,0 +1,61 @@
+name: CI Build User Interface
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+jobs:
+  Develop:
+    if: github.ref_type == 'branch'
+    env:
+      REACT_APP_AUTH_HOST: https://develop-auth.corps.cloud/auth
+      REACT_APP_AUTH_REDIRECT_URL: https://develop-water.corps.cloud
+      REACT_APP_WATER_API_URL: https://develop-water-api.corps.cloud
+      REACT_APP_ISDEVELOPMENT: true
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [16]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npm run build
+      - name: Deploy to Dev
+        env:
+          AWS_REGION: ${{ secrets.CASTLECI_DEVELOP_AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.CASTLECI_DEVELOP_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.CASTLECI_DEVELOP_AWS_SECRET_ACCESS_KEY }}
+          CASTLECI_DEVELOP_S3_BUCKET_APPS: ${{ secrets.CASTLECI_DEVELOP_S3_BUCKET_APPS }}
+        run: npm run deploy-develop
+  Stable:
+    if: github.ref_type == 'tag'
+    env:
+      REACT_APP_AUTH_HOST: https://auth.corps.cloud/auth
+      REACT_APP_AUTH_REDIRECT_URL: https://water.corps.cloud
+      REACT_APP_WATER_API_URL: https://water-api.corps.cloud
+      REACT_APP_ISDEVELOPMENT: false
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [16]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npm run build
+      - name: Deploy to Stable
+        env:
+          AWS_REGION: ${{ secrets.CASTLECI_STABLE_AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.CASTLECI_STABLE_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.CASTLECI_STABLE_AWS_SECRET_ACCESS_KEY }}
+          CASTLECI_STABLE_S3_BUCKET_APPS: ${{ secrets.CASTLECI_STABLE_S3_BUCKET_APPS }}
+        run: npm run deploy-stable
