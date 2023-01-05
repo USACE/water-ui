@@ -1,6 +1,7 @@
-import ConditionalWrapper from '../utils/conditional-wrapper';
-import Breadcrumb from './breadcrumb';
+// import ConditionalWrapper from '../utils/conditional-wrapper';
+// import Breadcrumb from './breadcrumb';
 import Modal from './modal';
+import MyHeader from './header';
 
 function Layout({ children }) {
   return (
@@ -13,16 +14,18 @@ function Layout({ children }) {
 
 function Header({ showBreadcrumb = true, children }) {
   return (
-    <header style={{ marginTop: 32 }} className="container">
-      <ConditionalWrapper
-        condition={showBreadcrumb}
-        wrapper={(children) => <hgroup>{children}</hgroup>}
-      >
-        <h3 style={{ color: 'gray' }}>Access to Water Admin</h3>
-        {showBreadcrumb && <Breadcrumb />}
-      </ConditionalWrapper>
-      {children}
-    </header>
+    // <header style={{ marginTop: 32 }} className="container bg-slate-300">
+    //   <ConditionalWrapper
+    //     condition={showBreadcrumb}
+    //     wrapper={(children) => <hgroup>{children}</hgroup>}
+    //   >
+    //     <h3>Access to Water</h3>
+
+    //     {showBreadcrumb && <Breadcrumb />}
+    //   </ConditionalWrapper>
+    //   {children}
+    // </header>
+    <MyHeader />
   );
 }
 
@@ -38,7 +41,7 @@ function Footer({ children }) {
 }
 
 function Main({ children }) {
-  return <main className="container">{children}</main>;
+  return <main className="">{children}</main>;
 }
 
 Layout.Header = Header;

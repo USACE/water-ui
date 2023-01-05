@@ -4,10 +4,12 @@
   "private": true,
   "dependencies": {
     "@headlessui/react": "^1.7.7",
+    "@heroicons/react": "^2.0.13",
+    "@tailwindcss/forms": "^0.5.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "@usace/create-rest-bundle": "^0.2.1",
+    "@usace/create-rest-bundle": "^0.3.1-beta.0",
     "internal-nav-helper": "^3.1.0",
     "money-clip": "^3.0.5",
     "react": "^18.2.0",
@@ -21,6 +23,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "lint": "eslint .",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -50,6 +53,8 @@
     "autoprefixer": "^10.4.13",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "postcss": "^8.4.19",
+    "prettier": "^2.8.1",
+    "prettier-plugin-tailwindcss": "^0.2.1",
     "tailwindcss": "^3.2.4"
   }
 }
