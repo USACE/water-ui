@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import './index.css';
 
 import { getNavHelper } from 'internal-nav-helper';
 import getStore from './app-bundles';
@@ -17,7 +18,7 @@ cache.getAll().then((initialData) => {
 
   root.render(
     <ReduxBundlerProvider store={store}>
-      <div onClick={getNavHelper(store.doUpdateUrl)}>
+      <div role="presentation" onClick={getNavHelper(store.doUpdateUrl)}>
         <App />
       </div>
     </ReduxBundlerProvider>
