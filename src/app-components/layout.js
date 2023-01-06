@@ -2,6 +2,7 @@
 // import Breadcrumb from './breadcrumb';
 import Modal from './modal';
 import MyHeader from './header';
+import MyFooter from './footer/footer';
 
 function Layout({ children }) {
   return (
@@ -31,12 +32,12 @@ function Header({ showBreadcrumb = true, children }) {
 
 function Footer({ children }) {
   return (
-    <footer className="container">
-      <footer>
-        <cite> - footer</cite>
-      </footer>
-      {children}
-    </footer>
+    // <footer className="container">
+    //   <footer>
+    //     <cite> - footer</cite>
+    //   </footer>
+    //   {children}
+    <MyFooter />
   );
 }
 
