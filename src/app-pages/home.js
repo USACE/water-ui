@@ -1,7 +1,18 @@
 // import { InboxIcon } from '@heroicons/react/24/outline';
 // import { getByPlaceholderText } from '@testing-library/react';
 import Card from '../app-components/card';
-import HomeDam1 from '../images/sutton-dam-2.jpg';
+import HomeDam1 from '../images/home/lrh-sutton-dam.jpg';
+import HomeDam2 from '../images/home/nww-lucky-peak-dam.jpg';
+import HomeDam3 from '../images/home/nww-ice-harbor-lock-dam.jpg';
+
+const HomeBgImgArray = [
+  { src: HomeDam1 },
+  { src: HomeDam2 },
+  { src: HomeDam3 },
+];
+const HomeBgImg =
+  HomeBgImgArray[Math.floor(Math.random() * HomeBgImgArray.length)];
+
 // const features = [
 //   {
 //     name: 'Unlimited Inboxes',
@@ -45,8 +56,8 @@ export default function Home() {
         /> */}
 
         <div
-          className="h-72 max-h-full bg-gray-500 bg-cover bg-center px-4 py-16 sm:px-6 sm:pt-20 sm:pb-24 lg:h-128 lg:px-8 lg:pt-8"
-          style={{ backgroundImage: `url(${HomeDam1})` }}
+          className="h-72 max-h-full bg-gray-500 bg-cover bg-center bg-no-repeat px-4 py-16 sm:px-6 sm:pt-20 sm:pb-24 lg:h-128 lg:px-8 lg:pt-8"
+          style={{ backgroundImage: `url(${HomeBgImg.src})` }}
         >
           {/* <div className="mx-auto max-w-xl px-4 sm:px-6 lg:mx-0 lg:max-w-none lg:py-16 lg:px-0"></div> */}
           {/* <div className="container mx-auto max-w-7xl rounded-md border-4 border-slate-300 bg-white py-2 text-center text-4xl font-bold tracking-tight opacity-50">
