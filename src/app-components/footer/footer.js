@@ -1,4 +1,6 @@
 import FooterNavigation from './navigation';
+import UsaceLogo from '../../images/usace-logo-color.svg';
+import CwbiLogo from '../../images/cwbi-logo.png';
 
 export default function Footer() {
   const navigation = {
@@ -67,7 +69,7 @@ export default function Footer() {
           <div className="col-span-2 text-gray-400">
             <div className="mt-8">
               <h3 className="text-base font-bold text-gray-200">Our Mission</h3>
-              <p className=" mt-4 text-base">
+              <p className=" mt-4 text-sm">
                 Deliver vital engineering solutions, in collaboration with our
                 partners, to secure our Nation, energize our economy, and reduce
                 disaster risk.
@@ -91,11 +93,13 @@ export default function Footer() {
           <FooterNavigation />
         </div>
         <div className="mt-8 border-t border-gray-700 pt-8 md:flex md:items-center md:justify-between">
-          <div className="flex space-x-6 md:order-2">
+          <div className="flex justify-center space-x-6 md:order-2">
             {navigation.social.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
+                target="_blank"
+                rel="noreferrer"
                 className="text-gray-400 hover:text-gray-300"
               >
                 <span className="sr-only">{item.name}</span>
@@ -103,9 +107,25 @@ export default function Footer() {
               </a>
             ))}
           </div>
-          <p className="mt-8 text-base text-gray-400 md:order-1 md:mt-0">
-            &copy; {new Date().getFullYear()} U.S Army Corps of Engineers
-          </p>
+          <div className="mt-10 bg-gray-900 text-center">
+            <img
+              src={UsaceLogo}
+              width="50"
+              alt="USACE Castle Logo"
+              title="U.S. Army Corps of Engineers"
+              className="inline h-10 w-auto md:h-20"
+            />
+            <img
+              src={CwbiLogo}
+              alt="CWBI Logo"
+              title="Civi Works Business Intelligence"
+              width="50"
+              className="ml-5 inline h-10 w-auto md:h-20"
+            />
+            <p className="mt-4 text-base text-gray-400 md:order-1 md:ml-5 md:mt-0 md:inline">
+              &copy; {new Date().getFullYear()} U.S Army Corps of Engineers
+            </p>
+          </div>
         </div>
       </div>
     </footer>

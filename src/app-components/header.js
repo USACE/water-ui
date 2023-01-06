@@ -137,7 +137,7 @@ export default function Header() {
         )}
       </Disclosure>
       <div className="bg-gray-200">
-        <div className="text-md container mx-auto max-w-7xl lg:px-8">
+        <div className="md:text-md container mx-auto max-w-7xl py-1 text-center text-sm md:text-left lg:px-8">
           <span className="font-bold">U.S. Army Corps of Engineers</span> Water
           Management Data
         </div>
