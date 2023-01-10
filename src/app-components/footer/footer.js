@@ -62,7 +62,7 @@ export default function Footer() {
         Footer
       </h2>
       {/* Full width container */}
-      <div className="mx-auto max-w-7xl py-8 px-6 lg:px-4">
+      <div className="mx-auto py-8 px-6 lg:max-w-screen-2xl lg:px-4">
         {/* Footer grid container */}
         <div className="grid-cols-4 xl:grid xl:gap-8">
           {/* Left Text container */}

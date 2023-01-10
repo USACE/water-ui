@@ -31,52 +31,19 @@ export default function Home() {
     'https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTh8fGRhdGF8ZW58MHx8MHx8&auto=format&fit=crop&w=900&q=60';
   return (
     <>
-      {/* Hero section */}
-      {/* <div className="relative mt-5">
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100" />
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
-            <div className="absolute inset-0">
-              <img
-                className="h-full w-full object-cover"
-                src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2830&q=80&sat=-100"
-                alt="People working on laptops"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-800 to-indigo-700 mix-blend-multiply" />
-            </div>
-          </div>
-        </div>
-      </div> */}
-
       {/* Alternating Feature Sections */}
       <div className="pt-0">
-        {/* <div
-          aria-hidden="true"
-          className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-gray-100"
-        /> */}
-
         <div
           className="h-72 max-h-full bg-gray-500 bg-cover bg-center bg-no-repeat px-4 py-16 sm:px-6 sm:pt-20 sm:pb-24 lg:h-128 lg:px-8 lg:pt-8"
           style={{ backgroundImage: `url(${HomeBgImg.src})` }}
-        >
-          {/* <div className="mx-auto max-w-xl px-4 sm:px-6 lg:mx-0 lg:max-w-none lg:py-16 lg:px-0"></div> */}
-          {/* <div className="container mx-auto max-w-7xl rounded-md border-4 border-slate-300 bg-white py-2 text-center text-4xl font-bold tracking-tight opacity-50">
-            U.S. Army Corps of Engineers - Water Resources Data
-          </div> */}
-        </div>
+        ></div>
       </div>
-
-      {/* <div className="bg-gradient-to-r from-purple-800 to-indigo-700">
-        <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:pt-20 sm:pb-24 lg:max-w-7xl lg:px-8 lg:pt-24">
-          cards
-        </div>
-      </div> */}
 
       <div className="-mt-10 bg-blue-900 py-0 text-center text-gray-300 opacity-90">
         {/* <span className="text-gray-500">
           U.S. Army Corps of Engineers - Water Resources Data
         </span> */}
-        <div className="mx-auto max-w-2xl px-4 py-16 pb-16 sm:px-6 sm:pt-20 sm:text-center lg:max-w-7xl lg:px-8">
+        <div className="mx-auto max-w-2xl px-4 py-16 pb-16 sm:px-6 sm:pt-20 sm:text-center lg:max-w-screen-2xl lg:px-8">
           <h2 className="text-xl font-medium tracking-tight text-white md:text-3xl">
             U.S. Army Corps of Engineers - Water Management
           </h2>
@@ -343,64 +310,6 @@ export default function Home() {
           </li>
         </ul>
       </div>
-      {/* Gradient Feature Section */}
-      {/* <div className="bg-gradient-to-r from-purple-800 to-indigo-700">
-        <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:pt-20 sm:pb-24 lg:max-w-7xl lg:px-8 lg:pt-24">
-          <h2 className="text-3xl font-bold tracking-tight text-white">
-            Water Resources Data across the U.S.
-          </h2>
-          <p className="mt-4 max-w-3xl text-lg text-purple-200">
-            Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus. Et
-            magna sit morbi lobortis. Blandit aliquam sit nisl euismod mattis
-            in.
-          </p>
-          <div className="mt-12 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-16">
-            test
-          </div>
-        </div>
-      </div> */}
-
-      {/* Stats section */}
-      {/* <div className="relative bg-gray-900">
-        <div className="absolute inset-x-0 bottom-0 h-80 xl:top-0 xl:h-full">
-          <div className="h-full w-full xl:grid xl:grid-cols-2">
-            <div className="h-full xl:relative xl:col-start-2">
-              <img
-                className="h-full w-full object-cover opacity-25 xl:absolute xl:inset-0"
-                src="https://water-api.corps.cloud/charts/bluestone-dam?format=svg"
-                alt="People working on laptops"
-              />
-
-              <div
-                aria-hidden="true"
-                className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-gray-900 xl:inset-y-0 xl:left-0 xl:h-full xl:w-32 xl:bg-gradient-to-r"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 xl:grid xl:grid-flow-col-dense xl:grid-cols-2 xl:gap-x-8">
-          <div className="relative pt-12 pb-64 sm:pt-24 sm:pb-64 xl:col-start-1 xl:pb-24">
-            <h2 className="text-base font-semibold">
-              <span className="bg-gradient-to-r from-purple-300 to-indigo-300 bg-clip-text text-transparent">
-                Valuable Metrics
-              </span>
-            </h2>
-            <p className="mt-3 text-3xl font-bold tracking-tight text-white">
-              Get actionable data that will help grow your business
-            </p>
-            <p className="mt-5 text-lg text-gray-300">
-              Rhoncus sagittis risus arcu erat lectus bibendum. Ut in adipiscing
-              quis in viverra tristique sem. Ornare feugiat viverra eleifend
-              fusce orci in quis amet. Sit in et vitae tortor, massa. Dapibus
-              laoreet amet lacus nibh integer quis. Eu vulputate diam sit tellus
-              quis at.
-            </p>
-            <div className="mt-12 grid grid-cols-1 gap-y-12 gap-x-6 sm:grid-cols-2">
-              test metrics
-            </div>
-          </div>
-        </div>
-      </div> */}
     </>
   );
 }

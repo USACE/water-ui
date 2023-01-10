@@ -12,7 +12,7 @@ export default function Header() {
   const nav_links = [
     { name: 'Home', path: '/' },
     { name: 'Map', path: '/' },
-    { name: 'Locations', path: '/' },
+    { name: 'Locations', path: '/provider/lrh/projects/my-test-project' },
     { name: 'Reports', path: '/' },
     { name: 'Help', path: '/' },
   ];
@@ -21,7 +21,7 @@ export default function Header() {
       <Disclosure as="nav" className="">
         {({ open }) => (
           <>
-            <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
+            <div className="mx-auto px-2 sm:px-4 lg:max-w-screen-2xl lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
                 <div className="flex items-center px-2 lg:px-0">
                   <div className="flex-shrink-0">
@@ -137,7 +137,7 @@ export default function Header() {
         )}
       </Disclosure>
       <div className="bg-gray-200">
-        <div className="md:text-md container mx-auto max-w-7xl py-1 text-center text-sm md:text-left lg:px-8">
+        <div className="md:text-md container mx-auto py-1 text-center text-sm md:text-left lg:max-w-screen-2xl lg:px-8">
           <span className="font-bold">U.S. Army Corps of Engineers</span> Water
           Management Data
         </div>
