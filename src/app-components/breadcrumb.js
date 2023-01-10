@@ -1,5 +1,6 @@
 import { useConnect } from 'redux-bundler-hook';
 import { MdHome } from 'react-icons/md';
+import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid';
 
 // https://www.designcise.com/web/tutorial/how-to-remove-a-trailing-slash-from-a-string-in-javascript
 const pathParts = (path) => {
@@ -14,40 +15,55 @@ const pathParts = (path) => {
   return _p.split('/');
 };
 
-const partNames = {
-  '': MdHome,
-  charts: 'charts',
-};
+// const partNames = {
+//   '': MdHome,
+//   mytestproject: 'my-test-project',
+// };
 
 export default function Breadcrumb() {
   const { pathname } = useConnect('selectPathname');
 
-  const parts = pathParts(pathname);
+  var parts = pathParts(pathname);
+  // remove the first element as it is empty
+  parts = pathParts(pathname).slice(1, parts.length);
+
+  const pages = parts.map((page, idx) => {
+    return {
+      name: page,
+      href: parts.slice(0, idx + 1).join('/'),
+      current: idx === parts.length - 1 ? true : false,
+    };
+  });
 
   return (
-    <nav aria-label="breadcrumb">
-      {
-        <ul>
-          {parts.map((p, idx) => (
-            <li>
-              {/* Right-most item in breadcrumb represents current page and should not be clickable */}
-              {idx === parts.length - 1 ? (
-                p === '' ? (
-                  <MdHome size={24} />
-                ) : (
-                  partNames[p] || p
-                )
-              ) : (
-                // All items in breadcrumb are clickable, except for right-most item.
-                // Build pathname for href by joining pathname parts with /
-                <a href={p === '' ? '/' : parts.slice(0, idx + 1).join('/')}>
-                  {p === '' ? <MdHome size={24} /> : partNames[p] || p}
-                </a>
-              )}
-            </li>
-          ))}
-        </ul>
-      }
+    <nav className="flex" aria-label="Breadcrumb">
+      <ol className="flex items-center space-x-4">
+        <li>
+          <div>
+            <a href="/" className="text-gray-400 hover:text-gray-500">
+              <HomeIcon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+              <span className="sr-only">Home</span>
+            </a>
+          </div>
+        </li>
+        {pages.map((page) => (
+          <li key={page.name}>
+            <div className="flex items-center">
+              <ChevronRightIcon
+                className="h-5 w-5 flex-shrink-0 text-gray-400"
+                aria-hidden="true"
+              />
+              <a
+                href={page.href}
+                className="ml-2 text-sm font-medium text-gray-400 hover:text-gray-700"
+                aria-current={page.current ? 'page' : undefined}
+              >
+                {page.name}
+              </a>
+            </div>
+          </li>
+        ))}
+      </ol>
     </nav>
   );
 }

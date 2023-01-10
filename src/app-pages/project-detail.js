@@ -1,3 +1,4 @@
+import Breadcrumb from '../app-components/breadcrumb';
 import PageHead from '../app-components/page-head';
 // import DamProfileMockup from '../images/mockup/dam-profile-chart.png';
 import StackedListTwoColumn from '../app-components/stacked-list-two-col';
@@ -43,7 +44,10 @@ export default function ProjectDetail() {
   ];
 
   return (
-    <div className="mx-auto px-4 pt-5 lg:max-w-screen-2xl lg:px-0">
+    <div className="mx-auto px-4 lg:max-w-screen-2xl lg:px-0">
+      <div className="mb-8 px-8 py-5">
+        <Breadcrumb />
+      </div>
       {/* Page Header */}
       <PageHead title="Bluestone Dam" provider="Huntington District" />
 
