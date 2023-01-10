@@ -15,6 +15,8 @@ import cache from '../cache';
 import modalBundle from './modal-bundle';
 import createSearchBundle from './create-search-bundle';
 
+import providerBundle from './provider-bundle';
+
 // Searchable Bundles
 // import locationSearchBundle from './location-search-bundle';
 // import timeseriesSearchBundle from './timeseries-search-bundle';
@@ -28,5 +30,6 @@ export default composeBundles(
     searchableBundles: [],
   }),
   modalBundle,
+  providerBundle,
   routeBundle
 );
