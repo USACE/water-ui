@@ -1,4 +1,4 @@
-export default function Card({ title, imgSrc }) {
+export default function ImageCard({ title, imgSrc }) {
   return (
     <div className="overflow-hidden rounded bg-white shadow-lg md:max-w-sm">
       <img

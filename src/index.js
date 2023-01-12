@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { HelmetProvider } from 'react-helmet-async';
 import './index.css';
 
 import { getNavHelper } from 'internal-nav-helper';
@@ -18,9 +19,11 @@ cache.getAll().then((initialData) => {
 
   root.render(
     <ReduxBundlerProvider store={store}>
-      <div role="presentation" onClick={getNavHelper(store.doUpdateUrl)}>
-        <App />
-      </div>
+      <HelmetProvider>
+        <div role="presentation" onClick={getNavHelper(store.doUpdateUrl)}>
+          <App />
+        </div>
+      </HelmetProvider>
     </ReduxBundlerProvider>
   );
 });

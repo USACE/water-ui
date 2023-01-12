@@ -3,13 +3,13 @@ import createRestBundle from '@usace/create-rest-bundle';
 const apiUrl = process.env.REACT_APP_WATER_API_URL;
 
 export default createRestBundle({
-  name: 'provider',
-  uid: 'provider',
+  name: 'watershed',
+  uid: 'slug',
   prefetch: true,
   staleAfter: 0, //5min
   persist: false,
-  routeParam: 'provider_slug',
-  getTemplate: `${apiUrl}/providers`,
+  routeParam: 'watershed_slug',
+  getTemplate: `${apiUrl}/locations?datatype=cwms-watershed&provider=:provider_slug`,
   fetchActions: [],
   urlParamSelectors: [],
   forceFetchActions: [],

@@ -1,25 +1,13 @@
-import Breadcrumb from '../app-components/breadcrumb';
-import PageHead from '../app-components/page-head';
+import { useConnect } from 'redux-bundler-hook';
+import Breadcrumb from '../../app-components/breadcrumb';
+import PageHead from '../../app-components/page-head';
 // import DamProfileMockup from '../images/mockup/dam-profile-chart.png';
-import StackedListTwoColumn from '../app-components/stacked-list-two-col';
-import TabsComponent from '../app-components/tabs';
-
-// export function DamProfileChart() {
-//   <div>
-//     <object
-//       type="image/svg+xml"
-//       data="https://water-api.corps.cloud/charts/bluestone-dam?format=svg"
-//       width="100%"
-//     >
-//       <img
-//         src="https://water-api.corps.cloud/charts/bluestone-dam?format=svg"
-//         alt="Browser fail"
-//       />
-//     </object>
-//   </div>;
-// }
+import StackedListTwoColumn from '../../app-components/stacked-list-two-col';
+import TabsComponent from '../../app-components/tabs';
 
 export default function ProjectDetail() {
+  const { locationByRoute: location } = useConnect('selectLocationByRoute');
+
   const DamProfileChart = () => (
     <div className="h-72 sm:h-80 lg:h-128">
       <object
@@ -49,7 +37,14 @@ export default function ProjectDetail() {
         <Breadcrumb />
       </div>
       {/* Page Header */}
-      <PageHead title="Bluestone Dam" provider="Huntington District" />
+      <PageHead
+        title={location && location.attributes.public_name}
+        subTitle={
+          <a href="/" className="text-gray-900">
+            Provided by {location && location.provider_name}
+          </a>
+        }
+      />
 
       <div className="">
         <div className="mt-8 flex-none md:flex md:gap-x-8">

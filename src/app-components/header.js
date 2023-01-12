@@ -11,8 +11,8 @@ import UsaceLogo from '../images/usace-logo-color.svg';
 export default function Header() {
   const nav_links = [
     { name: 'Home', path: '/' },
-    { name: 'Map', path: '/' },
-    { name: 'Locations', path: '/provider/lrh/projects/my-test-project' },
+    { name: 'Map', path: '/map' },
+    { name: 'Locations', path: '/overview' },
     { name: 'Reports', path: '/' },
     { name: 'Help', path: '/' },
   ];

@@ -1,12 +1,14 @@
-export default function PageHead({ title, provider }) {
+import CastleLogo from '../images/usace-logo.png';
+export default function PageHead({ title, subTitle }) {
   return (
     <div className="md:flex md:items-center md:justify-between md:space-x-5 lg:px-8">
       <div className="flex items-center space-x-5">
         <div className="flex-shrink-0">
           <div className="relative">
             <img
-              className="h-16 w-16 rounded-full"
-              src="https://images.unsplash.com/photo-1615529328331-f8917597711f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+              className="w-18 h-16 opacity-50 grayscale invert"
+              // src="https://images.unsplash.com/photo-1615529328331-f8917597711f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+              src={CastleLogo}
               alt=""
             />
             <span
@@ -18,10 +20,10 @@ export default function PageHead({ title, provider }) {
         <div>
           <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
           <p className="text-sm font-medium text-gray-500">
-            Provided by{' '}
-            <a href="/" className="text-gray-900">
-              {provider}
-            </a>{' '}
+            {/* <a href="/" className="text-gray-900">
+              {subTitle}
+            </a> */}
+            {subTitle}
           </p>
         </div>
       </div>

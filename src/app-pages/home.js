@@ -1,6 +1,6 @@
 // import { InboxIcon } from '@heroicons/react/24/outline';
 // import { getByPlaceholderText } from '@testing-library/react';
-import Card from '../app-components/card';
+import ImageCard from '../app-components/image-card';
 import HomeDam1 from '../images/home/lrh-sutton-dam.jpg';
 import HomeDam2 from '../images/home/nww-lucky-peak-dam.jpg';
 import HomeDam3 from '../images/home/nww-ice-harbor-lock-dam.jpg';
@@ -62,14 +62,14 @@ export default function Home() {
 
       <div className="py-8 opacity-90 ">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 md:flex md:gap-8 lg:px-8">
-          <a href="/">
-            <Card title="Locations" imgSrc={Card1ImgSrc}></Card>
+          <a href="/overview">
+            <ImageCard title="Locations" imgSrc={Card1ImgSrc}></ImageCard>
           </a>
           <a href="/">
-            <Card title="Data Resources" imgSrc={Card2ImgSrc}></Card>
+            <ImageCard title="Data Resources" imgSrc={Card2ImgSrc}></ImageCard>
           </a>
           <a href="/">
-            <Card title="Reports" imgSrc={Card3ImgSrc}></Card>
+            <ImageCard title="Reports" imgSrc={Card3ImgSrc}></ImageCard>
           </a>
         </div>
       </div>

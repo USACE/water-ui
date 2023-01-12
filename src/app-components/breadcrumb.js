@@ -1,5 +1,5 @@
 import { useConnect } from 'redux-bundler-hook';
-import { MdHome } from 'react-icons/md';
+// import { MdHome } from 'react-icons/md';
 import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid';
 
 // https://www.designcise.com/web/tutorial/how-to-remove-a-trailing-slash-from-a-string-in-javascript
@@ -30,7 +30,7 @@ export default function Breadcrumb() {
   const pages = parts.map((page, idx) => {
     return {
       name: page,
-      href: parts.slice(0, idx + 1).join('/'),
+      href: '/' + parts.slice(0, idx + 1).join('/'),
       current: idx === parts.length - 1 ? true : false,
     };
   });
