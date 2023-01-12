@@ -1,0 +1,70 @@
+{
+  "uuid": "1eb8209a-70c3-42f8-bcba-295a145c26e1",
+  "lastMigration": 24,
+  "name": "water-api",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 80,
+  "hostname": "0.0.0.0",
+  "routes": [
+    {
+      "uuid": "50481f43-1e43-4a29-99b5-0ebbe9bc23bc",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "providers/:provider_slug",
+      "responses": [
+        {
+          "uuid": "ae76013f-4f59-481d-a419-f9c6622ca8c2",
+          "body": "{\n  \"provider\": \"lrh\",\n  \"provider_name\": \"Huntington District\",\n  \"watersheds\": [\n    {\n      \"name\": \"Big Sandy\",\n      \"slug\": \"big-sandy\"\n    },\n    {\n      \"name\": \"Guyandotte\",\n      \"slug\": \"guyandotte\"\n    },\n    {\n      \"name\": \"Hocking\",\n      \"slug\": \"hocking\"\n    },\n    {\n      \"name\": \"Kanawha\",\n      \"slug\": \"kanawha\"\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": []
+}
