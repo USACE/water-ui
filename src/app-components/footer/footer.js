@@ -93,7 +93,7 @@ export default function Footer() {
 
           <FooterNavigation />
         </div>
-        <div className="mt-8 border-t border-gray-700 pt-8 md:flex md:items-center md:justify-between">
+        <div className="mt-8 border-t border-gray-700 pt-8 md:items-center lg:flex lg:justify-between">
           <div className="flex justify-center space-x-6 md:order-2">
             {navigation.social.map((item) => (
               <a
@@ -125,7 +125,9 @@ export default function Footer() {
             />
             <p className="mt-4 text-base text-gray-400 md:order-1 md:ml-5 md:mt-0 md:inline">
               &copy; {new Date().getFullYear()} U.S Army Corps of Engineers
-              <span className="ml-5 text-gray-500">v{pkg.version}</span>
+              <span className="ml-5 block text-gray-500 sm:inline">
+                v{pkg.version}
+              </span>
             </p>
           </div>
         </div>
