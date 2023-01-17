@@ -6,7 +6,7 @@ export default function PageHead({ title, subTitle }) {
         <div className="flex-shrink-0">
           <div className="relative">
             <img
-              className="w-18 h-16 opacity-50 grayscale invert"
+              className="w-18 h-16 opacity-30 grayscale invert"
               // src="https://images.unsplash.com/photo-1615529328331-f8917597711f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
               src={CastleLogo}
               alt=""

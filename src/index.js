@@ -21,7 +21,9 @@ cache.getAll().then((initialData) => {
     <ReduxBundlerProvider store={store}>
       <HelmetProvider>
         <div role="presentation" onClick={getNavHelper(store.doUpdateUrl)}>
-          <App />
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
         </div>
       </HelmetProvider>
     </ReduxBundlerProvider>

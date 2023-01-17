@@ -1,3 +1,4 @@
+import pkg from '../../../package.json';
 import FooterNavigation from './navigation';
 import UsaceLogo from '../../images/usace-logo-color.svg';
 import CwbiLogo from '../../images/cwbi-logo.png';
@@ -124,6 +125,7 @@ export default function Footer() {
             />
             <p className="mt-4 text-base text-gray-400 md:order-1 md:ml-5 md:mt-0 md:inline">
               &copy; {new Date().getFullYear()} U.S Army Corps of Engineers
+              <span className="ml-5 text-gray-500">v{pkg.version}</span>
             </p>
           </div>
         </div>

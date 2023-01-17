@@ -2,7 +2,7 @@ import { useConnect } from 'redux-bundler-hook';
 import Breadcrumb from '../../app-components/breadcrumb';
 import PageHead from '../../app-components/page-head';
 // import DamProfileMockup from '../images/mockup/dam-profile-chart.png';
-import StackedListTwoColumn from '../../app-components/stacked-list-two-col';
+import StackedParameterList from '../../app-components/stacked-parameter-list';
 import TabsComponent from '../../app-components/tabs';
 
 export default function ProjectDetail() {
@@ -49,7 +49,7 @@ export default function ProjectDetail() {
       <div className="">
         <div className="mt-8 flex-none md:flex md:gap-x-8">
           <div className="flex-auto lg:w-1/3">
-            <StackedListTwoColumn />
+            <StackedParameterList />
           </div>
           <div className="flex-auto bg-white p-2 lg:w-2/3">
             {/* <img src={DamProfileMockup} alt="Dam Profile Chart" /> */}

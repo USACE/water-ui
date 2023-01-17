@@ -1,12 +1,20 @@
+import React from 'react';
 import { useConnect } from 'redux-bundler-hook';
 import Breadcrumb from '../../app-components/breadcrumb';
 import PageHead from '../../app-components/page-head';
+import SimpleTable from '../../app-components/simple-table';
 
 export default function ProviderList() {
-  const { providerItems: providers, pathname } = useConnect(
-    'selectProviderItems',
-    'selectPathname'
-  );
+  const { providerItems: providers } = useConnect('selectProviderItems');
+
+  const ProviderLink = ({ href, title }) => {
+    return (
+      <a className="hover:underline" href={href}>
+        {title}
+      </a>
+    );
+  };
+
   return (
     <div className="mx-auto px-4 lg:max-w-screen-2xl lg:px-0">
       <div className="mb-8 px-8 py-5">
@@ -15,8 +23,26 @@ export default function ProviderList() {
       {/* Page Header */}
       <PageHead title="Providers" subTitle="City, State" />
 
-      <div className="mt-5 px-8">
-        <ul>
+      <div className="mt-5 lg:px-8">
+        <SimpleTable
+          headers={['Name']}
+          items={providers}
+          itemFields={[
+            {
+              key: 'provider_name',
+              render: ({ provider, provider_name }) => {
+                return (
+                  <ProviderLink
+                    title={provider_name}
+                    href={''.concat('/overview/', `${provider}`)}
+                  />
+                );
+              },
+            },
+          ]}
+        />
+
+        {/* <ul>
           {providers &&
             providers.length &&
             providers.map((p) => (
@@ -29,7 +55,7 @@ export default function ProviderList() {
                 </a>
               </li>
             ))}
-        </ul>
+        </ul> */}
       </div>
     </div>
   );

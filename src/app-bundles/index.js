@@ -22,6 +22,7 @@ import providerBundle from './provider-bundle';
 import locationBundle from './location-bundle';
 import providerLocationBundle from './provider-location-bundle';
 import watershedBundle from './watershed-bundle';
+import providerWatershedBundle from './provider-watershed-bundle';
 
 // Searchable Bundles
 // import locationSearchBundle from './location-search-bundle';
@@ -82,5 +83,6 @@ export default composeBundles(
   providerBundle,
   providerLocationBundle,
   watershedBundle,
+  providerWatershedBundle,
   routeBundle
 );

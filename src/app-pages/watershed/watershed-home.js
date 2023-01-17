@@ -2,7 +2,7 @@
 import { useConnect } from 'redux-bundler-hook';
 import Breadcrumb from '../../app-components/breadcrumb';
 import PageHead from '../../app-components/page-head';
-import MockConusMap from '../../images/mockup/conus-map.png';
+import MockDistrictMap from '../../images/mockup/map-district-focus.png';
 import SimpleStats from '../../app-components/simple-stats';
 import { Helmet } from 'react-helmet-async';
 
@@ -72,7 +72,7 @@ export default function WatershedHome() {
             </ul>
           </div>
           <div className="flex-auto p-2 lg:w-2/3">
-            <img src={MockConusMap} alt="mockup conus map" />
+            <img src={MockDistrictMap} alt="mockup district map" />
           </div>
         </div>
       </div>
