@@ -1,8 +1,8 @@
 import CastleLogo from '../images/usace-logo.png';
 export default function PageHead({ title, subTitle }) {
   return (
-    <div className="md:flex md:items-center md:justify-between md:space-x-5 lg:px-8">
-      <div className="flex items-center space-x-5">
+    <div className="md:flex md:items-center md:justify-between md:space-x-5">
+      <div className="flex items-center space-x-2">
         <div className="flex-shrink-0">
           <div className="relative">
             <img
@@ -28,7 +28,7 @@ export default function PageHead({ title, subTitle }) {
         </div>
       </div>
       <div className="justify-stretch mt-6 flex flex-col-reverse space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-y-0 sm:space-x-3 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
-        <button
+        {/* <button
           type="button"
           className="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100"
         >
@@ -39,7 +39,7 @@ export default function PageHead({ title, subTitle }) {
           className="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100"
         >
           Get Alerts
-        </button>
+        </button> */}
       </div>
     </div>
   );

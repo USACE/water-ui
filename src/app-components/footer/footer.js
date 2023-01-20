@@ -78,7 +78,7 @@ export default function Footer() {
             </div>
             <div className="mt-8">
               <h3 className="text-base font-bold text-gray-200">
-                About The Water Management Website
+                About the Water Management Website
               </h3>
               <p className="mt-4 text-sm">
                 The CWMS Data Dissemination website is a public accessible map

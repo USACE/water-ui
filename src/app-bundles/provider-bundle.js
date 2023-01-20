@@ -1,10 +1,10 @@
 import createRestBundle from '@usace/create-rest-bundle';
 
-const apiUrl = process.env.REACT_APP_WATER_API_URL;
+const apiUrl = process.env.REACT_APP_MOCK_API_URL;
 
 export default createRestBundle({
   name: 'provider',
-  uid: 'provider',
+  uid: 'slug',
   prefetch: true,
   staleAfter: 0, //5min
   persist: false,

@@ -14,8 +14,8 @@ export default createRouteBundle({
   '/map': MapHome,
   '/overview': ProviderList,
   '/overview/:provider_slug': ProviderHome,
-  '/overview/:provider_slug/watershed': WatershedHome,
   '/overview/:provider_slug/watershed/:watershed_slug': WatershedDetail,
-  '/location/:location_slug': LocationDetail,
+  '/overview/:provider_slug/watershed': WatershedHome,
+  '/overview/:provider_slug/location/:location_slug': LocationDetail,
   '*': fourOhFour,
 });
