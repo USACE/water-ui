@@ -16,7 +16,11 @@ import cache from '../cache';
 
 // todo; this should be converted to bundle maintained at @usace/modal-bundle
 import modalBundle from './modal-bundle';
-//import createSearchBundle from './create-search-bundle';
+// todo; this should be converted to bundle maintained at @usace/create-search-bundle
+import createSearchBundle from './create-search-bundle';
+
+// Searchable Bundles
+import locationSearchBundle from './location-search-bundle';
 
 import providerBundle from './provider-bundle';
 import locationBundle from './location-bundle';
@@ -75,12 +79,14 @@ export default composeBundles(
       },
     },
   }),
-  // createSearchBundle({
-  //   name: 'search',
-  //   // searchableBundles: [locationSearchBundle, timeseriesSearchBundle],
-  //   searchableBundles: [],
-  // }),
+  createSearchBundle({
+    name: 'search',
+    // searchableBundles: [locationSearchBundle, timeseriesSearchBundle],
+    searchableBundles: [locationSearchBundle],
+  }),
+  createSearchBundle,
   locationBundle,
+  locationSearchBundle,
   mapsBundle,
   modalBundle,
   providerBundle,

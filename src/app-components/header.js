@@ -1,14 +1,27 @@
+import { useState } from 'react';
 import { Fragment } from 'react';
 import { Disclosure } from '@headlessui/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import UsaceLogo from '../images/usace-logo-color.svg';
+import LocationCombobox from '../app-components/inputs/location-search-input';
 
 // function classNames(...classes) {
 //   return classes.filter(Boolean).join(' ');
 // }
 
 export default function Header() {
+  //const [name, setName] = useState(null);
+  //const [type, setType] = useState(null);
+  const [location, setLocation] = useState(null);
+
+  // Invalid Checks for Form Fields (used to set aria-invalid property on form values)
+  // TODO; More strict validation checking. Currently, if a string value is set, it is considered valid.
+  //       In the future, may want to consider checking if string value represents a valid timeseries
+  const [locationIsValid, setLocationIsValid] = useState(
+    location ? true : false
+  );
+
   const nav_links = [
     { name: 'Home', path: '/' },
     { name: 'Map', path: '/map' },
@@ -16,6 +29,7 @@ export default function Header() {
     { name: 'Reports', path: '/' },
     { name: 'Help', path: '/' },
   ];
+
   return (
     <header className="sticky top-0 z-50 bg-gray-900">
       <Disclosure as="nav" className="">
@@ -70,9 +84,9 @@ export default function Header() {
                 </div>
                 <div className="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                   <div className="w-full max-w-lg lg:max-w-xs">
-                    <label htmlFor="search" className="sr-only">
+                    {/* <label htmlFor="search" className="sr-only">
                       Search
-                    </label>
+                    </label> */}
                     <div className="relative">
                       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                         <MagnifyingGlassIcon
@@ -80,13 +94,24 @@ export default function Header() {
                           aria-hidden="true"
                         />
                       </div>
-                      <input
+
+                      <LocationCombobox
+                        label=""
+                        value={location}
+                        setValue={setLocation}
+                        isValid={!location || locationIsValid}
+                        setIsValid={setLocationIsValid}
+                        isRequired={false}
+                        placeholder="Search"
+                      />
+
+                      {/* <input
                         id="search"
                         name="search"
                         className="block w-full rounded-md border border-transparent bg-gray-700 py-2 pl-10 pr-3 leading-5 text-gray-300 placeholder-gray-400 focus:border-white focus:bg-white focus:text-gray-900 focus:outline-none focus:ring-white sm:text-sm"
                         placeholder="Search"
                         type="search"
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
