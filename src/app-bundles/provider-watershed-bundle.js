@@ -8,8 +8,8 @@ export default createRestBundle({
   prefetch: true,
   staleAfter: 0, //5min
   persist: false,
-  routeParam: 'provider_slug',
-  getTemplate: `${apiUrl}/providers/:provider_slug/watersheds`,
+  routeParam: 'watershed_slug',
+  getTemplate: `${apiUrl}/providers/:provider_slug/watersheds/:watershed_slug`,
   fetchActions: ['URL_UPDATED'],
   urlParamSelectors: [],
   forceFetchActions: ['URL_UPDATED'],

@@ -9,12 +9,12 @@ import PageWrapper from '../page-wrapper';
 export default function WatershedDetail() {
   const {
     providerByRoute: provider,
-    watershedByRoute: watershed,
-    providerLocationItems: locations,
+    providerWatershedByRoute: watershed,
+    providerLocationsItems: locations,
   } = useConnect(
     'selectProviderByRoute',
-    'selectWatershedByRoute',
-    'selectProviderLocationItems'
+    'selectProviderWatershedByRoute',
+    'selectProviderLocationsItems'
   );
 
   // useEffect(() => {

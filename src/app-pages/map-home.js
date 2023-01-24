@@ -1,60 +1,77 @@
-//import { useState, useEffect } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
+import { useConnect } from 'redux-bundler-hook';
 
-// openlayers
-//import GeoJSON from 'ol/format/GeoJSON';
-//import Feature from 'ol/Feature';
+//import Panel from './panel';
+//import PanelGroup from '../../app-components/panel-group';
+import Map from '../app-components/classMap';
+//import MapLegend from './map-legend';
+//import MapTools from './map-tools';
+//import Visualizations from './explorer-visualizations';
+//import useWindowListener from '../../customHooks/useWindowListener';
+//import { classArray } from '../../utils';
 
-//import MapWrapper from '../app-components/map/map';
-import '../app-components/map/map.css';
+//import './explorer.scss';
 
-import MockConusMapBoundaries from '../images/mockup/conus-mockup-with-boundaries.png';
+export default function MapHome() {
+  const {
+    doMapsInitialize,
+    doMapsShutdown,
+    //exploreMapKey: mapKey,
+    mapsObject,
+  } = useConnect(
+    'doMapsInitialize',
+    'doMapsShutdown',
+    //'selectExploreMapKey',
+    'selectMapsObject'
+  );
 
-// export function DamProfileChart() {
-//   <div>
-//     <object
-//       type="image/svg+xml"
-//       data="https://water-api.corps.cloud/charts/bluestone-dam?format=svg"
-//       width="100%"
-//     >
-//       <img
-//         src="https://water-api.corps.cloud/charts/bluestone-dam?format=svg"
-//         alt="Browser fail"
-//       />
-//     </object>
-//   </div>;
-// }
+  //const [landscapeMode, setLandscapeMode] = useState(false);
+  const mapRef = useRef();
 
-export default function Map() {
-  // set intial state
-  // const [features, setFeatures] = useState([]);
+  // const toggleLandscape = useCallback(
+  //   (e) => {
+  //     if (e.keyCode === 86 && e.shiftKey) {
+  //       setLandscapeMode(!landscapeMode);
+  //     }
+  //   },
+  //   [setLandscapeMode, landscapeMode]
+  // );
 
-  // // initialization - retrieve GeoJSON features from Mock JSON API get features from mock
-  // //  GeoJson API (read from flat .json file in public directory)
-  // useEffect(() => {
-  //   fetch('/mock-geojson-api.json')
-  //     .then((response) => response.json())
-  //     .then((fetchedFeatures) => {
-  //       // parse fetched geojson into OpenLayers features
-  //       //  use options to convert feature from EPSG:4326 to EPSG:3857
-  //       const wktOptions = {
-  //         dataProjection: 'EPSG:4326',
-  //         featureProjection: 'EPSG:3857',
-  //       };
-  //       const parsedFeatures = new GeoJSON().readFeatures(
-  //         fetchedFeatures,
-  //         wktOptions
-  //       );
+  //useWindowListener('keydown', toggleLandscape);
 
-  //       // set features into state (which will be passed into OpenLayers
-  //       //  map component as props)
-  //       setFeatures(parsedFeatures);
-  //     });
-  // }, []);
+  // const hasDevBanner = process.env.REACT_APP_DEVELOPMENT_BANNER;
+  // const cls = classArray([
+  //   'explorer-container',
+  //   hasDevBanner && 'with-banner',
+  // ]);
 
   return (
-    <div className="mx-auto px-4 lg:max-w-screen-2xl lg:px-0">
-      {/* <MapWrapper features={features} /> */}
-      <img src={MockConusMapBoundaries} alt="Conus mockup map" />
+    //   <div className={cls} key={Number(landscapeMode)}>
+    <div className="mx-auto w-full px-4 lg:max-w-full lg:px-0">
+      {/* <PanelGroup
+          borderColor='#ccc'
+          spacing={2}
+          direction={landscapeMode ? 'column' : 'row'}
+          onUpdate={(_data) =>
+            mapRef && mapRef.current && mapRef.current.updateSize()
+          }
+        > */}
+      {/* <Panel> */}
+      <Map
+        ref={mapRef}
+        //mapKey={mapKey}
+        options={{ center: [-98.6, 39.8], zoom: 5 }}
+        doMapsInitialize={doMapsInitialize}
+        doMapsShutdown={doMapsShutdown}
+        mapsObject={mapsObject}
+      />
+      {/* <MapTools />
+            <MapLegend /> */}
+      {/* </Panel>
+          <Panel className='overflow-auto'>
+            <Visualizations />
+          </Panel>
+        </PanelGroup> */}
     </div>
   );
 }

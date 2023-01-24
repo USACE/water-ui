@@ -10,13 +10,13 @@ export default function ProviderHome() {
   const {
     pathname,
     providerByRoute: provider,
-    providerLocationItems: locations,
-    providerWatershedItems: watersheds,
+    providerLocationsItems: locations,
+    providerWatershedsItems: watersheds,
   } = useConnect(
     'selectPathname',
     'selectProviderByRoute',
-    'selectProviderLocationItems',
-    'selectProviderWatershedItems'
+    'selectProviderLocationsItems',
+    'selectProviderWatershedsItems'
   );
 
   const provider_projects = locations.filter(

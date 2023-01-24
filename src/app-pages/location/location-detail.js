@@ -8,7 +8,9 @@ import PageWrapper from '../page-wrapper';
 import Accordion from '../../app-components/accordion';
 
 export default function ProjectDetail() {
-  const { locationByRoute: location } = useConnect('selectLocationByRoute');
+  const { providerLocationByRoute: location } = useConnect(
+    'selectProviderLocationByRoute'
+  );
 
   // const tabs = [
   //   {
