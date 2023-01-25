@@ -8,5 +8,6 @@ module.exports = {
       },
     },
   },
+  darkMode: 'class', //comment out to allow OS to determine dark/light mode
   plugins: [require('@headlessui/tailwindcss'), require('@tailwindcss/forms')],
 };

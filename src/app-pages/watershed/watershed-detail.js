@@ -39,6 +39,7 @@ export default function WatershedDetail() {
     { name: 'Projects', stat: projects.length },
     { name: 'Locations', stat: locations.length },
     { name: 'Flood Storage', stat: '1%' },
+    { name: 'Drainage Area', stat: 38080 },
   ];
 
   const ProjectLink = ({ href, title }) => {
@@ -74,8 +75,8 @@ export default function WatershedDetail() {
     >
       <SimpleStats stats={stats} title="" />
 
-      <div className="mt-8 flex-none md:flex md:gap-x-8">
-        <div className="flex-auto lg:w-1/3">
+      <div className="mt-8 flex-none lg:flex lg:gap-x-8">
+        <div className="flex-auto lg:w-2/3">
           <SimpleTable
             headers={[
               'Project',

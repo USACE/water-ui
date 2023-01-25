@@ -11,7 +11,7 @@ export default function Accordion({ sections }) {
               {section.title}
               <ChevronRightIcon className="w-6 ui-open:rotate-90 ui-open:transform" />
             </Disclosure.Button>
-            <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+            <Disclosure.Panel className="px-2 py-2 text-sm text-gray-500">
               {section.content}
             </Disclosure.Panel>
           </Disclosure>

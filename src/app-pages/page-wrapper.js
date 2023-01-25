@@ -5,7 +5,7 @@ import PageHead from '../app-components/page-head';
 export default function PageWrapper({ title, subTitle, children }) {
   const defaultTitle = 'Water Data - U.S. Army Corps of Engineers';
   return (
-    <div className="mx-auto px-4 pb-4 lg:max-w-screen-2xl lg:px-8">
+    <div className="mx-auto px-4 pb-4 dark:bg-gray-800 lg:max-w-screen-2xl lg:px-8">
       <Helmet
         titleTemplate={`%s - ${defaultTitle}`}
         defaultTitle={defaultTitle}
@@ -18,6 +18,7 @@ export default function PageWrapper({ title, subTitle, children }) {
       </div>
       {/* Page Header */}
       <PageHead title={title} subTitle={subTitle} />
+      {/* Main Page Content */}
       <div className="">{children}</div>
     </div>
   );
