@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 
 //import Panel from './panel';

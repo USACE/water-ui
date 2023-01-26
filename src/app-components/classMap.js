@@ -1,4 +1,5 @@
 import React, {
+  useMemo,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -16,7 +17,7 @@ const Map = forwardRef(
       if (mapsObject[mapKey]) mapsObject[mapKey].updateSize();
     }, 200);
 
-    const ro = new ResizeObserver(updateSize);
+    const ro = useMemo(() => new ResizeObserver(updateSize), [updateSize]);
 
     useImperativeHandle(ref, () => ({
       updateSize: () => {
@@ -37,7 +38,7 @@ const Map = forwardRef(
         doMapsInitialize(mapKey, el.current, newOptions);
         ro.observe(el.current);
       }
-    }, []);
+    }, [doMapsInitialize, mapKey]); // eslint-disable-line
 
     useEffect(
       () => () => {
