@@ -39,7 +39,8 @@ export default function StackedParameterList({ parameters }) {
   return (
     <div className="overflow-hidden bg-white shadow sm:rounded-md">
       <ul className="divide-y divide-gray-200">
-        {parameters.length &&
+        {parameters &&
+          parameters.length &&
           parameters.map((p, idx) => (
             <li key={idx}>
               <a href="/" className="block hover:bg-gray-50">

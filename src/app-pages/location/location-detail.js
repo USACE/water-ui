@@ -96,13 +96,20 @@ export default function ProjectDetail() {
               alt="sample graph"
             />
           )}
-          {location && location.timeseries && (
+          {/* {location && location.timeseries && (
             <StackedParameterList parameters={location.timeseries} />
-          )}
+          )} */}
         </div>
         <div className="flex-auto bg-white p-2 lg:w-1/3">
           <Accordion
             sections={[
+              {
+                title: 'Current Values',
+                content: (
+                  <StackedParameterList parameters={location?.timeseries} />
+                ),
+                defaultOpen: true,
+              },
               {
                 title: 'Metadata',
                 content: <Metadata metadata={location} />,
