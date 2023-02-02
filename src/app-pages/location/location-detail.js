@@ -3,7 +3,8 @@ import { useConnect } from 'redux-bundler-hook';
 import DamProfileMockup from '../../images/mockup/dam-profile-chart.png';
 import StackedParameterList from '../../app-components/stacked-parameter-list';
 import TabsComponent from '../../app-components/tabs';
-import SimpleStageHydrographChart from '../../images/mockup/simple-stage-hydrograph-chart.png';
+//import SimpleStageHydrographChart from '../../images/mockup/simple-stage-hydrograph-chart.png';
+import SimpleHydrographChart from '../../app-components/charts/simple-hydrograph-chart';
 //import CardSimple from '../../app-components/card-simple';
 import PageWrapper from '../page-wrapper';
 import Accordion from '../../app-components/accordion';
@@ -57,15 +58,15 @@ const DamProfileChart = () => {
   );
 };
 
-const TimeseriesChart = () => {
-  return (
-    <img
-      src={SimpleStageHydrographChart}
-      className="w-full"
-      alt="Timeseries Chart"
-    />
-  );
-};
+// const TimeseriesChart = () => {
+//   return (
+//     <img
+//       src={SimpleStageHydrographChart}
+//       className="w-full"
+//       alt="Timeseries Chart"
+//     />
+//   );
+// };
 
 export default function ProjectDetail() {
   const { providerLocationByRoute: location } = useConnect(
@@ -77,7 +78,10 @@ export default function ProjectDetail() {
       name: 'Dam Profile',
       content: <DamProfileChart />,
     },
-    { name: 'Timeseries', content: <TimeseriesChart /> },
+    {
+      name: 'Timeseries',
+      content: location ? <SimpleHydrographChart /> : null,
+    },
   ];
 
   return (
@@ -90,11 +94,14 @@ export default function ProjectDetail() {
           {location?.attributes.kind === 'PROJECT' ? (
             <TabsComponent tabs={tabs} />
           ) : (
-            <img
+            <>
+              {/* <img
               src={SimpleStageHydrographChart}
               className="w-full"
               alt="sample graph"
-            />
+            /> */}
+              <SimpleHydrographChart />
+            </>
           )}
           {/* {location && location.timeseries && (
             <StackedParameterList parameters={location.timeseries} />

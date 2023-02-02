@@ -27,6 +27,7 @@ import locationBundle from './location-bundle';
 import mapsBundle from './maps-bundle';
 import providerLocationBundle from './provider-location-bundle';
 import providerLocationsBundle from './provider-locations-bundle';
+import providerTimeseriesValuesBundle from './provider-timeseries-values-bundle';
 import providerWatershedBundle from './provider-watershed-bundle';
 import providerWatershedsBundle from './provider-watersheds-bundle';
 import watershedBundle from './watershed-bundle';
@@ -92,6 +93,7 @@ export default composeBundles(
   providerBundle,
   providerLocationBundle,
   providerLocationsBundle,
+  providerTimeseriesValuesBundle,
   watershedBundle,
   providerWatershedBundle,
   providerWatershedsBundle,

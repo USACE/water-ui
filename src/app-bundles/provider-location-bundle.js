@@ -13,7 +13,7 @@ export default createRestBundle({
   getTemplate: `${apiUrl}/providers/:provider_slug/locations/:location_slug`,
   fetchActions: ['URL_UPDATED'],
   urlParamSelectors: [],
-  forceFetchActions: [],
+  forceFetchActions: ['URL_UPDATED'],
   sortBy: '',
   sortAsc: false,
   reduceFurther: null,
