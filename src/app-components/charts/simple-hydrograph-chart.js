@@ -19,10 +19,7 @@ export default function SimpleHydrographChart() {
   const [location, setLocation] = useState(providerLocationByRoute);
   const [timeseriesIds, setTimeseriesId] = useState([]);
   const [measurements, setMeasurements] = useState([]);
-  const [dateRange, setDateRange] = useState([
-    subDays(new Date(), 365),
-    new Date(),
-  ]);
+  const [dateRange] = useState([subDays(new Date(), 365), new Date()]);
 
   /** Setup the chart */
   const [chartOptions, setChartOptions] = useState({
