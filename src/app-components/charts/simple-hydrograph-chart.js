@@ -59,25 +59,25 @@ export default function SimpleHydrographChart() {
   /* Ensure location is set */
   // @todo Try to set this without useEffect
   useEffect(() => {
-    console.log('--providerLocationByRoute--');
-    console.log(providerLocationByRoute);
+    //console.log('--providerLocationByRoute--');
+    //console.log(providerLocationByRoute);
     setLocation(providerLocationByRoute);
   }, [providerLocationByRoute]);
 
   /** Load specific timeseries ids into state when new configurations are loaded */
   useEffect(() => {
-    console.log('--Location --');
-    console.log(location);
+    //console.log('--Location --');
+    //console.log(location);
 
-    console.log('--Location Timeseries --');
-    const timeseriesIdArray = location
-      ? location?.timeseries.map((ts) => {
+    //console.log('--Location Timeseries --');
+    const timeseriesIdArray = location?.timeseries
+      ? location.timeseries.map((ts) => {
           return ts.tsid;
         })
       : [];
 
-    console.warn(`Setting timeseriesIds`);
-    console.log(timeseriesIdArray);
+    //console.warn(`Setting timeseriesIds`);
+    //console.log(timeseriesIdArray);
     setTimeseriesId(timeseriesIdArray);
   }, [location]);
 
@@ -86,14 +86,14 @@ export default function SimpleHydrographChart() {
     location &&
       timeseriesIds &&
       timeseriesIds.forEach((id) => {
-        console.log(`fetching ${id}`);
+        //console.log(`fetching ${id}`);
         doProviderTimeseriesValuesFetchById({ timeseriesId: id, dateRange });
       });
   }, [location, timeseriesIds, dateRange, doProviderTimeseriesValuesFetchById]);
 
   useEffect(() => {
-    console.log(`--Setting measurements--`);
-    console.log(timeSeriesValues);
+    //console.log(`--Setting measurements--`);
+    //console.log(timeSeriesValues);
     //console.log(JSON.stringify(timeSeriesValues));
 
     // Note: timeSeriesValues may contain the more tsids than we want for this location
@@ -116,10 +116,10 @@ export default function SimpleHydrographChart() {
 
   useEffect(() => {
     let chartSeries = [];
-    console.log(measurements);
+    //console.log(measurements);
 
     measurements.forEach((e) => {
-      console.log(`pushing ${JSON.stringify(e)}`);
+      //console.log(`pushing ${JSON.stringify(e)}`);
       chartSeries.push({
         name: e.param,
         data: e.values.map((v) => {
@@ -128,7 +128,7 @@ export default function SimpleHydrographChart() {
       });
     });
 
-    console.log(chartSeries);
+    //console.log(chartSeries);
 
     setChartOptions({
       title: { text: location?.attributes.public_name || 'not available' },
@@ -140,7 +140,7 @@ export default function SimpleHydrographChart() {
   // return <div id="container" style={{ width: '100%', height: '400px' }}></div>;
   return (
     <div>
-      <div className="h-40 overflow-scroll text-sm">
+      <div className="h-20 overflow-scroll text-sm">
         {measurements && JSON.stringify(measurements)}
       </div>
 
@@ -149,6 +149,7 @@ export default function SimpleHydrographChart() {
           <HighchartsReact highcharts={Highcharts} options={chartOptions} />
         )}
       </div>
+
       {/* <img
         src={SimpleStageHydrographChart}
         className="w-full"

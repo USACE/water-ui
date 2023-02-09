@@ -14,11 +14,11 @@ export default function TabsComponent({ tabs }) {
           console.log('Changed selected tab to:', index);
         }}
       >
-        <Tab.List className="-mb-px flex flex-wrap border-b-2 border-gray-400">
+        <Tab.List className="-mb-px flex flex-wrap border-b-2 border-gray-300">
           {tabs.map((tab, idx) => (
             <Tab
               key={idx}
-              className="p-4 ui-selected:bg-gray-400 ui-selected:text-white ui-not-selected:bg-white ui-not-selected:text-black ui-active:bg-gray-800"
+              className="mr-2 rounded-t-md p-4  ui-selected:bg-gray-500 ui-selected:text-white ui-not-selected:bg-white ui-not-selected:text-black ui-active:bg-gray-800"
             >
               {tab.name}
             </Tab>
@@ -26,7 +26,7 @@ export default function TabsComponent({ tabs }) {
         </Tab.List>
         <Tab.Panels>
           {tabs.map((tab) => (
-            <Tab.Panel key={tab.name} className="p-3">
+            <Tab.Panel key={tab.name} className="bg-white p-0">
               {tab.content}
             </Tab.Panel>
           ))}

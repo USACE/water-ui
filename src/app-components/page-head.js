@@ -1,20 +1,22 @@
-import CastleLogo from '../images/usace-logo.png';
+//import CastleLogo from '../images/usace-logo.png';
+import { FcDam } from 'react-icons/fc';
 export default function PageHead({ title, subTitle }) {
   return (
     <div className="md:flex md:items-center md:justify-between md:space-x-5">
       <div className="flex items-center space-x-2">
         <div className="flex-shrink-0">
           <div className="relative">
-            <img
+            {/* <img
               className="w-18 h-16 opacity-30 grayscale invert"
               // src="https://images.unsplash.com/photo-1615529328331-f8917597711f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
               src={CastleLogo}
               alt=""
-            />
-            <span
+            /> */}
+            {<FcDam size={50} />}
+            {/* <span
               className="absolute inset-0 rounded-full shadow-inner"
               aria-hidden="true"
-            />
+            /> */}
           </div>
         </div>
         <div>

@@ -9,6 +9,9 @@ import SimpleHydrographChart from '../../app-components/charts/simple-hydrograph
 import PageWrapper from '../page-wrapper';
 import Accordion from '../../app-components/accordion';
 import SimpleTable from '../../app-components/simple-table';
+//import SynchronizedCharts from '../../app-components/charts/synchronized-charts';
+//import MultiParamChart from '../../app-components/charts/highchart-multiparam';
+import ProjectTimeseriesCharts from '../../app-components/charts/project-timeseries-charts';
 
 const Metadata = ({ metadata }) => {
   //convert object into list with key pairs
@@ -78,9 +81,26 @@ export default function ProjectDetail() {
       name: 'Dam Profile',
       content: <DamProfileChart />,
     },
+    // {
+    //   name: 'Timeseries',
+    //   content: location ? (
+    //     <>
+    //       {/* <SimpleHydrographChart /> */}
+    //       <SynchronizedCharts />
+    //     </>
+    //   ) : null,
+    // },
+    // {
+    //   name: 'Testing',
+    //   content: location ? <MultiParamChart location={location} /> : null,
+    // },
     {
       name: 'Timeseries',
-      content: location ? <SimpleHydrographChart /> : null,
+      content: location ? (
+        <div className="bg-white pt-5">
+          <ProjectTimeseriesCharts location={location} />
+        </div>
+      ) : null,
     },
   ];
 
@@ -101,13 +121,17 @@ export default function ProjectDetail() {
               alt="sample graph"
             /> */}
               <SimpleHydrographChart />
+              {/* <SynchronizedCharts /> */}
             </>
           )}
           {/* {location && location.timeseries && (
             <StackedParameterList parameters={location.timeseries} />
           )} */}
+          {/* <div className="h-20 bg-blue-100">
+            <SynchronizedCharts />
+          </div> */}
         </div>
-        <div className="flex-auto bg-white p-2 lg:w-1/3">
+        <div className="flex-auto bg-white p-0 lg:w-1/3">
           <Accordion
             sections={[
               {

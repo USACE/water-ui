@@ -41,8 +41,8 @@ export default createRestBundle({
           //new Array(body).forEach((item) => (itemsById[item['key']] = item));
 
           new Array(body).forEach((item) => {
-            console.warn(item);
-            console.log(itemsById);
+            //console.warn(item);
+            //console.log(itemsById);
             itemsById[item['key']] = item;
           });
 

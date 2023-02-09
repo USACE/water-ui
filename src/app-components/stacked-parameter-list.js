@@ -1,5 +1,6 @@
-import { ClockIcon } from '@heroicons/react/20/solid';
-import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
+import { ClockIcon } from '@heroicons/react/24/outline';
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/solid';
+import { parseISO, format } from 'date-fns';
 
 // const parameters = [
 //   {
@@ -65,7 +66,10 @@ export default function StackedParameterList({ parameters }) {
                           className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
                           aria-hidden="true"
                         />
-                        <time dateTime={p.latest_time}>{p.latest_time}</time>
+                        <time dateTime={p.latest_time}>
+                          {/* {p.latest_time && parseISO(new Date(p.latest_time))} */}
+                          {format(parseISO(p.latest_time), 'dd-LLL-yyyy @ p')}
+                        </time>
                       </p>
                     </div>
                     <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">

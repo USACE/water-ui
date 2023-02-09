@@ -2,7 +2,7 @@
 // import { getByPlaceholderText } from '@testing-library/react';
 import ImageCard from '../app-components/image-card';
 import HomeDam1 from '../images/home/lrh-sutton-dam.jpg';
-import HomeDam2 from '../images/home/nww-lucky-peak-dam.jpg';
+import HomeDam2 from '../images/home/nww-lucky-peak-dam-1.jpg';
 import HomeDam3 from '../images/home/nww-ice-harbor-lock-dam.jpg';
 
 const HomeBgImgArray = [
