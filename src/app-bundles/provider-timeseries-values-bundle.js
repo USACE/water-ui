@@ -1,5 +1,5 @@
 import createRestBundle from '@usace/create-rest-bundle';
-import { subDays } from 'date-fns';
+//import { subDays } from 'date-fns';
 
 const apiUrl = process.env.REACT_APP_MOCK_API_URL;
 
@@ -23,12 +23,12 @@ export default createRestBundle({
       ({ timeseriesId, dateRange }) =>
       ({ dispatch, store, apiGet }) => {
         dispatch({ type: 'TIMESERIES_FETCH_BY_ID_START', payload: {} });
-        const [after, before] = dateRange;
+        //const [after, before] = dateRange;
 
-        const isoAfter = after ? after.toISOString() : new Date();
-        const isoBefore = before
-          ? before.toISOString()
-          : subDays(new Date(), 3);
+        //const isoAfter = after ? after.toISOString() : new Date();
+        // const isoBefore = before
+        //   ? before.toISOString()
+        //   : subDays(new Date(), 3);
         const provider = store['selectProviderByRoute']();
 
         // const url = `/timeseries/${timeseriesId}/measurements?after=${isoAfter}&before=${isoBefore}`;
