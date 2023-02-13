@@ -1,8 +1,8 @@
 //import { useEffect } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 import MockWatershedMap from '../../images/mockup/map-watershed-focus.png';
-import SimpleStats from '../../app-components/simple-stats';
-import SimpleTable from '../../app-components/simple-table';
+import SimpleStats from '../../app-components/stats-simple';
+import SimpleTable from '../../app-components/table-simple';
 import CardSimple from '../../app-components/card-simple';
 import PageWrapper from '../page-wrapper';
 

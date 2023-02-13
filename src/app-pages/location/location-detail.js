@@ -3,15 +3,12 @@ import { useConnect } from 'redux-bundler-hook';
 import DamProfileMockup from '../../images/mockup/dam-profile-chart.png';
 import StackedParameterList from '../../app-components/stacked-parameter-list';
 import TabsComponent from '../../app-components/tabs';
-//import SimpleStageHydrographChart from '../../images/mockup/simple-stage-hydrograph-chart.png';
-import SimpleHydrographChart from '../../app-components/charts/simple-hydrograph-chart';
-//import CardSimple from '../../app-components/card-simple';
 import PageWrapper from '../page-wrapper';
 import Accordion from '../../app-components/accordion';
-import SimpleTable from '../../app-components/simple-table';
-//import SynchronizedCharts from '../../app-components/charts/synchronized-charts';
-//import MultiParamChart from '../../app-components/charts/highchart-multiparam';
-import ProjectTimeseriesCharts from '../../app-components/charts/project-timeseries-charts';
+import SimpleTable from '../../app-components/table-simple';
+import LocationTimeseriesCharts from '../../app-components/charts/location-timeseries-charts';
+//import SimpleStats from '../../app-components/stats-simple';
+import StatsWIcon from '../../app-components/stats-with-icon';
 
 const Metadata = ({ metadata }) => {
   //convert object into list with key pairs
@@ -61,16 +58,6 @@ const DamProfileChart = () => {
   );
 };
 
-// const TimeseriesChart = () => {
-//   return (
-//     <img
-//       src={SimpleStageHydrographChart}
-//       className="w-full"
-//       alt="Timeseries Chart"
-//     />
-//   );
-// };
-
 export default function ProjectDetail() {
   const { providerLocationByRoute: location } = useConnect(
     'selectProviderLocationByRoute'
@@ -81,46 +68,40 @@ export default function ProjectDetail() {
       name: 'Dam Profile',
       content: <DamProfileChart />,
     },
-    // {
-    //   name: 'Timeseries',
-    //   content: location ? (
-    //     <>
-    //       {/* <SimpleHydrographChart /> */}
-    //       <SynchronizedCharts />
-    //     </>
-    //   ) : null,
-    // },
-    // {
-    //   name: 'Testing',
-    //   content: location ? <MultiParamChart location={location} /> : null,
-    // },
+
     {
       name: 'Timeseries',
       content: location ? (
         <div className="bg-white pt-5">
-          <ProjectTimeseriesCharts location={location} />
+          <LocationTimeseriesCharts location={location} />
         </div>
       ) : null,
     },
   ];
+
+  // const stats = [
+  //   { name: 'Flood Storage Utilized', stat: '1%' },
+  //   { name: 'Conservation Storage Utilized', stat: '1%' },
+  //   { name: 'Pool Elevation', stat: '646.35' },
+  //   { name: 'Inflow', stat: '303.22' },
+  //   { name: 'Discharge', stat: 447 },
+  // ];
 
   return (
     <PageWrapper
       title={location?.attributes.public_name}
       subTitle={`provided by ${location?.provider_name}`}
     >
+      <StatsWIcon />
+      {/* <SimpleStats stats={stats} title="" /> */}
       <div className="mt-8 flex-none md:gap-x-8 lg:flex">
         <div className="flex-auto lg:w-2/3">
           {location?.attributes.kind === 'PROJECT' ? (
             <TabsComponent tabs={tabs} />
           ) : (
             <>
-              {/* <img
-              src={SimpleStageHydrographChart}
-              className="w-full"
-              alt="sample graph"
-            /> */}
-              <SimpleHydrographChart />
+              {/* <SimpleHydrographChart /> */}
+              <LocationTimeseriesCharts location={location} />
               {/* <SynchronizedCharts /> */}
             </>
           )}

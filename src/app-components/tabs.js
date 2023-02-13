@@ -18,7 +18,7 @@ export default function TabsComponent({ tabs }) {
           {tabs.map((tab, idx) => (
             <Tab
               key={idx}
-              className="mr-2 rounded-t-md p-4  ui-selected:bg-gray-500 ui-selected:text-white ui-not-selected:bg-white ui-not-selected:text-black ui-active:bg-gray-800"
+              className="mr-1 rounded-t-md border-2 border-b-0 border-gray-200 p-4 ui-selected:-mb-1 ui-selected:border-gray-200 ui-selected:bg-white ui-selected:text-gray-900 ui-not-selected:bg-gray-200 ui-not-selected:text-gray-500 ui-active:bg-gray-800"
             >
               {tab.name}
             </Tab>

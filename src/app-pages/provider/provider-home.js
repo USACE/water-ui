@@ -1,9 +1,9 @@
 //import { useEffect } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 import MockDistrictMap from '../../images/mockup/map-district-focus.png';
-import SimpleStats from '../../app-components/simple-stats';
+import SimpleStats from '../../app-components/stats-simple';
 import CardSimple from '../../app-components/card-simple';
-import SimpleTable from '../../app-components/simple-table';
+import SimpleTable from '../../app-components/table-simple';
 import PageWrapper from '../page-wrapper';
 
 export default function ProviderHome() {

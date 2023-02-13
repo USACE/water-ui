@@ -2,7 +2,7 @@
 // import { getByPlaceholderText } from '@testing-library/react';
 import ImageCard from '../app-components/image-card';
 import HomeDam1 from '../images/home/lrh-sutton-dam.jpg';
-import HomeDam2 from '../images/home/nww-lucky-peak-dam-1.jpg';
+import HomeDam2 from '../images/home/nww-lucky-peak-dam.jpg';
 import HomeDam3 from '../images/home/nww-ice-harbor-lock-dam.jpg';
 
 const HomeBgImgArray = [
@@ -87,7 +87,7 @@ export default function Home() {
             dam projects.
           </p>
         </div>
-        <ul className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 text-sm sm:mt-20 sm:grid-cols-2 md:gap-y-10 lg:max-w-none lg:grid-cols-3">
+        {/* <ul className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 text-sm sm:mt-20 sm:grid-cols-2 md:gap-y-10 lg:max-w-none lg:grid-cols-3">
           <li className="rounded-2xl border border-gray-200 p-8">
             <svg viewBox="0 0 32 32" aria-hidden="true" className="h-8 w-8">
               <path
@@ -308,7 +308,7 @@ export default function Home() {
               in the dust.
             </p>
           </li>
-        </ul>
+        </ul> */}
       </div>
     </>
   );

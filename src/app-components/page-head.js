@@ -1,6 +1,19 @@
 //import CastleLogo from '../images/usace-logo.png';
+import { useConnect } from 'redux-bundler-hook';
 import { FcDam } from 'react-icons/fc';
+import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
+import { BsWater } from 'react-icons/bs';
 export default function PageHead({ title, subTitle }) {
+  const {
+    providerByRoute: provider,
+    providerLocationByRoute: location,
+    providerWatershedByRoute: watershed,
+  } = useConnect(
+    'selectProviderByRoute',
+    'selectProviderLocationByRoute',
+    'selectProviderWatershedByRoute'
+  );
+
   return (
     <div className="md:flex md:items-center md:justify-between md:space-x-5">
       <div className="flex items-center space-x-2">
@@ -12,11 +25,20 @@ export default function PageHead({ title, subTitle }) {
               src={CastleLogo}
               alt=""
             /> */}
-            {<FcDam size={50} />}
-            {/* <span
-              className="absolute inset-0 rounded-full shadow-inner"
-              aria-hidden="true"
-            /> */}
+
+            {provider && location?.attributes?.kind === 'PROJECT' ? (
+              <FcDam size={50} />
+            ) : !location && !watershed ? (
+              <HiOutlineBuildingOffice2 size={50} />
+            ) : (
+              <BsWater size={50} />
+            )}
+
+            {/* {provider && !location ? (
+              <HiOutlineBuildingOffice2 size={50} />
+            ) : (
+              <FcDam size={50} />
+            )} */}
           </div>
         </div>
         <div>

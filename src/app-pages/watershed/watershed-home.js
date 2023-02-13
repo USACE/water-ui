@@ -3,7 +3,7 @@ import { useConnect } from 'redux-bundler-hook';
 import Breadcrumb from '../../app-components/breadcrumb';
 import PageHead from '../../app-components/page-head';
 import MockDistrictMap from '../../images/mockup/map-district-focus.png';
-import SimpleStats from '../../app-components/simple-stats';
+import SimpleStats from '../../app-components/stats-simple';
 import { Helmet } from 'react-helmet-async';
 
 export default function WatershedHome() {

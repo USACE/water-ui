@@ -140,21 +140,15 @@ export default function SimpleHydrographChart() {
   // return <div id="container" style={{ width: '100%', height: '400px' }}></div>;
   return (
     <div>
-      <div className="h-20 overflow-scroll text-sm">
+      {/* <div className="h-20 overflow-scroll text-sm">
         {measurements && JSON.stringify(measurements)}
-      </div>
+      </div> */}
 
       <div className="w-full">
         {measurements && chartOptions && (
           <HighchartsReact highcharts={Highcharts} options={chartOptions} />
         )}
       </div>
-
-      {/* <img
-        src={SimpleStageHydrographChart}
-        className="w-full"
-        alt="Timeseries Chart"
-      /> */}
     </div>
   );
 }
