@@ -13,6 +13,7 @@
     "@usace/create-jwt-api-bundle": "^0.4.1-beta.0",
     "@usace/create-keycloak-auth-bundle": "^0.3.1-beta.1",
     "@usace/create-rest-bundle": "^0.3.1-beta.0",
+    "d3": "^7.8.2",
     "date-fns": "^2.29.3",
     "highcharts": "^10.3.2",
     "highcharts-react-official": "^3.1.0",

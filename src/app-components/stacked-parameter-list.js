@@ -47,7 +47,7 @@ export default function StackedParameterList({ parameters }) {
               <a href="/" className="block hover:bg-gray-50">
                 <div className="px-4 py-4 sm:px-6">
                   <div className="flex items-center justify-between">
-                    <p className="text-md font-lg truncate font-bold text-black">
+                    <p className="font-lg truncate text-lg font-semibold text-black">
                       {p.label}
                     </p>
                     <div className="ml-2 flex flex-shrink-0">
@@ -67,7 +67,6 @@ export default function StackedParameterList({ parameters }) {
                           aria-hidden="true"
                         />
                         <time dateTime={p.latest_time}>
-                          {/* {p.latest_time && parseISO(new Date(p.latest_time))} */}
                           {format(parseISO(p.latest_time), 'dd-LLL-yyyy @ p')}
                         </time>
                       </p>

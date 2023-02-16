@@ -20,7 +20,11 @@ cache.getAll().then((initialData) => {
   root.render(
     <ReduxBundlerProvider store={store}>
       <HelmetProvider>
-        <div role="presentation" onClick={getNavHelper(store.doUpdateUrl)}>
+        <div
+          role="presentation"
+          className="dark:bg-gray-800"
+          onClick={getNavHelper(store.doUpdateUrl)}
+        >
           <React.StrictMode>
             <App />
           </React.StrictMode>

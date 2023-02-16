@@ -23,7 +23,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
   /** Load specific timeseries ids into state when new configurations are loaded */
   useEffect(() => {
     const timeseriesIdArray = location?.timeseries
-      ? location.timeseries.map((ts) => {
+      ? location?.timeseries?.map((ts) => {
           return ts.tsid;
         })
       : [];
@@ -36,7 +36,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
     location &&
       timeseriesIds &&
       timeseriesIds.forEach((id) => {
-        //console.log(`fetching ${id}`);
+        // console.log(`fetching ${id}`);
         doProviderTimeseriesValuesFetchById({ timeseriesId: id, dateRange });
       });
   }, [location, timeseriesIds, dateRange, doProviderTimeseriesValuesFetchById]);
@@ -46,7 +46,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
     // Filter is down by the "timeseriesIds" array which only includes tsids for the
     // current location
 
-    console.log('--filtering timeseries values--');
+    // console.log('--filtering timeseries values--');
     const locationTsValues = timeSeriesValues.filter((v) =>
       timeseriesIds.includes(v.key)
     );
@@ -59,6 +59,12 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
   //console.log('--project-timeseries-charts--');
 
   useEffect(() => {
+    // bail if the required objects are not set
+    if (!location?.timeseries || !measurements?.length) {
+      //console.log('--bail--');
+      return;
+    }
+
     const FloodControlProjectChartSetup = [
       [{ tsLabel: 'Pool Elevation' }],
       [{ tsLabel: 'Storage' }],
@@ -88,6 +94,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
     let components = [];
 
     // // Loop over chartSetup array
+
     chartSetup.forEach((chartCfg, idx) => {
       let chartParams = [];
 
@@ -101,7 +108,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
         // Only continue if the timeseries label is available in the tsObj
         // for the current cfgObj.tsLabel (chart configuration label)
         // Ex: 'Pool Elevation'
-        if (_tsObj[cfgObj.tsLabel] && measurements.length) {
+        if (_tsObj[cfgObj.tsLabel] && measurements?.length) {
           const tsObj = _tsObj[cfgObj.tsLabel];
 
           const paramMeasurements = mapObjectArrayByKey(measurements, 'key')[

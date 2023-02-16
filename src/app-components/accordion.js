@@ -7,7 +7,7 @@ export default function Accordion({ sections }) {
       {sections &&
         sections.map((section) => (
           <Disclosure key={section.title} defaultOpen={section.defaultOpen}>
-            <Disclosure.Button className="text-md mb-2 flex w-full justify-between rounded bg-gray-200 px-4 py-2 text-left font-medium text-gray-900 hover:bg-gray-300 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75">
+            <Disclosure.Button className="text-md mb-1 flex w-full justify-between rounded bg-gray-200 px-4 py-2 text-left font-medium text-gray-900 hover:bg-gray-300 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75 ui-open:mb-0">
               {section.title}
               <ChevronRightIcon className="w-6 ui-open:rotate-90 ui-open:transform" />
             </Disclosure.Button>

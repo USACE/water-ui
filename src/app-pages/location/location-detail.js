@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import { useMemo } from 'react';
 import { useConnect } from 'redux-bundler-hook';
-import DamProfileMockup from '../../images/mockup/dam-profile-chart.png';
 import StackedParameterList from '../../app-components/stacked-parameter-list';
 import TabsComponent from '../../app-components/tabs';
 import PageWrapper from '../page-wrapper';
@@ -9,6 +9,8 @@ import SimpleTable from '../../app-components/table-simple';
 import LocationTimeseriesCharts from '../../app-components/charts/location-timeseries-charts';
 //import SimpleStats from '../../app-components/stats-simple';
 import StatsWIcon from '../../app-components/stats-with-icon';
+import DamProfileChart from '../../app-components/charts/dam-profile-chart/chart';
+import { HiOutlineArrowsExpand } from 'react-icons/hi';
 
 const Metadata = ({ metadata }) => {
   //convert object into list with key pairs
@@ -16,6 +18,7 @@ const Metadata = ({ metadata }) => {
     () => [
       { name: 'State', value: metadata?.state_name },
       { name: 'Provider', value: metadata?.provider_name },
+      { name: 'Project Purpose', value: metadata?.attributes?.project_purpose },
     ],
     [metadata]
   );
@@ -52,21 +55,27 @@ const Levels = ({ levels }) => {
   );
 };
 
-const DamProfileChart = () => {
-  return (
-    <img src={DamProfileMockup} className="w-full" alt="Dam Profile Chart" />
-  );
-};
+// const DamProfileChart = () => {
+//   return (
+//     <img src={DamProfileMockup} className="w-full" alt="Dam Profile Chart" />
+//   );
+// };
 
 export default function ProjectDetail() {
   const { providerLocationByRoute: location } = useConnect(
     'selectProviderLocationByRoute'
   );
 
+  const [expanded, setExpanded] = useState(false);
+
   const tabs = [
     {
       name: 'Dam Profile',
-      content: <DamProfileChart />,
+      content: (
+        <>
+          <DamProfileChart />
+        </>
+      ),
     },
 
     {
@@ -79,6 +88,11 @@ export default function ProjectDetail() {
     },
   ];
 
+  const handleExpandToggle = () => {
+    //alert('hello');
+    setExpanded(!expanded);
+  };
+
   // const stats = [
   //   { name: 'Flood Storage Utilized', stat: '1%' },
   //   { name: 'Conservation Storage Utilized', stat: '1%' },
@@ -87,6 +101,19 @@ export default function ProjectDetail() {
   //   { name: 'Discharge', stat: 447 },
   // ];
 
+  const ToggleExpandButton = () => {
+    return (
+      <div className="hidden w-full bg-gray-100 lg:flex ">
+        <HiOutlineArrowsExpand
+          size={32}
+          title="Expand or Collapse this section"
+          className="-mb-0 ml-auto cursor-pointer text-gray-400 hover:text-gray-900"
+          onClick={handleExpandToggle}
+        />
+      </div>
+    );
+  };
+
   return (
     <PageWrapper
       title={location?.attributes.public_name}
@@ -94,25 +121,28 @@ export default function ProjectDetail() {
     >
       <StatsWIcon />
       {/* <SimpleStats stats={stats} title="" /> */}
-      <div className="mt-8 flex-none md:gap-x-8 lg:flex">
-        <div className="flex-auto lg:w-2/3">
-          {location?.attributes.kind === 'PROJECT' ? (
-            <TabsComponent tabs={tabs} />
-          ) : (
+      <div
+        className={`mt-8 md:gap-x-8 ${expanded ? 'lg:flex-wrap' : 'lg:flex'}`}
+      >
+        <div className={`flex-auto ${expanded ? 'lg:w-full' : 'lg:w-2/4'}`}>
+          <ToggleExpandButton />
+
+          {location?.attributes?.kind === 'PROJECT' ? (
             <>
-              {/* <SimpleHydrographChart /> */}
-              <LocationTimeseriesCharts location={location} />
-              {/* <SynchronizedCharts /> */}
+              <TabsComponent tabs={tabs} />
             </>
+          ) : (
+            location && <LocationTimeseriesCharts location={location} />
           )}
           {/* {location && location.timeseries && (
             <StackedParameterList parameters={location.timeseries} />
           )} */}
-          {/* <div className="h-20 bg-blue-100">
-            <SynchronizedCharts />
-          </div> */}
         </div>
-        <div className="flex-auto bg-white p-0 lg:w-1/3">
+        <div
+          className={`flex-auto bg-white p-0 ${
+            expanded ? 'lg:w-full' : 'lg:w-1/4'
+          }`}
+        >
           <Accordion
             sections={[
               {
@@ -126,8 +156,10 @@ export default function ProjectDetail() {
                 title: 'Metadata',
                 content: <Metadata metadata={location} />,
               },
-              { title: 'Location Data', content: JSON.stringify(location) },
-              { title: 'Timeseries', content: 'sample data' },
+              {
+                title: 'Location Data',
+                content: JSON.stringify(location?.geometry),
+              },
               {
                 title: 'Levels',
                 content: <Levels levels={location?.levels} />,
@@ -138,7 +170,6 @@ export default function ProjectDetail() {
               },
             ]}
           />
-          {/* <CardSimple title="test">{JSON.stringify(location)}</CardSimple> */}
         </div>
       </div>
     </PageWrapper>

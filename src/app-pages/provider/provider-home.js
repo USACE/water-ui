@@ -10,14 +10,52 @@ export default function ProviderHome() {
   const {
     pathname,
     providerByRoute: provider,
+    providerItems: providers,
     providerLocationsItems: locations,
     providerWatershedsItems: watersheds,
   } = useConnect(
     'selectPathname',
+    'selectProviderItems',
     'selectProviderByRoute',
     'selectProviderLocationsItems',
     'selectProviderWatershedsItems'
   );
+
+  const TableLink = ({ href, title }) => {
+    return (
+      <a className="hover:underline" href={href}>
+        {title}
+      </a>
+    );
+  };
+
+  const MockStorage = () => {
+    return <>{parseInt(Math.floor(Math.random() * (15 - 2 + 1) + 2)) + '%'}</>;
+  };
+
+  const MscDistrictsTable = ({ mscSlug }) => {
+    const districts = providers.filter((p) => p.parent_provider === mscSlug);
+    return districts?.length ? (
+      <SimpleTable
+        headers={['District', 'Flood Storage Utilized']}
+        items={districts}
+        itemFields={[
+          {
+            key: 'code',
+            render: (p) => {
+              return (
+                <TableLink
+                  title={p.name}
+                  href={''.concat('/overview/', `${p.slug}`)}
+                />
+              );
+            },
+          },
+          { key: 'slug', render: MockStorage },
+        ]}
+      />
+    ) : null;
+  };
 
   const provider_projects = locations.filter(
     (location) => location.attributes.kind === 'PROJECT'
@@ -30,18 +68,6 @@ export default function ProviderHome() {
     { name: 'Flood Storage Utilized', stat: '1%' },
   ];
 
-  const WatershedLink = ({ href, title }) => {
-    return (
-      <a className="hover:underline" href={href}>
-        {title}
-      </a>
-    );
-  };
-
-  const MockStorage = () => {
-    return <>{parseInt(Math.floor(Math.random() * (15 - 2 + 1) + 2)) + '%'}</>;
-  };
-
   return (
     <PageWrapper title={provider?.name} subTitle="SubTitle">
       {/* <div className=""> */}
@@ -52,6 +78,9 @@ export default function ProviderHome() {
         <div className="w-full flex-auto lg:w-1/3">
           {/* <CardSimple title="Watersheds"> */}
           {/* <h4 className="py-2 text-xl font-bold">Watersheds</h4> */}
+          {provider?.type === 'msc' && (
+            <MscDistrictsTable mscSlug={provider?.slug} />
+          )}
           <SimpleTable
             headers={['Watershed', 'Flood Storage Utilized']}
             items={watersheds}
@@ -60,7 +89,7 @@ export default function ProviderHome() {
                 key: 'code',
                 render: (watershed) => {
                   return (
-                    <WatershedLink
+                    <TableLink
                       title={watershed.code}
                       href={''.concat(
                         pathname,
