@@ -1,65 +1,14 @@
 import { useState } from 'react';
-import { useMemo } from 'react';
 import { useConnect } from 'redux-bundler-hook';
-import StackedParameterList from '../../app-components/stacked-parameter-list';
 import TabsComponent from '../../app-components/tabs';
 import PageWrapper from '../page-wrapper';
-import Accordion from '../../app-components/accordion';
-import SimpleTable from '../../app-components/table-simple';
 import LocationTimeseriesCharts from '../../app-components/charts/location-timeseries-charts';
 //import SimpleStats from '../../app-components/stats-simple';
 import StatsWIcon from '../../app-components/stats-with-icon';
 import DamProfileChart from '../../app-components/charts/dam-profile-chart/chart';
 import { HiOutlineArrowsExpand } from 'react-icons/hi';
-
-const Metadata = ({ metadata }) => {
-  //convert object into list with key pairs
-  const meta_array = useMemo(
-    () => [
-      { name: 'State', value: metadata?.state_name },
-      { name: 'Provider', value: metadata?.provider_name },
-      { name: 'Project Purpose', value: metadata?.attributes?.project_purpose },
-    ],
-    [metadata]
-  );
-
-  return (
-    <SimpleTable
-      headers={['Name', 'Value']}
-      items={meta_array}
-      itemFields={[{ key: 'name' }, { key: 'value' }]}
-    />
-  );
-};
-const Levels = ({ levels }) => {
-  console.log('hello from levels');
-  return (
-    <SimpleTable
-      headers={['Label', 'Parameter', 'Value', 'Units']}
-      items={levels}
-      itemFields={[
-        {
-          key: 'label',
-        },
-        {
-          key: 'parameter',
-        },
-        {
-          key: 'latest_value',
-        },
-        {
-          key: 'units',
-        },
-      ]}
-    />
-  );
-};
-
-// const DamProfileChart = () => {
-//   return (
-//     <img src={DamProfileMockup} className="w-full" alt="Dam Profile Chart" />
-//   );
-// };
+import { ProjectFloodStoragePercent } from '../../helpers/project-helper';
+import LocationSideBarAccordian from '../../app-components/location-detail/sidebar-accordian';
 
 export default function ProjectDetail() {
   const { providerLocationByRoute: location } = useConnect(
@@ -71,11 +20,7 @@ export default function ProjectDetail() {
   const tabs = [
     {
       name: 'Dam Profile',
-      content: (
-        <>
-          <DamProfileChart />
-        </>
-      ),
+      content: <DamProfileChart />,
     },
 
     {
@@ -120,14 +65,16 @@ export default function ProjectDetail() {
       subTitle={`provided by ${location?.provider_name}`}
     >
       <StatsWIcon />
+      {ProjectFloodStoragePercent(500, 200, 250)}
       {/* <SimpleStats stats={stats} title="" /> */}
       <div
         className={`mt-8 md:gap-x-8 ${expanded ? 'lg:flex-wrap' : 'lg:flex'}`}
       >
-        <div className={`flex-auto ${expanded ? 'lg:w-full' : 'lg:w-2/4'}`}>
+        <div className={`flex-auto ${expanded ? 'lg:w-full' : 'lg:w-3/5'}`}>
           <ToggleExpandButton />
 
-          {location?.attributes?.kind === 'PROJECT' ? (
+          {location?.attributes?.kind === 'PROJECT' &&
+          location?.levels?.length ? (
             <>
               <TabsComponent tabs={tabs} />
             </>
@@ -140,36 +87,10 @@ export default function ProjectDetail() {
         </div>
         <div
           className={`flex-auto bg-white p-0 ${
-            expanded ? 'lg:w-full' : 'lg:w-1/4'
+            expanded ? 'lg:w-full' : 'lg:w-1/5'
           }`}
         >
-          <Accordion
-            sections={[
-              {
-                title: 'Current Values',
-                content: (
-                  <StackedParameterList parameters={location?.timeseries} />
-                ),
-                defaultOpen: true,
-              },
-              {
-                title: 'Metadata',
-                content: <Metadata metadata={location} />,
-              },
-              {
-                title: 'Location Data',
-                content: JSON.stringify(location?.geometry),
-              },
-              {
-                title: 'Levels',
-                content: <Levels levels={location?.levels} />,
-              },
-              {
-                title: 'Documents',
-                content: 'docs here',
-              },
-            ]}
-          />
+          <LocationSideBarAccordian location={location} />
         </div>
       </div>
     </PageWrapper>

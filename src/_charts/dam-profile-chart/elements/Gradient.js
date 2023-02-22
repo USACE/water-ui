@@ -2,12 +2,12 @@ import * as d3 from 'd3';
 import { straightLine } from './Lines.js';
 
 const Gradient = (svg, damScale, min, max) => {
-  console.log('--Gradient--');
-  console.log(`svg: ${svg}`);
-  console.log(`damScale: ${damScale}`);
-  console.log(`min: ${min}`);
-  console.log(`max: ${max}`);
-  console.log('---');
+  // console.log('--Gradient--');
+  // console.log(`svg: ${svg}`);
+  // console.log(`damScale: ${damScale}`);
+  // console.log(`min: ${min}`);
+  // console.log(`max: ${max}`);
+  // console.log('---');
   const colors = [
     { level: 0.0, color: 'red' },
     { level: 0.2, color: 'yellow' },
@@ -17,7 +17,6 @@ const Gradient = (svg, damScale, min, max) => {
   const labels = [0, 20, 40, 60, 80, 100];
 
   if (!isNaN(max) && !isNaN(min)) {
-    console.log('hello there');
     const bottom = damScale(min);
     const top = damScale(max);
     // gradientScale:
