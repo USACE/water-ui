@@ -4,6 +4,10 @@ import PageHead from '../app-components/page-head';
 
 export default function PageWrapper({ title, subTitle, children }) {
   const defaultTitle = 'Water Data - U.S. Army Corps of Engineers';
+  if (!title) {
+    title = 'Loading...';
+    subTitle = null;
+  }
   return (
     <div className="mx-auto px-4 pb-4 dark:bg-gray-800 lg:max-w-screen-2xl lg:px-8">
       <Helmet

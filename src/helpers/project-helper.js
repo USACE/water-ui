@@ -6,6 +6,9 @@
  * @return {Number}          The percent of Flood Storage Utilized
  */
 const ProjectFloodStoragePercent = (topFlood, bottomFlood, currentVal) => {
+  if (!topFlood || !bottomFlood || !currentVal) {
+    return null;
+  }
   return (1 - (topFlood - currentVal) / (topFlood - bottomFlood)) * 100;
 };
 

@@ -42,7 +42,10 @@ export default function PageHead({ title, subTitle }) {
           </div>
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h1
+            aria-level="1"
+            className="text-3xl font-bold text-gray-900 dark:text-white"
+          >
             {title}
           </h1>
           <p className="text-sm font-medium text-gray-500">

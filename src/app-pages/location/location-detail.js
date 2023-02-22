@@ -4,11 +4,10 @@ import TabsComponent from '../../app-components/tabs';
 import PageWrapper from '../page-wrapper';
 import LocationTimeseriesCharts from '../../app-components/charts/location-timeseries-charts';
 //import SimpleStats from '../../app-components/stats-simple';
-import StatsWIcon from '../../app-components/stats-with-icon';
 import DamProfileChart from '../../app-components/charts/dam-profile-chart/chart';
 import { HiOutlineArrowsExpand } from 'react-icons/hi';
-import { ProjectFloodStoragePercent } from '../../helpers/project-helper';
 import LocationSideBarAccordian from '../../app-components/location-detail/sidebar-accordian';
+import ProjectStats from '../../app-components/location-detail/project-stats';
 
 export default function ProjectDetail() {
   const { providerLocationByRoute: location } = useConnect(
@@ -17,10 +16,27 @@ export default function ProjectDetail() {
 
   const [expanded, setExpanded] = useState(false);
 
+  const isProject =
+    location?.attributes?.kind === 'PROJECT' && location?.levels?.length;
+
+  // const ProjectStatusDescription = () => (
+  //   <div className="sr-only bg-red-100 p-10" aria-label="Project Status">
+  //     Dewey Lake is located in the state of Kentucky. The current pool elevation
+  //     is 646.35 ft. The lake has decreased in elevation 0.37 ft in the last 24
+  //     hours. The project is currently utilizing 3.3% of it's total flood
+  //     storage.
+  //   </div>
+  // );
+
   const tabs = [
     {
       name: 'Dam Profile',
-      content: <DamProfileChart />,
+      content: (
+        <>
+          {/* <ProjectStatusDescription /> */}
+          <DamProfileChart />
+        </>
+      ),
     },
 
     {
@@ -64,8 +80,8 @@ export default function ProjectDetail() {
       title={location?.attributes.public_name}
       subTitle={`provided by ${location?.provider_name}`}
     >
-      <StatsWIcon />
-      {ProjectFloodStoragePercent(500, 200, 250)}
+      {/* {isProject && <ProjectStats location={location} />} */}
+
       {/* <SimpleStats stats={stats} title="" /> */}
       <div
         className={`mt-8 md:gap-x-8 ${expanded ? 'lg:flex-wrap' : 'lg:flex'}`}
@@ -73,10 +89,14 @@ export default function ProjectDetail() {
         <div className={`flex-auto ${expanded ? 'lg:w-full' : 'lg:w-3/5'}`}>
           <ToggleExpandButton />
 
-          {location?.attributes?.kind === 'PROJECT' &&
-          location?.levels?.length ? (
+          {isProject ? (
             <>
-              <TabsComponent tabs={tabs} />
+              <div className="mb-5">
+                {isProject && <ProjectStats location={location} />}
+              </div>
+              <div className="">
+                <TabsComponent tabs={tabs} />
+              </div>
             </>
           ) : (
             location && <LocationTimeseriesCharts location={location} />
@@ -85,6 +105,7 @@ export default function ProjectDetail() {
             <StackedParameterList parameters={location.timeseries} />
           )} */}
         </div>
+
         <div
           className={`flex-auto bg-white p-0 ${
             expanded ? 'lg:w-full' : 'lg:w-1/5'

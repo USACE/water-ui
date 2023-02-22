@@ -15,6 +15,7 @@ import Info from './elements/Info.js';
 
 export default function DamProfileChart(info, dom) {
   const {
+    infoText,
     pool,
     tail,
     inflow,
@@ -135,5 +136,5 @@ export default function DamProfileChart(info, dom) {
 
   Levels(svg, damScale, damtop, dambottom, levels);
 
-  Info(svg);
+  Info(svg, infoText);
 }

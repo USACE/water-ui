@@ -33,6 +33,7 @@ export default function ReactDamProfileChart() {
       //   { name: 'Top of Flood', value: 690 },
       //   { name: 'Streambed', value: 500 },
       // ],
+      infoText: location?.attributes.public_name || null,
       levels: _levels,
       damtop: levelsMap['Top of Dam']?.latest_value || null,
       dambottom: levelsMap['Streambed']?.latest_value || null,
@@ -56,9 +57,10 @@ export default function ReactDamProfileChart() {
   return (
     <>
       {/* <img src={DamProfileMockup} className="w-full" alt="Dam Profile Chart" /> */}
-      <div className="dark:bg-orange-50 dark:invert">
+      <div className="dark:bg-orange-50 dark:invert" aria-details="hello there">
         <svg
           ref={ref}
+          aria-hidden={true}
           preserveAspectRatio="xMinYMin meet"
           viewBox="0 0 1240 650"
         ></svg>

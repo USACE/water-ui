@@ -1,40 +1,40 @@
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
-import { CursorArrowRaysIcon } from '@heroicons/react/24/outline';
-import { BiWater } from 'react-icons/bi';
-import { MdWaterDrop } from 'react-icons/md';
+// import { CursorArrowRaysIcon } from '@heroicons/react/24/outline';
+// import { BiWater } from 'react-icons/bi';
+// import { MdWaterDrop } from 'react-icons/md';
 
-const stats = [
-  {
-    id: 1,
-    name: 'Flood Storage Utilized',
-    stat: '2.9%',
-    icon: BiWater,
-    change: '0.8%',
-    changeType: 'increase',
-  },
-  {
-    id: 2,
-    name: 'Conservation Storage Utilized',
-    stat: '58.16%',
-    icon: MdWaterDrop,
-    change: '5.4%',
-    changeType: 'increase',
-  },
-  {
-    id: 3,
-    name: 'undecided stat',
-    stat: '24.57%',
-    icon: CursorArrowRaysIcon,
-    change: '3.2%',
-    changeType: 'decrease',
-  },
-];
+// const stats = [
+//   {
+//     id: 1,
+//     name: 'Flood Storage Utilized',
+//     stat: '2.9%',
+//     icon: BiWater,
+//     change: '0.8%',
+//     changeType: 'increase',
+//   },
+//   {
+//     id: 2,
+//     name: 'Conservation Storage Utilized',
+//     stat: '58.16%',
+//     icon: MdWaterDrop,
+//     change: '5.4%',
+//     changeType: 'increase',
+//   },
+//   {
+//     id: 3,
+//     name: 'undecided stat',
+//     stat: '24.57%',
+//     icon: CursorArrowRaysIcon,
+//     change: '3.2%',
+//     changeType: 'decrease',
+//   },
+// ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function StatsWIcon() {
+export default function StatsWIcon({ stats }) {
   return (
     <div>
       <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">

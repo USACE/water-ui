@@ -6,10 +6,10 @@ const Info = (svg, text) => {
     .append('text')
     .attr('text-anchor', 'end')
     .attr('dx', 1230)
-    .attr('dy', 15)
+    .attr('dy', 20)
     .attr('class', 'infoText')
     .attr('font-family', 'sans-serif')
-    .attr('font-size', '1em')
+    .attr('font-size', '1.2em')
     .text(`${text || ''} ${new Date().toUTCString()}`);
 };
 

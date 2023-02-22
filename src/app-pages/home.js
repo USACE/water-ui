@@ -51,7 +51,7 @@ export default function Home() {
         >
           {/* NOTE: relative and z index styles below are needed to keep the 
           search results above other content which contains opacity adjustments */}
-          <div className="relative z-50 m-auto w-full rounded-md border-2 border-gray-400 bg-gray-300 p-4 sm:w-4/5 md:w-3/5 lg:w-2/5">
+          <div className="relative z-10 m-auto w-full rounded-md border-2 border-gray-400 bg-gray-300 p-4 sm:w-4/5 md:w-3/5 lg:w-2/5">
             <div className="relative shadow-lg">
               <LocationCombobox
                 label=""
