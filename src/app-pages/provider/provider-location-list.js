@@ -22,11 +22,20 @@ export default function ProviderLocationList() {
     );
   };
 
+  const allowedKinds = ['SITE', 'STREAM_LOCATION', 'PROJECT', 'BASIN'];
+
+  const filteredLocations = locations.filter(
+    (l) =>
+      l.attributes.public_name &&
+      l.state !== '00' &&
+      allowedKinds.includes(l.attributes.kind)
+  );
+
   return (
     <PageWrapper title={`${provider?.name} Locations`} subTitle="SubTitle">
       <SimpleTable
         headers={['Name', 'Kind', 'State']}
-        items={locations}
+        items={filteredLocations}
         itemFields={[
           {
             key: 'slug',

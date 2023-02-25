@@ -37,7 +37,7 @@ function classNames(...classes) {
 export default function StatsWIcon({ stats }) {
   return (
     <div>
-      <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <dl className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {stats.map((item) => (
           <div
             key={item.id}
@@ -51,7 +51,7 @@ export default function StatsWIcon({ stats }) {
                 {item.name}
               </p>
             </dt>
-            <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">
+            <dd className="ml-16 flex items-baseline pb-6">
               <p className="text-2xl font-semibold text-gray-900">
                 {item.stat}
               </p>
@@ -68,19 +68,20 @@ export default function StatsWIcon({ stats }) {
                     className="h-5 w-5 flex-shrink-0 self-center text-green-500"
                     aria-hidden="true"
                   />
-                ) : (
+                ) : item.changeType === 'decrease' ? (
                   <ArrowDownIcon
                     className="h-5 w-5 flex-shrink-0 self-center text-red-500"
                     aria-hidden="true"
                   />
-                )}
+                ) : null}
 
                 <span className="sr-only">
                   {' '}
                   {item.changeType === 'increase'
-                    ? 'Increased'
-                    : 'Decreased'}{' '}
-                  by{' '}
+                    ? 'Increased by '
+                    : item.changeType === 'decrease'
+                    ? 'Decreased by '
+                    : null}
                 </span>
                 {item.change}
               </p>

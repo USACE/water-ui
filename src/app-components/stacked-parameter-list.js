@@ -86,14 +86,16 @@ export default function StackedParameterList({ parameters }) {
                                 aria-hidden="true"
                               />
                             )}
-                            <span className="">
+                            {/* <span className="">
                               {' '}
                               {p.delta24hr > 0
                                 ? '24hr increase'
                                 : '24hr decrease'}{' '}
                               of
+                            </span> */}
+                            <span className="ml-1" aria-label="24 hour change">
+                              {p.delta24hr}
                             </span>
-                            <span className="ml-1">{p.delta24hr}</span>
                           </>
                         ) : null}
                       </p>

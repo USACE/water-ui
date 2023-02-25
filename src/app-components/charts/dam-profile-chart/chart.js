@@ -18,9 +18,20 @@ export default function ReactDamProfileChart() {
       return;
     }
 
-    const _levels = location?.levels?.map((lvl) => {
-      return { name: lvl.label, value: lvl.latest_value };
-    });
+    const allowedLevels = [
+      'Streambed',
+      'Top of Dam',
+      'Top of Surcharge',
+      'Top of Flood',
+      'Bottom of Flood',
+      'Bottom of Conservation',
+    ];
+
+    const _levels = location?.levels
+      ?.filter((lvl) => allowedLevels.includes(lvl.label))
+      .map((lvl) => {
+        return { name: lvl.label, value: lvl.latest_value };
+      });
 
     const levelsMap = mapObjectArrayByKey(location?.levels, 'label');
     // console.log('-----');

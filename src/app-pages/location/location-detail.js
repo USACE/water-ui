@@ -10,11 +10,21 @@ import LocationSideBarAccordian from '../../app-components/location-detail/sideb
 import ProjectStats from '../../app-components/location-detail/project-stats';
 
 export default function ProjectDetail() {
-  const { providerLocationByRoute: location } = useConnect(
-    'selectProviderLocationByRoute'
-  );
+  const { providerLocationByRoute: location, providerLocationIsLoading } =
+    useConnect(
+      'selectProviderLocationByRoute',
+      'selectProviderLocationIsLoading'
+    );
 
   const [expanded, setExpanded] = useState(false);
+
+  if (!location && !providerLocationIsLoading) {
+    return (
+      <PageWrapper title="404 - Location Not Found" subTitle="">
+        <div className="mx-auto h-96">Unable to find your location.</div>
+      </PageWrapper>
+    );
+  }
 
   const isProject =
     location?.attributes?.kind === 'PROJECT' && location?.levels?.length;
@@ -64,7 +74,7 @@ export default function ProjectDetail() {
 
   const ToggleExpandButton = () => {
     return (
-      <div className="hidden w-full bg-gray-100 lg:flex ">
+      <div className="mb-2 hidden w-full lg:flex ">
         <HiOutlineArrowsExpand
           size={32}
           title="Expand or Collapse this section"
@@ -84,7 +94,7 @@ export default function ProjectDetail() {
 
       {/* <SimpleStats stats={stats} title="" /> */}
       <div
-        className={`mt-8 md:gap-x-8 ${expanded ? 'lg:flex-wrap' : 'lg:flex'}`}
+        className={`mt-0 md:gap-x-8 ${expanded ? 'lg:flex-wrap' : 'lg:flex'}`}
       >
         <div className={`flex-auto ${expanded ? 'lg:w-full' : 'lg:w-3/5'}`}>
           <ToggleExpandButton />
