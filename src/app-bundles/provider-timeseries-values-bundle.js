@@ -1,5 +1,5 @@
 import createRestBundle from '@usace/create-rest-bundle';
-//import { subDays } from 'date-fns';
+import { subDays } from 'date-fns';
 
 const apiUrl = process.env.REACT_APP_MOCK_API_URL;
 
@@ -23,17 +23,16 @@ export default createRestBundle({
       ({ timeseriesId, dateRange }) =>
       ({ dispatch, store, apiGet }) => {
         dispatch({ type: 'TIMESERIES_FETCH_BY_ID_START', payload: {} });
-        //const [after, before] = dateRange;
+        const [begin, end] = dateRange;
 
-        //const isoAfter = after ? after.toISOString() : new Date();
-        // const isoBefore = before
-        //   ? before.toISOString()
-        //   : subDays(new Date(), 3);
+        const isoAfter = begin ? begin.toISOString() : new Date();
+        const isoBefore = end ? end.toISOString() : subDays(new Date(), 7);
         const provider = store['selectProviderByRoute']();
 
         // const url = `/timeseries/${timeseriesId}/measurements?after=${isoAfter}&before=${isoBefore}`;
-        const url = `${apiUrl}/providers/${provider?.slug}/timeseries/values?key=${timeseriesId}`;
-        //const url = `${apiUrl}:8080/providers/${provider?.slug}/timeseries?name=${timeseriesId}`;
+        const url = `${apiUrl}:8080/providers/${provider?.slug}/timeseries?name=${timeseriesId}&begin=${isoAfter}&end=${isoBefore}`;
+        // const url = `${apiUrl}/providers/${provider?.slug}/timeseries/values?key=${timeseriesId}`;
+        // const url = `${apiUrl}:8080/providers/${provider?.slug}/timeseries?name=${timeseriesId}`;
         const flags = store['selectProviderTimeseriesValuesFlags']();
         const itemsById = store['selectProviderTimeseriesValuesItemsObject']();
         let fetchCount = store['selectProviderTimeseriesValuesFetchCount']();

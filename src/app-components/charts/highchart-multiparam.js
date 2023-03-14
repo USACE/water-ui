@@ -76,9 +76,11 @@ export default function MultiParamChart({ chartParams }) {
         yAxis: idx,
         color: isStorage ? '#4d4b46' : null,
         fillOpacity: isStorage ? 0.1 : null,
-        data: chartParamObj?.values?.map((v) => {
-          return [new Date(v[0]).getTime(), v[1]];
-        }),
+        data: chartParamObj?.values
+          ?.filter((v) => v[1] !== 0)
+          .map((v) => {
+            return [new Date(v[0]).getTime(), v[1]];
+          }),
         marker: {
           enabled: true,
           radius: 2,

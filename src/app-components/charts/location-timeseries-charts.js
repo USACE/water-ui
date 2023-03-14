@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 import { subDays } from 'date-fns';
 import MultiParamChart from './highchart-multiparam';
+import DateLookbackSelector from './date-lookback-selector';
 
 export default function ProjectTimeseriesCharts({ location: _location }) {
   const {
@@ -18,7 +19,10 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
   const [timeseriesIds, setTimeseriesId] = useState([]);
   const [measurements, setMeasurements] = useState([]);
   const [chartComponents, setChartComponents] = useState([]);
-  const [dateRange] = useState([subDays(new Date(), 3), new Date()]);
+  const [dateRange, setDateRange] = useState([
+    subDays(new Date(), 7),
+    new Date(),
+  ]);
 
   /** Load specific timeseries ids into state when new configurations are loaded */
   useEffect(() => {
@@ -91,7 +95,9 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
       return mappedObj;
     };
 
-    let components = [];
+    let components = [
+      <DateLookbackSelector key="selector" onInputValueChange={setDateRange} />,
+    ];
 
     // // Loop over chartSetup array
 
@@ -117,8 +123,8 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
           //   console.log('--paramMeasurements--');
           //   console.log(paramMeasurements);
 
-          //   console.log('--values--');
-          //   console.log(paramMeasurements?.values);
+          console.log(`--values for ${tsObj.tsid}--`);
+          console.log(paramMeasurements?.values);
 
           // inject the values from the measurements payload into the tsObj
           tsObj['values'] = paramMeasurements?.values;

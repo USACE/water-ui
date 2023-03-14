@@ -15,8 +15,8 @@ export default createRestBundle({
   staleAfter: 0, //5min
   persist: false,
   routeParam: 'provider_slug',
-  // getTemplate: `${apiUrl}/locations?provider=:provider_slug`,
   getTemplate: `${apiUrl}/providers/:provider_slug/locations`,
+  //getTemplate: `http://localhost:8080/providers/:provider_slug/locations`,
   fetchActions: ['URL_UPDATED'],
   urlParamSelectors: [],
   forceFetchActions: ['URL_UPDATED'],

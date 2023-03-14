@@ -18,7 +18,11 @@ const HighchartsWrapper = (props) => {
     chart: {
       //type: props.chartOptions?.chart?.type || 'spline',
       height: props.chartOptions?.chart?.height || 300,
+      zoomType: 'x',
+      panning: true,
+      panKey: 'shift',
     },
+
     title: props.chartOptions?.title || {
       text: 'No title set',
       align: 'center',
