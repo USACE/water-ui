@@ -56,7 +56,16 @@ export default function MultiParamChart({ chartParams }) {
     let chartTitle = null;
     let chartSeries = [];
     let yAxis = [];
+    let yMin = null;
+    let yMax = null;
+
     //setChartOptions(defaultChartOptions);
+
+    const allEqual = (arr) => arr.every((val) => val === arr[0]);
+
+    const equalUnits = allEqual(chartParams?.map((item) => item?.units));
+
+    console.log(equalUnits);
 
     // Loop over each tsLabel (aka descriptive parameter) for each chart
     // ------------------------
@@ -69,6 +78,22 @@ export default function MultiParamChart({ chartParams }) {
         ? chartTitle.concat(' / ', chartParamObj?.label)
         : chartParamObj?.label;
 
+      // setup data as array of arrays [[time, value], [time, value]]
+      const data = chartParamObj?.values?.map((v) => {
+        return [new Date(v[0]).getTime(), v[1]];
+      });
+
+      // determine yAxis miniumum value
+      const minValue = data && Math.min(...data?.map((item) => item[1]));
+      if (yMin === null || minValue < yMin) {
+        yMin = minValue;
+      }
+      // determine yAxis max value
+      const maxValue = data && Math.max(...data?.map((item) => item[1]));
+      if (yMax === null || maxValue > yMax) {
+        yMax = maxValue;
+      }
+
       // console.log(`pushing data to chart series for ${chartParamObj?.label}`);
       chartSeries.push({
         name: chartParamObj?.label,
@@ -76,11 +101,7 @@ export default function MultiParamChart({ chartParams }) {
         yAxis: idx,
         color: isStorage ? '#4d4b46' : null,
         fillOpacity: isStorage ? 0.1 : null,
-        data: chartParamObj?.values
-          ?.filter((v) => v[1] !== 0)
-          .map((v) => {
-            return [new Date(v[0]).getTime(), v[1]];
-          }),
+        data: data,
         marker: {
           enabled: true,
           radius: 2,
@@ -89,9 +110,14 @@ export default function MultiParamChart({ chartParams }) {
           description: `${chartParamObj?.label} measured in ${chartParamObj?.units}`,
         },
       });
+
       yAxis.push({
         title: { text: chartParamObj?.label + ` (${chartParamObj?.units})` },
         opposite: idx > 0,
+        // force yaxis to match if two parameters have same units
+        min: chartParams.length > 1 && equalUnits ? yMin : null,
+        max: chartParams.length > 1 && equalUnits ? yMax : null,
+        tickInterval: null,
         labels: {
           format: `{value} ${chartParamObj?.units}`,
         },

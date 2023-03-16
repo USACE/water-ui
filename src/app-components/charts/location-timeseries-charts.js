@@ -70,9 +70,10 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
     }
 
     const FloodControlProjectChartSetup = [
-      [{ tsLabel: 'Pool Elevation' }],
+      [{ tsLabel: 'Pool Elevation' }, { tsLabel: 'Pool Stage' }],
       [{ tsLabel: 'Storage' }],
       [{ tsLabel: 'Pool Inflow' }, { tsLabel: 'Tailwater Outflow' }],
+      [{ tsLabel: 'Tailwater Elevation' }, { tsLabel: 'Tailwater Stage' }],
       [{ tsLabel: 'Tailwater Temperature' }],
     ];
 

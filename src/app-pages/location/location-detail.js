@@ -5,7 +5,7 @@ import PageWrapper from '../page-wrapper';
 import LocationTimeseriesCharts from '../../app-components/charts/location-timeseries-charts';
 //import SimpleStats from '../../app-components/stats-simple';
 import DamProfileChart from '../../app-components/charts/dam-profile-chart/chart';
-import { HiOutlineArrowsExpand } from 'react-icons/hi';
+import { BiExpandHorizontal } from 'react-icons/bi';
 import LocationSideBarAccordian from '../../app-components/location-detail/sidebar-accordian';
 import ProjectStats from '../../app-components/location-detail/project-stats';
 
@@ -61,7 +61,12 @@ export default function ProjectDetail() {
 
   const handleExpandToggle = () => {
     //alert('hello');
+    // console.log(`setting value of expanded to ${!expanded}`);
     setExpanded(!expanded);
+    // this is a hack to get the charts to refresh and resize
+    // console.log('--firing resize--');
+    window.dispatchEvent(new Event('resize'));
+    return;
   };
 
   // const stats = [
@@ -75,10 +80,10 @@ export default function ProjectDetail() {
   const ToggleExpandButton = () => {
     return (
       <div className="mb-2 hidden w-full lg:flex ">
-        <HiOutlineArrowsExpand
+        <BiExpandHorizontal
           size={32}
           title="Expand or Collapse this section"
-          className="-mb-0 ml-auto cursor-pointer text-gray-400 hover:text-gray-900"
+          className="-mb-0 ml-auto cursor-pointer rounded-md border-2 border-gray-100 bg-white px-1 text-gray-400 shadow-md hover:text-gray-900"
           onClick={handleExpandToggle}
         />
       </div>
@@ -94,7 +99,9 @@ export default function ProjectDetail() {
 
       {/* <SimpleStats stats={stats} title="" /> */}
       <div
-        className={`mt-0 md:gap-x-8 ${expanded ? 'lg:flex-wrap' : 'lg:flex'}`}
+        className={`mt-0 duration-300 ease-in-out md:gap-x-8 ${
+          expanded ? 'lg:flex-wrap' : 'lg:flex'
+        }`}
       >
         <div className={`flex-auto ${expanded ? 'lg:w-full' : 'lg:w-3/5'}`}>
           <ToggleExpandButton />

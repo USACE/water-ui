@@ -18,10 +18,12 @@ const Levels = (svg, damScale, damTop, damBottom, levels = []) => {
 
   // Default Level Properties if not speficied
   const _levels = levels.map((l) => ({
-    side: 'left', // default; labels will be on left side of image
+    side: l.name === 'Top of Surcharge' ? 'right' : 'left', // default; labels will be on left side of image
     showLine: true,
     ...l,
   }));
+  console.log('--levels--');
+  console.log(levels);
 
   // reverse order sort
   var lineData = _levels.sort((a, b) => {

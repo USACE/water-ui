@@ -2,7 +2,7 @@
 import { useConnect } from 'redux-bundler-hook';
 import { FcDam } from 'react-icons/fc';
 import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
-import { BsWater } from 'react-icons/bs';
+//import { BsWater } from 'react-icons/bs';
 import { GrLocation } from 'react-icons/gr';
 export default function PageHead({ title, subTitle }) {
   const {
