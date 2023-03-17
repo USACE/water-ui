@@ -44,28 +44,14 @@ export default function MultiParamChart({ chartParams }) {
   // ####################################
 
   useEffect(() => {
-    //console.log('--highchart-multiparam--chart--start--');
-    // const mapObjectArrayByKey = (objectArray, key) => {
-    //   let mappedObj = {};
-    //   objectArray?.forEach((elem) => {
-    //     mappedObj[elem[key]] = elem;
-    //   });
-    //   return mappedObj;
-    // };
-
     let chartTitle = null;
     let chartSeries = [];
     let yAxis = [];
     let yMin = null;
     let yMax = null;
 
-    //setChartOptions(defaultChartOptions);
-
     const allEqual = (arr) => arr.every((val) => val === arr[0]);
-
     const equalUnits = allEqual(chartParams?.map((item) => item?.units));
-
-    console.log(equalUnits);
 
     // Loop over each tsLabel (aka descriptive parameter) for each chart
     // ------------------------
@@ -124,6 +110,41 @@ export default function MultiParamChart({ chartParams }) {
         accessibility: {
           description: `${chartParamObj?.label} measured in ${chartParamObj?.units}`,
         },
+        // plotBands: [
+        //   {
+        //     // Light air
+        //     from: 400,
+        //     to: 425,
+        //     color: 'rgba(68, 170, 213, 0.1)',
+
+        //     label: {
+        //       text: 'Flood Control Pool',
+        //       align: 'right',
+        //       x: -20,
+        //       style: {
+        //         color: '#369',
+        //       },
+        //     },
+        //   },
+        // ],
+        plotLines:
+          chartParamObj?.levels &&
+          chartParamObj?.levels.map((lvl) => {
+            return {
+              color: 'orange',
+              dashStyle: 'LongDash',
+              width: 2,
+              value: lvl?.latest_value,
+              // y: 20 /*moves label down*/,
+              // x: -20,
+              label: {
+                text: `${lvl?.label} (${lvl?.units})`,
+                align: 'left',
+                style: { color: 'orange' },
+              },
+            };
+          }),
+
         //tickInterval: tsObj?.parameter.toLowerCase() === 'flow' ? 50 : null,
       });
     });

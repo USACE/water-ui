@@ -14,28 +14,29 @@ export default function ProjectStats({ location }) {
     return;
   }
 
-  const levelsMap = mapObjectArrayByKey(location?.levels, 'label');
+  const levelsMap = mapObjectArrayByKey(location?.levels, 'slug');
   const timeseriesMap = mapObjectArrayByKey(location?.timeseries, 'label');
 
   // Flood Levels
-  const floodTop = levelsMap['Top of Flood']?.latest_value || null;
-  const floodBottom = levelsMap['Bottom of Flood']?.latest_value || null;
+  const floodTop = levelsMap['stor.top of flood']?.latest_value || null;
+  const floodBottom = levelsMap['stor.bottom of flood']?.latest_value || null;
   // Conservation Levels
-  const conTop = levelsMap['Top of Conservation']?.latest_value || null;
-  const conBottom = levelsMap['Bottom of Conservation']?.latest_value || null;
-  // Current Pool Value
-  const currentPoolElev = timeseriesMap['Pool Elevation']?.latest_value || null;
+  const conTop = levelsMap['stor.top of conservation']?.latest_value || null;
+  const conBottom =
+    levelsMap['stor.bottom of conservation']?.latest_value || null;
+  // Current Storage Value
+  const currentStorage = timeseriesMap['Storage']?.latest_value || null;
 
   const FloodStorageUtilized = ProjectFloodStoragePercent(
     floodTop,
     floodBottom,
-    currentPoolElev
+    currentStorage
   );
 
   const ConservationStorageUtilized = ProjectConservationStoragePercent(
     conTop,
     conBottom,
-    currentPoolElev
+    currentStorage
   );
 
   const stats = [

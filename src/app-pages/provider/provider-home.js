@@ -35,9 +35,10 @@ export default function ProviderHome() {
 
   const MscDistrictsTable = ({ mscSlug }) => {
     const districts = providers.filter((p) => p.parent_provider === mscSlug);
+
     return districts?.length ? (
       <SimpleTable
-        headers={['District', 'Flood Storage Utilized']}
+        headers={['Office', 'Flood Storage Utilized']}
         items={districts}
         itemFields={[
           {
@@ -78,7 +79,7 @@ export default function ProviderHome() {
         <div className="w-full flex-auto lg:w-1/3">
           {/* <CardSimple title="Watersheds"> */}
           {/* <h4 className="py-2 text-xl font-bold">Watersheds</h4> */}
-          {provider?.type === 'msc' && (
+          {(provider?.type === 'msc' || provider?.type === 'hq') && (
             <MscDistrictsTable mscSlug={provider?.slug} />
           )}
           <SimpleTable

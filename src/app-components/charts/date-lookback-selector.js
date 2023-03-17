@@ -22,9 +22,9 @@ export default function DateLookbackSelector({ onInputValueChange }) {
         <button
           className={`${
             option.value === daysBack
-              ? 'cursor-default bg-blue-300'
+              ? 'cursor-default bg-blue-200'
               : 'bg-gray-100'
-          } inline-flex items-center rounded-full px-2.5 py-0.5 text-sm font-medium text-gray-800 hover:bg-blue-300`}
+          } inline-flex items-center rounded-full px-2.5 py-0.5 text-sm font-medium text-gray-600 hover:bg-blue-300`}
           onClick={handleChange}
           value={option.value}
           key={idx}

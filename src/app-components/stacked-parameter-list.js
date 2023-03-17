@@ -59,7 +59,7 @@ export default function StackedParameterList({ parameters }) {
                       </p>
                     </div>
                   </div>
-                  <div className="mt-2 sm:flex sm:justify-between">
+                  <div className="mt-2 flex justify-between">
                     <div className="sm:flex">
                       <p className="flex items-center text-sm text-gray-500">
                         <ClockIcon

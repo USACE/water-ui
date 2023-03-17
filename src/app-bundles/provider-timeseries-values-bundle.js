@@ -1,7 +1,7 @@
 import createRestBundle from '@usace/create-rest-bundle';
 import { subDays } from 'date-fns';
 
-const apiUrl = process.env.REACT_APP_MOCK_API_URL;
+const apiUrl = process.env.REACT_APP_WATER_API_URL;
 
 export default createRestBundle({
   name: 'providerTimeseriesValues',
@@ -29,16 +29,12 @@ export default createRestBundle({
         const isoBefore = end ? end.toISOString() : subDays(new Date(), 7);
         const provider = store['selectProviderByRoute']();
 
-        // const url = `/timeseries/${timeseriesId}/measurements?after=${isoAfter}&before=${isoBefore}`;
-        const url = `${apiUrl}:8080/providers/${provider?.slug}/timeseries?name=${timeseriesId}&begin=${isoAfter}&end=${isoBefore}`;
+        const url = `${apiUrl}/providers/${provider?.slug}/timeseries?name=${timeseriesId}&begin=${isoAfter}&end=${isoBefore}`;
         // const url = `${apiUrl}/providers/${provider?.slug}/timeseries/values?key=${timeseriesId}`;
         // const url = `${apiUrl}:8080/providers/${provider?.slug}/timeseries?name=${timeseriesId}`;
         const flags = store['selectProviderTimeseriesValuesFlags']();
         const itemsById = store['selectProviderTimeseriesValuesItemsObject']();
         let fetchCount = store['selectProviderTimeseriesValuesFetchCount']();
-
-        // console.log('^^^^^^^');
-        // console.log(provider.slug);
 
         apiGet(url, (_err, body) => {
           //new Array(body).forEach((item) => (itemsById[item['key']] = item));

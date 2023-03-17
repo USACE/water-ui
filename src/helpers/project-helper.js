@@ -2,7 +2,7 @@
  * Calculates project flood storage utilized
  * @param  {Number} topFlood Top of Flood level value
  * @param  {Number} bottomFlood Bottom of Flood level value
- * @param  {Number} currentVal The current pool elevation value
+ * @param  {Number} currentVal The current storage value
  * @return {Number}          The percent of Flood Storage Utilized
  */
 const ProjectFloodStoragePercent = (topFlood, bottomFlood, currentVal) => {
@@ -16,7 +16,7 @@ const ProjectFloodStoragePercent = (topFlood, bottomFlood, currentVal) => {
  * Calculates project conservation storage utilized
  * @param  {Number} topCon Top of Conservation level value
  * @param  {Number} bottomCon Bottom of Conservation level value
- * @param  {Number} currentVal The current pool elevation value
+ * @param  {Number} currentVal The current storage value
  * @return {Number}          The percent of Conservation Storage Utilized
  */
 const ProjectConservationStoragePercent = (topCon, bottomCon, currentVal) => {

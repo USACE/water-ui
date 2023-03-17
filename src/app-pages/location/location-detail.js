@@ -101,7 +101,7 @@ export default function ProjectDetail() {
       <div
         className={`mt-0 duration-300 ease-in-out md:gap-x-8 ${
           expanded ? 'lg:flex-wrap' : 'lg:flex'
-        }`}
+        } flex flex-col-reverse lg:flex-row`}
       >
         <div className={`flex-auto ${expanded ? 'lg:w-full' : 'lg:w-3/5'}`}>
           <ToggleExpandButton />
@@ -125,7 +125,7 @@ export default function ProjectDetail() {
 
         <div
           className={`flex-auto bg-white p-0 ${
-            expanded ? 'lg:w-full' : 'lg:w-1/5'
+            expanded ? 'xl:w-full' : 'xl:w-1/5'
           }`}
         >
           <LocationSideBarAccordian location={location} />

@@ -70,16 +70,30 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
     }
 
     const FloodControlProjectChartSetup = [
-      [{ tsLabel: 'Pool Elevation' }, { tsLabel: 'Pool Stage' }],
-      [{ tsLabel: 'Storage' }],
+      [
+        {
+          tsLabel: 'Pool Elevation',
+          displayLevels: ['elev.top of flood', 'elev.bottom of flood'],
+        },
+        { tsLabel: 'Pool Stage' },
+      ],
+      [
+        {
+          tsLabel: 'Storage',
+          displayLevels: ['stor.top of flood'],
+        },
+      ],
       [{ tsLabel: 'Pool Inflow' }, { tsLabel: 'Tailwater Outflow' }],
       [{ tsLabel: 'Tailwater Elevation' }, { tsLabel: 'Tailwater Stage' }],
       [{ tsLabel: 'Tailwater Temperature' }],
+      [{ tsLabel: 'Precipitation' }],
     ];
 
     const LocationChartSetup = [
+      [{ tsLabel: 'Elevation' }],
       [{ tsLabel: 'Stage' }],
       [{ tsLabel: 'Flow' }],
+      [{ tsLabel: 'Precipitation' }],
       [{ tsLabel: 'Temperature' }],
     ];
 
@@ -96,6 +110,10 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
       return mappedObj;
     };
 
+    const levelsMap = mapObjectArrayByKey(location?.levels, 'slug');
+    // console.log('--levels map--');
+    // console.log(levelsMap);
+
     let components = [
       <DateLookbackSelector key="selector" onInputValueChange={setDateRange} />,
     ];
@@ -103,6 +121,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
     // // Loop over chartSetup array
 
     chartSetup.forEach((chartCfg, idx) => {
+      // each chart can have one or more parameters (elev, stage, etc)
       let chartParams = [];
 
       // Loop over each label (aka parameter) for each chart
@@ -124,11 +143,21 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
           //   console.log('--paramMeasurements--');
           //   console.log(paramMeasurements);
 
-          console.log(`--values for ${tsObj.tsid}--`);
-          console.log(paramMeasurements?.values);
+          // console.log(`--values for ${tsObj.tsid}--`);
+          // console.log(paramMeasurements?.values);
 
           // inject the values from the measurements payload into the tsObj
           tsObj['values'] = paramMeasurements?.values;
+
+          // using the displayLevel array for this parameter
+          // attach the levels data to each item.
+          const levels = cfgObj?.displayLevels?.map(
+            (level) => levelsMap[level]
+          );
+
+          // inject the values from levels into the tsObj
+          tsObj['levels'] = levels;
+
           chartParams.push(tsObj);
         } else {
           console.log(`No tsObj for ${cfgObj.tsLabel} or no measurements`);
