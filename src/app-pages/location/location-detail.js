@@ -60,22 +60,11 @@ export default function ProjectDetail() {
   ];
 
   const handleExpandToggle = () => {
-    //alert('hello');
-    // console.log(`setting value of expanded to ${!expanded}`);
+    // Not sure this works as intended
     setExpanded(!expanded);
-    // this is a hack to get the charts to refresh and resize
-    // console.log('--firing resize--');
     window.dispatchEvent(new Event('resize'));
     return;
   };
-
-  // const stats = [
-  //   { name: 'Flood Storage Utilized', stat: '1%' },
-  //   { name: 'Conservation Storage Utilized', stat: '1%' },
-  //   { name: 'Pool Elevation', stat: '646.35' },
-  //   { name: 'Inflow', stat: '303.22' },
-  //   { name: 'Discharge', stat: 447 },
-  // ];
 
   const ToggleExpandButton = () => {
     return (
@@ -95,9 +84,6 @@ export default function ProjectDetail() {
       title={location?.attributes.public_name}
       subTitle={`provided by ${location?.provider_name}`}
     >
-      {/* {isProject && <ProjectStats location={location} />} */}
-
-      {/* <SimpleStats stats={stats} title="" /> */}
       <div
         className={`mt-0 duration-300 ease-in-out md:gap-x-8 ${
           expanded ? 'lg:flex-wrap' : 'lg:flex'
@@ -118,9 +104,6 @@ export default function ProjectDetail() {
           ) : (
             location && <LocationTimeseriesCharts location={location} />
           )}
-          {/* {location && location.timeseries && (
-            <StackedParameterList parameters={location.timeseries} />
-          )} */}
         </div>
 
         <div

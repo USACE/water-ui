@@ -42,7 +42,7 @@ function Footer({ children }) {
 }
 
 function Main({ children }) {
-  return <main className="mb-5 bg-gray-50 dark:bg-gray-800">{children}</main>;
+  return <main className="mb-5 bg-gray-100 dark:bg-gray-800">{children}</main>;
 }
 
 Layout.Header = Header;
