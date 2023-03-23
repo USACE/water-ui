@@ -15,7 +15,7 @@ export default function ProviderList() {
   };
 
   return (
-    <PageWrapper title="Providers" subTitle="SubTitle">
+    <PageWrapper title="Data Providers" subTitle="SubTitle">
       <SimpleTable
         headers={['Reports to', 'Name']}
         items={providers}
