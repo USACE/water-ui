@@ -29,7 +29,7 @@ export default createRestBundle({
         const isoBefore = end ? end.toISOString() : subDays(new Date(), 7);
         const provider = store['selectProviderByRoute']();
 
-        const url = `${apiUrl}/providers/${provider?.slug}/timeseries?name=${timeseriesId}&begin=${isoAfter}&end=${isoBefore}`;
+        const url = `${apiUrl}/cwms-data/providers/${provider?.slug}/timeseries?name=${timeseriesId}&begin=${isoAfter}&end=${isoBefore}`;
         // const url = `${apiUrl}/providers/${provider?.slug}/timeseries/values?key=${timeseriesId}`;
         // const url = `${apiUrl}:8080/providers/${provider?.slug}/timeseries?name=${timeseriesId}`;
         const flags = store['selectProviderTimeseriesValuesFlags']();
