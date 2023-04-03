@@ -131,7 +131,7 @@ export default function SimpleHydrographChart() {
     //console.log(chartSeries);
 
     setChartOptions({
-      title: { text: location?.attributes.public_name || 'not available' },
+      title: { text: location?.public_name || 'not available' },
       series: chartSeries,
       //series: [{ data: [Math.random() * 5, 2, 1] }],
     });

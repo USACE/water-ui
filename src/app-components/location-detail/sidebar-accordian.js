@@ -13,7 +13,7 @@ export default function LocationSideBarAccordian({ location }) {
         { name: 'Provider', value: metadata?.provider_name },
         {
           name: 'Project Purpose',
-          value: metadata?.attributes?.project_purpose,
+          value: metadata?.project_purpose,
         },
       ],
       [metadata]
@@ -111,7 +111,7 @@ export default function LocationSideBarAccordian({ location }) {
     },
   ];
 
-  if (location?.attributes?.kind === 'PROJECT' && location?.documents?.length) {
+  if (location?.kind === 'PROJECT' && location?.documents?.length) {
     sections.push(...projectSections);
   }
 

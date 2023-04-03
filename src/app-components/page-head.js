@@ -27,7 +27,7 @@ export default function PageHead({ title, subTitle }) {
               alt=""
             /> */}
 
-            {provider && location?.attributes?.kind === 'PROJECT' ? (
+            {provider && location?.kind === 'PROJECT' ? (
               <FcDam size={50} />
             ) : !location && !watershed ? (
               <HiOutlineBuildingOffice2 size={50} />

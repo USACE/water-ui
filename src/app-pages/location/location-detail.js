@@ -26,8 +26,7 @@ export default function ProjectDetail() {
     );
   }
 
-  const isProject =
-    location?.attributes?.kind === 'PROJECT' && location?.levels?.length;
+  const isProject = location?.kind === 'PROJECT' && location?.levels?.length;
 
   // const ProjectStatusDescription = () => (
   //   <div className="sr-only bg-red-100 p-10" aria-label="Project Status">
@@ -51,11 +50,12 @@ export default function ProjectDetail() {
 
     {
       name: 'Timeseries',
-      content: location ? (
-        <div className="bg-white pt-5">
-          <LocationTimeseriesCharts location={location} />
-        </div>
-      ) : null,
+      content:
+        location && location?.timeseries?.length ? (
+          <div className="bg-white pt-5">
+            <LocationTimeseriesCharts location={location} />
+          </div>
+        ) : null,
     },
   ];
 
@@ -81,7 +81,7 @@ export default function ProjectDetail() {
 
   return (
     <PageWrapper
-      title={location?.attributes.public_name}
+      title={location?.public_name}
       subTitle={`provided by ${location?.provider_name}`}
     >
       <div

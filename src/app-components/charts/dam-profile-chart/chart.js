@@ -29,14 +29,15 @@ export default function ReactDamProfileChart() {
 
     const _levels = location?.levels
       ?.filter(
-        (lvl) => allowedLevels.includes(lvl.label) && lvl.parameter === 'Elev'
+        (lvl) =>
+          allowedLevels.includes(lvl.label) && lvl.base_parameter === 'Elev'
       )
       .map((lvl) => {
         return { name: lvl.label, value: lvl.latest_value };
       });
 
     const levelsMap = mapObjectArrayByKey(
-      location?.levels.filter((lvl) => lvl.parameter === 'Elev'),
+      location?.levels.filter((lvl) => lvl.base_parameter === 'Elev'),
       'label'
     );
     // console.log('-----');
@@ -49,7 +50,7 @@ export default function ReactDamProfileChart() {
       //   { name: 'Top of Flood', value: 690 },
       //   { name: 'Streambed', value: 500 },
       // ],
-      infoText: location?.attributes.public_name || null,
+      infoText: location?.public_name || null,
       levels: _levels,
       damtop: levelsMap['Top of Dam']?.latest_value || null,
       dambottom: levelsMap['Streambed']?.latest_value || null,

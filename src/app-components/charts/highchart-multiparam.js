@@ -10,12 +10,6 @@ export default function MultiParamChart({ chartParams }) {
     chart: {
       type: 'spline',
     },
-    // plotOptions: {
-    //   series: {
-    //     pointPlacement: 'on',
-    //     pointInterval: 24 * 3600 * 1000, // one day
-    //   },
-    // },
     title: { text: 'Initial Chart Title' },
     xAxis: {
       type: 'datetime',
@@ -25,7 +19,6 @@ export default function MultiParamChart({ chartParams }) {
       labels: {
         format: '{value:%Y-%m-%d}',
       },
-
       title: {
         text: 'Date',
       },

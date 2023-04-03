@@ -10,7 +10,7 @@ export default createRestBundle({
   staleAfter: 0, //5min
   persist: false,
   routeParam: 'key',
-  getTemplate: `${apiUrl}/providers/:provider_slug/timeseries/values?key=:key`,
+  getTemplate: `${apiUrl}/cwms-data/providers/:provider_slug/timeseries/values?key=:key`,
   //getTemplate: `${apiUrl}:8080/providers/:provider_slug/timeseries?name=:key`,
   fetchActions: ['URL_UPDATED', 'PROVIDERLOCATION_FETCH_FINISHED'],
   urlParamSelectors: [],

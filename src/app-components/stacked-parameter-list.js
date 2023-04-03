@@ -67,7 +67,8 @@ export default function StackedParameterList({ parameters }) {
                           aria-hidden="true"
                         />
                         <time dateTime={p.latest_time}>
-                          {format(parseISO(p.latest_time), 'dd-LLL-yyyy @ p')}
+                          {p.latest_time &&
+                            format(parseISO(p.latest_time), 'dd-LLL-yyyy @ p')}
                         </time>
                       </p>
                     </div>

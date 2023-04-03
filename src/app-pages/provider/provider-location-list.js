@@ -25,10 +25,7 @@ export default function ProviderLocationList() {
   const allowedKinds = ['SITE', 'STREAM_LOCATION', 'PROJECT', 'BASIN'];
 
   const filteredLocations = locations.filter(
-    (l) =>
-      l.attributes.public_name &&
-      l.state !== '00' &&
-      allowedKinds.includes(l.attributes.kind)
+    (l) => l.public_name && l.state !== '00' && allowedKinds.includes(l.kind)
   );
 
   return (
@@ -42,7 +39,7 @@ export default function ProviderLocationList() {
             render: (location) => {
               return (
                 <LocationLink
-                  title={location.attributes.public_name}
+                  title={location.public_name}
                   href={''.concat(
                     pathname,
                     '/',
@@ -55,7 +52,7 @@ export default function ProviderLocationList() {
           {
             key: 'kind',
             render: (location) => {
-              return location.attributes && location.attributes.kind;
+              return location?.kind;
             },
           },
           {

@@ -4,6 +4,7 @@ import MockDistrictMap from '../../images/mockup/map-district-focus.png';
 import SimpleStats from '../../app-components/stats-simple';
 import CardSimple from '../../app-components/card-simple';
 import SimpleTable from '../../app-components/table-simple';
+import ProjectsTable from '../../app-components/projects-table';
 import PageWrapper from '../page-wrapper';
 
 export default function ProviderHome() {
@@ -59,7 +60,7 @@ export default function ProviderHome() {
   };
 
   const provider_projects = locations.filter(
-    (location) => location.attributes.kind === 'PROJECT'
+    (location) => location.kind === 'PROJECT'
   );
 
   const stats = [
@@ -82,28 +83,35 @@ export default function ProviderHome() {
           {(provider?.type === 'msc' || provider?.type === 'hq') && (
             <MscDistrictsTable mscSlug={provider?.slug} />
           )}
-          <SimpleTable
-            headers={['Watershed', 'Flood Storage Utilized']}
-            items={watersheds}
-            itemFields={[
-              {
-                key: 'code',
-                render: (watershed) => {
-                  return (
-                    <TableLink
-                      title={watershed.code}
-                      href={''.concat(
-                        pathname,
-                        '/watershed/',
-                        `${watershed.slug}`
-                      )}
-                    />
-                  );
+          {watersheds?.length ? (
+            <SimpleTable
+              headers={['Watershed', 'Total Drainage Area (sq. mi)']}
+              items={watersheds}
+              itemFields={[
+                {
+                  key: 'code',
+                  render: (watershed) => {
+                    return (
+                      <TableLink
+                        title={watershed.public_name}
+                        href={''.concat(
+                          pathname,
+                          '/watershed/',
+                          `${watershed.slug}`
+                        )}
+                      />
+                    );
+                  },
                 },
-              },
-              { key: 'slug', render: MockStorage },
-            ]}
-          />
+                { key: 'drainage_total' },
+              ]}
+            />
+          ) : (
+            'no watersheds available - showing all projects'
+          )}
+          {!watersheds?.length && (
+            <ProjectsTable projects={provider_projects} />
+          )}
         </div>
         <div className="w-full flex-auto lg:w-1/3">
           <CardSimple title={provider && provider.provider_name}>

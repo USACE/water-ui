@@ -1,6 +1,7 @@
 // import { InboxIcon } from '@heroicons/react/24/outline';
 // import { getByPlaceholderText } from '@testing-library/react';
 import { useState } from 'react';
+import PageTitle from '../app-components/page-title';
 import ImageCard from '../app-components/image-card';
 import HomeDam1 from '../images/home/lrh-sutton-dam.jpg';
 import HomeDam2 from '../images/home/nww-lucky-peak-dam.jpg';
@@ -42,6 +43,7 @@ export default function Home() {
     'https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTh8fGRhdGF8ZW58MHx8MHx8&auto=format&fit=crop&w=900&q=60';
   return (
     <>
+      <PageTitle useDefault={true} />
       {/* Alternating Feature Sections */}
 
       <div className="pt-0">

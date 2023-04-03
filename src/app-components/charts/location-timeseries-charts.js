@@ -5,12 +5,11 @@ import MultiParamChart from './highchart-multiparam';
 import DateLookbackSelector from './date-lookback-selector';
 
 export default function ProjectTimeseriesCharts({ location: _location }) {
+  console.log('im rendering');
   const {
-    //providerLocationByRoute,
     providerTimeseriesValuesItems: timeSeriesValues,
     doProviderTimeseriesValuesFetchById,
   } = useConnect(
-    //'selectProviderLocationByRoute',
     'selectProviderTimeseriesValuesItems',
     'doProviderTimeseriesValuesFetchById'
   );
@@ -60,8 +59,6 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
 
   // ####################################
 
-  //console.log('--project-timeseries-charts--');
-
   useEffect(() => {
     // bail if the required objects are not set
     if (!location?.timeseries || !measurements?.length) {
@@ -72,7 +69,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
     const FloodControlProjectChartSetup = [
       [
         {
-          tsLabel: 'Pool Elevation',
+          tsLabel: 'Elevation',
           displayLevels: ['elev.top of flood', 'elev.bottom of flood'],
         },
         { tsLabel: 'Pool Stage' },
@@ -83,8 +80,8 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
           displayLevels: ['stor.top of flood'],
         },
       ],
-      [{ tsLabel: 'Pool Inflow' }, { tsLabel: 'Tailwater Outflow' }],
-      [{ tsLabel: 'Tailwater Elevation' }, { tsLabel: 'Tailwater Stage' }],
+      [{ tsLabel: 'Inflow' }, { tsLabel: 'Outflow' }],
+      [{ tsLabel: 'Tailwater Elevation' }, { tsLabel: 'Stage Tailwater' }],
       [{ tsLabel: 'Tailwater Temperature' }],
       [{ tsLabel: 'Precipitation' }],
     ];
@@ -98,7 +95,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
     ];
 
     const chartSetup =
-      location?.attributes?.kind === 'PROJECT'
+      location?.kind === 'PROJECT'
         ? FloodControlProjectChartSetup
         : LocationChartSetup;
 
@@ -111,8 +108,6 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
     };
 
     const levelsMap = mapObjectArrayByKey(location?.levels, 'slug');
-    // console.log('--levels map--');
-    // console.log(levelsMap);
 
     let components = [
       <DateLookbackSelector key="selector" onInputValueChange={setDateRange} />,
@@ -140,11 +135,6 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
           const paramMeasurements = mapObjectArrayByKey(measurements, 'key')[
             tsObj.tsid
           ];
-          //   console.log('--paramMeasurements--');
-          //   console.log(paramMeasurements);
-
-          // console.log(`--values for ${tsObj.tsid}--`);
-          // console.log(paramMeasurements?.values);
 
           // inject the values from the measurements payload into the tsObj
           tsObj['values'] = paramMeasurements?.values;
@@ -163,7 +153,6 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
           console.log(`No tsObj for ${cfgObj.tsLabel} or no measurements`);
           //return;
         }
-        //console.log(tsObj);
       });
       // ----------
 

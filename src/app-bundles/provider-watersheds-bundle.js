@@ -1,6 +1,6 @@
 import createRestBundle from '@usace/create-rest-bundle';
 
-const apiUrl = process.env.REACT_APP_MOCK_API_URL;
+const apiUrl = process.env.REACT_APP_WATER_API_URL;
 
 /* 
     How is this different from 'provider-watershed-bundle ??
