@@ -7,10 +7,10 @@ export default createRestBundle({
   name: 'providerTimeseriesValues',
   uid: 'key',
   prefetch: true,
-  staleAfter: 0, //5min
+  staleAfter: 30000, //5min
   persist: false,
   routeParam: 'key',
-  getTemplate: `${apiUrl}/cwms-data/providers/:provider_slug/timeseries/values?key=:key`,
+  getTemplate: `${apiUrl}/cwms-data/providers/:provider_slug/timeseries?name=:timeseriesId`,
   //getTemplate: `${apiUrl}:8080/providers/:provider_slug/timeseries?name=:key`,
   fetchActions: ['URL_UPDATED', 'PROVIDERLOCATION_FETCH_FINISHED'],
   urlParamSelectors: [],
@@ -30,8 +30,6 @@ export default createRestBundle({
         const provider = store['selectProviderByRoute']();
 
         const url = `${apiUrl}/cwms-data/providers/${provider?.slug}/timeseries?name=${timeseriesId}&begin=${isoAfter}&end=${isoBefore}`;
-        // const url = `${apiUrl}/providers/${provider?.slug}/timeseries/values?key=${timeseriesId}`;
-        // const url = `${apiUrl}:8080/providers/${provider?.slug}/timeseries?name=${timeseriesId}`;
         const flags = store['selectProviderTimeseriesValuesFlags']();
         const itemsById = store['selectProviderTimeseriesValuesItemsObject']();
         let fetchCount = store['selectProviderTimeseriesValuesFetchCount']();

@@ -29,7 +29,10 @@ export default function ProviderLocationList() {
   );
 
   return (
-    <PageWrapper title={`${provider?.name} Locations`} subTitle="SubTitle">
+    <PageWrapper
+      title={provider?.name || 'Loading Locations'}
+      subTitle={provider?.name && `provided by ${provider?.name}`}
+    >
       <SimpleTable
         headers={['Name', 'Kind', 'State']}
         items={filteredLocations}

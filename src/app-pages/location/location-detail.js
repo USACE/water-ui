@@ -10,11 +10,15 @@ import LocationSideBarAccordian from '../../app-components/location-detail/sideb
 import ProjectStats from '../../app-components/location-detail/project-stats';
 
 export default function ProjectDetail() {
-  const { providerLocationByRoute: location, providerLocationIsLoading } =
-    useConnect(
-      'selectProviderLocationByRoute',
-      'selectProviderLocationIsLoading'
-    );
+  const {
+    providerLocationByRoute: location,
+    providerLocationIsLoading,
+    providerByRoute: provider,
+  } = useConnect(
+    'selectProviderLocationByRoute',
+    'selectProviderLocationIsLoading',
+    'selectProviderByRoute'
+  );
 
   const [expanded, setExpanded] = useState(false);
 
@@ -82,7 +86,7 @@ export default function ProjectDetail() {
   return (
     <PageWrapper
       title={location?.public_name}
-      subTitle={`provided by ${location?.provider_name}`}
+      subTitle={`provided by ${provider?.name}`}
     >
       <div
         className={`mt-0 duration-300 ease-in-out md:gap-x-8 ${

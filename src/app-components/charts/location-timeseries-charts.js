@@ -82,16 +82,16 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
       ],
       [{ tsLabel: 'Inflow' }, { tsLabel: 'Outflow' }],
       [{ tsLabel: 'Tailwater Elevation' }, { tsLabel: 'Stage Tailwater' }],
-      [{ tsLabel: 'Tailwater Temperature' }],
+      [{ tsLabel: 'Water Temperature' }],
       [{ tsLabel: 'Precipitation' }],
     ];
 
     const LocationChartSetup = [
       [{ tsLabel: 'Elevation' }],
       [{ tsLabel: 'Stage' }],
-      [{ tsLabel: 'Flow' }],
+      [{ tsLabel: 'Outflow' }],
       [{ tsLabel: 'Precipitation' }],
-      [{ tsLabel: 'Temperature' }],
+      [{ tsLabel: 'Water Temperature' }],
     ];
 
     const chartSetup =
