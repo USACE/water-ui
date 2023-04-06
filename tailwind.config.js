@@ -6,6 +6,9 @@ module.exports = {
       height: {
         128: '32rem',
       },
+      minHeight: (theme) => ({
+        ...theme('spacing'),
+      }),
     },
   },
   darkMode: 'class', //comment out to allow OS to determine dark/light mode

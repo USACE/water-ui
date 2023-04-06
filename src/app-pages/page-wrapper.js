@@ -14,7 +14,7 @@ export default function PageWrapper({ title, subTitle, children }) {
       {/* Page Header */}
       <PageHead title={title} subTitle={subTitle} />
       {/* Main Page Content */}
-      <div className="">{children}</div>
+      <div className="min-h-96">{children}</div>
     </div>
   );
 }

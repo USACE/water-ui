@@ -15,6 +15,7 @@
     "@usace/create-rest-bundle": "^0.3.1-beta.0",
     "d3": "^7.8.2",
     "date-fns": "^2.29.3",
+    "date-fns-tz": "^2.0.0",
     "highcharts": "^10.3.2",
     "highcharts-react-official": "^3.1.0",
     "internal-nav-helper": "^3.1.0",

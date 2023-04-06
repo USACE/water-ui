@@ -54,16 +54,16 @@ export default function ReactDamProfileChart() {
       levels: _levels,
       damtop: levelsMap['Top of Dam']?.latest_value || null,
       dambottom: levelsMap['Streambed']?.latest_value || null,
-      pool: timeseriesMap['Pool Elevation']?.latest_value || null,
-      tail: timeseriesMap['Tailwater Stage']?.latest_value || null,
-      inflow: timeseriesMap['Pool Inflow']?.latest_value || null,
-      outflow: timeseriesMap['Tailwater Outflow']?.latest_value || null,
-      surcharge: 0,
+      pool: timeseriesMap['Elevation']?.latest_value || null,
+      tail: timeseriesMap['Stage Tailwater']?.latest_value || null,
+      inflow: timeseriesMap['Inflow']?.latest_value || null,
+      outflow: timeseriesMap['Outflow']?.latest_value || null,
+      surcharge: timeseriesMap['Surcharge Release']?.latest_value || null,
       gradientBottom: levelsMap['Top of Flood']?.latest_value || null,
       gradientTop: levelsMap['Bottom of Flood']?.latest_value || null,
     };
     setInfo(_info);
-  }, [location]);
+  }, [location, location.timeseries]);
 
   useEffect(() => {
     if (info) {

@@ -9,8 +9,8 @@ export default function LocationSideBarAccordian({ location }) {
     //convert object into list with key pairs
     const meta_array = useMemo(
       () => [
-        { name: 'State', value: metadata?.state_name },
-        { name: 'Provider', value: metadata?.provider_name },
+        { name: 'State', value: metadata?.state },
+        { name: 'Provider', value: metadata?.provider },
         {
           name: 'Project Purpose',
           value: metadata?.project_purpose,

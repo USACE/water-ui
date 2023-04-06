@@ -59,7 +59,7 @@ const InflowIcon = (svg, inflow) => {
     .attr('class', 'inflowText')
     .attr('font-family', 'sans-serif')
     .attr('font-size', '1em')
-    .text(!isNaN(inflow) ? inflow + ' cfs' : '');
+    .text(!isNaN(inflow) && inflow ? inflow + ' cfs' : 'Not Available');
 };
 
 export default InflowIcon;

@@ -46,7 +46,7 @@ export default function ProviderLocationList() {
                   href={''.concat(
                     pathname,
                     '/',
-                    `${location.slug.toLowerCase()}`
+                    `${encodeURIComponent(location.slug).toLowerCase()}`
                   )}
                 />
               );
