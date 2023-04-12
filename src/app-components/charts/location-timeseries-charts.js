@@ -1,27 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { useConnect } from 'redux-bundler-hook';
-import { subDays } from 'date-fns';
+// import { subDays } from 'date-fns';
 import MultiParamChart from './highchart-multiparam';
 import DateLookbackSelector from './date-lookback-selector';
 
-export default function ProjectTimeseriesCharts({ location: _location }) {
+export default function ProjectTimeseriesCharts({
+  location: _location,
+  dateRange,
+  setDateRange,
+}) {
   console.log('im rendering');
   const {
     providerTimeseriesValuesItems: timeSeriesValues,
-    doProviderTimeseriesValuesFetchById,
+    // doProviderTimeseriesValuesFetchById,
   } = useConnect(
-    'selectProviderTimeseriesValuesItems',
-    'doProviderTimeseriesValuesFetchById'
+    'selectProviderTimeseriesValuesItems'
+    //'doProviderTimeseriesValuesFetchById'
   );
 
   const [location] = useState(_location);
   const [timeseriesIds, setTimeseriesId] = useState([]);
   const [measurements, setMeasurements] = useState([]);
   const [chartComponents, setChartComponents] = useState([]);
-  const [dateRange, setDateRange] = useState([
-    subDays(new Date(), 7),
-    new Date(),
-  ]);
+  // const [dateRange, setDateRange] = useState([
+  //   subDays(new Date(), 7),
+  //   new Date(),
+  // ]);
 
   /** Load specific timeseries ids into state when new configurations are loaded */
   useEffect(() => {
@@ -35,14 +39,14 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
   }, [location]);
 
   /** Fetch the timeseries measurements in regards to date range */
-  useEffect(() => {
-    location &&
-      timeseriesIds &&
-      timeseriesIds.forEach((id) => {
-        // console.log(`fetching ${id}`);
-        doProviderTimeseriesValuesFetchById({ timeseriesId: id, dateRange });
-      });
-  }, [location, timeseriesIds, dateRange, doProviderTimeseriesValuesFetchById]);
+  // useEffect(() => {
+  //   location &&
+  //     timeseriesIds &&
+  //     timeseriesIds.forEach((id) => {
+  //       // console.log(`fetching ${id}`);
+  //       doProviderTimeseriesValuesFetchById({ timeseriesId: id, dateRange });
+  //     });
+  // }, [location, timeseriesIds, dateRange, doProviderTimeseriesValuesFetchById]);
 
   useEffect(() => {
     // Note: timeSeriesValues may contain the more tsids than we want for this location
@@ -72,7 +76,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
           tsLabel: 'Elevation',
           displayLevels: ['elev.top of flood', 'elev.bottom of flood'],
         },
-        { tsLabel: 'Pool Stage' },
+        { tsLabel: 'Stage' },
       ],
       [
         {
@@ -88,7 +92,12 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
 
     const LocationChartSetup = [
       [{ tsLabel: 'Elevation' }],
-      [{ tsLabel: 'Stage' }],
+      [
+        {
+          tsLabel: 'Stage',
+          displayLevels: ['elev.top of flood', 'stage.flood'],
+        },
+      ],
       [{ tsLabel: 'Outflow' }],
       [{ tsLabel: 'Precipitation' }],
       [{ tsLabel: 'Water Temperature' }],
@@ -109,9 +118,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
 
     const levelsMap = mapObjectArrayByKey(location?.levels, 'slug');
 
-    let components = [
-      <DateLookbackSelector key="selector" onInputValueChange={setDateRange} />,
-    ];
+    let components = [<DateLookbackSelector key="selector" />];
 
     // // Loop over chartSetup array
 
@@ -167,7 +174,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
         );
       setChartComponents(components);
     });
-  }, [location, measurements]);
+  }, [location, measurements, dateRange]);
 
   return chartComponents;
 }

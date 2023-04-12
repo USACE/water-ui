@@ -1,23 +1,44 @@
 import { useState } from 'react';
-import { subDays } from 'date-fns';
+import { subDays, differenceInDays } from 'date-fns';
+import { useConnect } from 'redux-bundler-hook';
 
-export default function DateLookbackSelector({ onInputValueChange }) {
+export default function DateLookbackSelector() {
+  const {
+    timeseriesDateRange: dateRange,
+    doTimeseriesDateRangeUpdate,
+    providerTimeseriesValuesIsLoading: tsIsLoading,
+  } = useConnect(
+    'selectTimeseriesDateRange',
+    'doTimeseriesDateRangeUpdate',
+    'selectProviderTimeseriesValuesIsLoading'
+  );
   const options = [
     { name: 'last 7 days', value: 7 },
     { name: 'last 14 days', value: 14 },
     { name: 'last month', value: 30 },
   ];
-  const [daysBack, setDaysBack] = useState(parseInt(options[0].value));
+  // const [daysBack] = useState(parseInt(options[0].value));
+  const [daysBack, setDaysBack] = useState(
+    differenceInDays(dateRange?.endDate, dateRange?.beginDate)
+  );
+
+  // console.log('---daysBack--');
+  // console.log(daysBack);
 
   const handleChange = (e) => {
     // only process if different selection is chosen
     if (parseInt(e.target.value) !== daysBack) {
+      console.log(`--Setting daysBack to ${parseInt(e.target.value)}`);
+      doTimeseriesDateRangeUpdate(
+        subDays(new Date(), parseInt(e.target.value)),
+        new Date()
+      );
       setDaysBack(parseInt(e.target.value));
-      onInputValueChange([subDays(new Date(), daysBack), new Date()]);
     }
   };
   return (
     <div className="-mt-2 mb-2 mr-2 flex justify-end">
+      {/* {tsIsLoading ? 'Loading...' : 'Done'} */}
       {options.map((option, idx) => (
         <button
           className={`${

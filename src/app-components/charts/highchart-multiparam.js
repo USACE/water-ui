@@ -44,7 +44,7 @@ export default function MultiParamChart({ chartParams }) {
     let yMax = null;
 
     const allEqual = (arr) => arr.every((val) => val === arr[0]);
-    const equalUnits = allEqual(chartParams?.map((item) => item?.units));
+    const equalUnits = allEqual(chartParams?.map((item) => item?.unit));
 
     // Loop over each tsLabel (aka descriptive parameter) for each chart
     // ------------------------
@@ -73,6 +73,16 @@ export default function MultiParamChart({ chartParams }) {
         yMax = maxValue;
       }
 
+      const levelColor = (label) => {
+        switch (label) {
+          case 'Flood':
+            return 'red';
+
+          default:
+            return 'orange';
+        }
+      };
+
       // console.log(`pushing data to chart series for ${chartParamObj?.label}`);
       chartSeries.push({
         name: chartParamObj?.label,
@@ -86,22 +96,22 @@ export default function MultiParamChart({ chartParams }) {
           radius: 2,
         },
         accessibility: {
-          description: `${chartParamObj?.label} measured in ${chartParamObj?.units}`,
+          description: `${chartParamObj?.label} measured in ${chartParamObj?.unit}`,
         },
       });
 
       yAxis.push({
-        title: { text: chartParamObj?.label + ` (${chartParamObj?.units})` },
+        title: { text: chartParamObj?.label + ` (${chartParamObj?.unit})` },
         opposite: idx > 0,
         // force yaxis to match if two parameters have same units
         min: chartParams.length > 1 && equalUnits ? yMin : null,
         max: chartParams.length > 1 && equalUnits ? yMax : null,
         tickInterval: null,
         labels: {
-          format: `{value} ${chartParamObj?.units}`,
+          format: `{value} ${chartParamObj?.unit}`,
         },
         accessibility: {
-          description: `${chartParamObj?.label} measured in ${chartParamObj?.units}`,
+          description: `${chartParamObj?.label} measured in ${chartParamObj?.unit}`,
         },
         // plotBands: [
         //   {
@@ -124,16 +134,16 @@ export default function MultiParamChart({ chartParams }) {
           chartParamObj?.levels &&
           chartParamObj?.levels.map((lvl) => {
             return {
-              color: 'orange',
+              color: levelColor(lvl?.label),
               dashStyle: 'LongDash',
               width: 2,
               value: lvl?.latest_value,
               // y: 20 /*moves label down*/,
               // x: -20,
               label: {
-                text: `${lvl?.label} (${lvl?.units})`,
+                text: `${lvl?.label} ${lvl?.base_parameter} ${lvl?.latest_value} (${lvl?.unit})`,
                 align: 'left',
-                style: { color: 'orange' },
+                style: { color: levelColor(lvl?.label) },
               },
             };
           }),

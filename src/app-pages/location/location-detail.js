@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 import TabsComponent from '../../app-components/tabs';
 import PageWrapper from '../page-wrapper';
@@ -8,19 +8,118 @@ import DamProfileChart from '../../app-components/charts/dam-profile-chart/chart
 import { BiExpandHorizontal } from 'react-icons/bi';
 import LocationSideBarAccordian from '../../app-components/location-detail/sidebar-accordian';
 import ProjectStats from '../../app-components/location-detail/project-stats';
+// import { subDays, subHours, parseJSON, differenceInDays } from 'date-fns';
+// import { formatInTimeZone } from 'date-fns-tz';
+import {
+  LastValueSet,
+  LookBackValueSet,
+} from '../../helpers/timeseries-helper';
 
 export default function ProjectDetail() {
   const {
     providerLocationByRoute: location,
     providerLocationIsLoading,
     providerByRoute: provider,
+    providerTimeseriesValuesItemsObject: tsvObj,
+    doProviderTimeseriesValuesFetchById,
+    timeseriesDateRange: dateRange,
   } = useConnect(
     'selectProviderLocationByRoute',
     'selectProviderLocationIsLoading',
-    'selectProviderByRoute'
+    'selectProviderByRoute',
+    'selectProviderTimeseriesValuesItemsObject',
+    'doProviderTimeseriesValuesFetchById',
+    'selectTimeseriesDateRange'
   );
 
+  console.log('############# LOCATION DETAIL RENDER #################');
+
+  //const [location, setLocation] = useState(_location);
   const [expanded, setExpanded] = useState(false);
+  const [timeseriesIds, setTimeseriesId] = useState([]);
+  //const [measurements, setMeasurements] = useState([]);
+  // const [dateRange, setDateRange] = useState([
+  //   subDays(new Date(), 7),
+  //   new Date(),
+  // ]);
+
+  // console.log('----DATE RANGE---');
+  // console.log(dateRange);
+  // console.log(differenceInDays(dateRange[1], dateRange[0]));
+
+  /** Load specific timeseries ids into state when new configurations are loaded */
+  useEffect(() => {
+    const timeseriesIdArray = location?.timeseries
+      ? location?.timeseries?.map((ts) => {
+          return ts.tsid;
+        })
+      : [];
+
+    setTimeseriesId(timeseriesIdArray);
+  }, [location]);
+
+  /** Fetch the timeseries measurements in regards to date range */
+  useEffect(() => {
+    location &&
+      timeseriesIds &&
+      timeseriesIds.forEach((id) => {
+        // console.log(`fetching ${id}`);
+        doProviderTimeseriesValuesFetchById({ timeseriesId: id, dateRange });
+        //doProviderTimeseriesValuesFetch();
+      });
+  }, [location, timeseriesIds, dateRange, doProviderTimeseriesValuesFetchById]);
+
+  // useEffect(() => {
+  //   // Note: timeSeriesValues may contain the more tsids than we want for this location
+  //   // Filter is down by the "timeseriesIds" array which only includes tsids for the
+  //   // current location
+
+  //   console.log('--filtering timeseries values--');
+  //   const locationTsValues = timeSeriesValues.filter((v) =>
+  //     timeseriesIds.includes(v.key)
+  //   );
+  //   console.log(locationTsValues);
+
+  //   setMeasurements(locationTsValues);
+  // }, [timeSeriesValues, timeseriesIds]);
+
+  useEffect(() => {
+    // console.log('--hello world--');
+    // console.log(location?.timeseries);
+    // console.log('--tsvObj--');
+    // console.log(tsvObj);
+    if (!tsvObj || !location) {
+      console.log('--returning--');
+      return;
+    }
+    let temp_location = location;
+    let temp_timeseries = location?.timeseries?.map((obj) => {
+      // console.log('--obj--');
+      // console.log(obj);
+
+      // console.log('--tsvObj[obj.tsid]--');
+      // console.log(tsvObj && tsvObj[obj.tsid]);
+      const tsvArray = tsvObj ? tsvObj[obj.tsid]?.values : null;
+
+      if (tsvArray?.length) {
+        const lastRecord = LastValueSet(tsvArray);
+        obj['latest_time'] = lastRecord.latest_time || null;
+        obj['latest_value'] = lastRecord.latest_value || null;
+        const lookBackRecord = LookBackValueSet(tsvArray, 24);
+        obj['delta24hr'] =
+          lookBackRecord &&
+          (lastRecord.latest_value - lookBackRecord.latest_value).toFixed(2);
+        obj['unit'] = tsvObj[obj.tsid]?.unit;
+      }
+
+      return obj;
+    });
+    temp_location.timeseries = temp_timeseries;
+    // console.log('--temp location--');
+    // console.log(temp_location);
+    location.timeseries = temp_timeseries;
+    //setLocation(temp_location);
+  }, [location, location?.timeseries, tsvObj]);
 
   if (!location && !providerLocationIsLoading) {
     return (
@@ -47,6 +146,7 @@ export default function ProjectDetail() {
       content: (
         <>
           {/* <ProjectStatusDescription /> */}
+
           <DamProfileChart />
         </>
       ),
@@ -110,11 +210,7 @@ export default function ProjectDetail() {
           )}
         </div>
 
-        <div
-          className={`flex-auto bg-white p-0 ${
-            expanded ? 'xl:w-full' : 'xl:w-1/5'
-          }`}
-        >
+        <div className={`flex-auto p-0 ${expanded ? 'xl:w-full' : 'xl:w-1/5'}`}>
           <LocationSideBarAccordian location={location} />
         </div>
       </div>
