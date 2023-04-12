@@ -2,6 +2,10 @@ import * as d3 from 'd3';
 import { straightLine } from './Lines.js';
 
 const Gradient = (svg, damScale, min, max) => {
+  // short circuit
+  if (!damScale || !min || !max) {
+    return;
+  }
   // console.log('--Gradient--');
   // console.log(`svg: ${svg}`);
   // console.log(`damScale: ${damScale}`);

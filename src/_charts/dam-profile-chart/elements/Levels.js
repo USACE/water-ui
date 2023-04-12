@@ -2,7 +2,7 @@ import { createLine, straightLine } from './Lines.js';
 
 const Levels = (svg, damScale, damTop, damBottom, levels = []) => {
   // short circuit
-  if (!levels.length) {
+  if (!levels.length || !damTop || !damBottom || !damScale) {
     return;
   }
 

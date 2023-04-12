@@ -30,7 +30,7 @@ const TailwaterLevel = (svg, damScale, tailwater) => {
     .attr('class', 'tailwaterText')
     .attr('font-family', 'sans-serif')
     .attr('font-size', '18px')
-    .text(!isNaN(tailwater) ? tailwater + "'" : '');
+    .text(!isNaN(tailwater) & tailwater ? tailwater + "'" : '');
 };
 
 export default TailwaterLevel;
