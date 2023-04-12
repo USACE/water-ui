@@ -1,32 +1,74 @@
 import createRestBundle from '@usace/create-rest-bundle';
-import { subDays } from 'date-fns';
 
 const apiUrl = process.env.REACT_APP_WATER_API_URL;
 
 export default createRestBundle({
   name: 'providerTimeseriesValues',
   uid: 'key',
-  prefetch: true,
-  staleAfter: 30000, //5min
+  prefetch: false,
+  staleAfter: 300000, //5min
   persist: false,
   routeParam: 'key',
-  getTemplate: `${apiUrl}/cwms-data/providers/:provider_slug/timeseries?name=:key`,
-  //getTemplate: `${apiUrl}:8080/providers/:provider_slug/timeseries?name=:key`,
-  fetchActions: ['URL_UPDATED', 'PROVIDERLOCATION_FETCH_FINISHED'],
+  getTemplate: '',
+  fetchActions: [],
   urlParamSelectors: [],
-  forceFetchActions: ['PROVIDERLOCATION_FETCH_FINISHED'],
+  forceFetchActions: [],
   sortBy: '',
   sortAsc: false,
-  //reduceFurther: null,
+  reduceFurther: (state, { type, payload }) => {
+    switch (type) {
+      case 'URL_UPDATED':
+        return { ...state, ...{ _shouldProviderClear: true } };
+      case 'TIMESERIES_MEASUREMENTS_CLEAR_FINISHED':
+        return { ...payload };
+      case 'TIMESERIES_MEASUREMENTS_CLEAR_STARTED':
+      case 'TIMESERIES_MEASUREMENTS_UPDATED_ITEM':
+        return Object.assign({}, state, payload);
+      default:
+        return state;
+    }
+  },
   addons: {
+    reactProviderTimeseriesValueShouldClear: (state) => {
+      if (state.providerTimeseriesValues._shouldProviderClear) {
+        return { actionCreator: 'doProviderTimeseriesValueClear' };
+      }
+    },
+    selectProviderTimeseriesValuesLastProvider: (state) => {
+      return state.providerTimeseriesValues._lastProvider;
+    },
+    doProviderTimeseriesValueClear:
+      () =>
+      ({ dispatch, store }) => {
+        dispatch({
+          type: 'TIMESERIES_MEASUREMENTS_CLEAR_STARTED',
+          payload: { _shouldProviderClear: false },
+        });
+        const provider = store['selectProviderByRoute']();
+        const lastProvider =
+          store['selectProviderTimeseriesValuesLastProvider']();
+        const flags = store['selectProviderTimeseriesValuesFlags']();
+
+        if (provider?.slug === lastProvider) {
+          dispatch({ type: 'TIMESERIES_MEASUREMENTS_CLEAR_ABORTED' });
+        } else {
+          dispatch({
+            type: 'TIMESERIES_MEASUREMENTS_CLEAR_FINISHED',
+            payload: {
+              ...flags,
+              ...{ _lastProvider: provider?.slug },
+            },
+          });
+        }
+      },
     doProviderTimeseriesValuesFetchById:
       ({ timeseriesId, dateRange }) =>
       ({ dispatch, store, apiGet }) => {
         dispatch({ type: 'TIMESERIES_FETCH_BY_ID_START', payload: {} });
-        const [begin, end] = dateRange;
+        const { beginDate, endDate } = dateRange;
 
-        const isoAfter = begin ? begin.toISOString() : new Date();
-        const isoBefore = end ? end.toISOString() : subDays(new Date(), 7);
+        const isoAfter = beginDate ? beginDate?.toISOString() : null;
+        const isoBefore = endDate ? endDate?.toISOString() : null;
         const provider = store['selectProviderByRoute']();
 
         const url = `${apiUrl}/cwms-data/providers/${provider?.slug}/timeseries?name=${timeseriesId}&begin=${isoAfter}&end=${isoBefore}&page-size=-1`;
@@ -35,18 +77,7 @@ export default createRestBundle({
         let fetchCount = store['selectProviderTimeseriesValuesFetchCount']();
 
         apiGet(url, (_err, body) => {
-          //new Array(body).forEach((item) => (itemsById[item['key']] = item));
-
-          new Array(body).forEach((item) => {
-            //console.warn(item);
-            //console.log(itemsById);
-            itemsById[item['key']] = item;
-          });
-
-          // console.warn(body);
-          // new Array(body).forEach((item) => {
-          //   console.log(itemsById);
-          // });
+          new Array(body).forEach((item) => (itemsById[item['key']] = item));
 
           dispatch({
             type: 'TIMESERIES_MEASUREMENTS_UPDATED_ITEM',
@@ -60,6 +91,7 @@ export default createRestBundle({
                 _lastFetch: new Date(),
                 _lastResource: url,
                 _abortReason: null,
+                _lastProvider: provider?.slug,
               },
             },
           });
@@ -67,14 +99,5 @@ export default createRestBundle({
           dispatch({ type: 'TIMESERIES_FETCH_BY_ID_FINISHED', payload: {} });
         });
       },
-  },
-
-  reduceFurther: (state, { type, payload }) => {
-    switch (type) {
-      case 'TIMESERIES_MEASUREMENTS_UPDATED_ITEM':
-        return Object.assign({}, state, payload);
-      default:
-        return state;
-    }
   },
 });

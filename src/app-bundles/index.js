@@ -31,6 +31,7 @@ import providerTimeseriesValuesBundle from './provider-timeseries-values-bundle'
 import providerWatershedBundle from './provider-watershed-bundle';
 import providerWatershedsBundle from './provider-watersheds-bundle';
 import watershedBundle from './watershed-bundle';
+import timeseriesDateRangeBundle from './timeseries-date-range-bundle';
 // Searchable Bundles
 // import locationSearchBundle from './location-search-bundle';
 // import timeseriesSearchBundle from './timeseries-search-bundle';
@@ -97,5 +98,6 @@ export default composeBundles(
   watershedBundle,
   providerWatershedBundle,
   providerWatershedsBundle,
-  routeBundle
+  routeBundle,
+  timeseriesDateRangeBundle
 );
