@@ -25,7 +25,7 @@ export default function ProjectStats({ location }) {
   const conBottom =
     levelsMap['stor.bottom of conservation']?.latest_value || null;
   // Current Storage Value
-  const currentStorage = timeseriesMap['Storage']?.latest_value || null;
+  const currentStorage = timeseriesMap['Flood Storage']?.latest_value || null;
 
   const FloodStorageUtilized = ProjectFloodStoragePercent(
     floodTop,
