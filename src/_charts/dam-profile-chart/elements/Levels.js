@@ -22,8 +22,6 @@ const Levels = (svg, damScale, damTop, damBottom, levels = []) => {
     showLine: true,
     ...l,
   }));
-  console.log('--levels--');
-  console.log(levels);
 
   // reverse order sort
   var lineData = _levels.sort((a, b) => {
