@@ -14,6 +14,7 @@ import {
   LastValueSet,
   LookBackValueSet,
 } from '../../helpers/timeseries-helper';
+import { Placeholder } from '../../app-components/content-placeholder';
 
 export default function ProjectDetail() {
   const {
@@ -34,7 +35,7 @@ export default function ProjectDetail() {
 
   console.log('############# LOCATION DETAIL RENDER #################');
 
-  //const [location, setLocation] = useState(_location);
+  //const [location, setLocation] = useState();
   const [expanded, setExpanded] = useState(false);
   const [timeseriesIds, setTimeseriesId] = useState([]);
   //const [measurements, setMeasurements] = useState([]);
@@ -88,12 +89,12 @@ export default function ProjectDetail() {
     // console.log(location?.timeseries);
     // console.log('--tsvObj--');
     // console.log(tsvObj);
-    if (!tsvObj || !location) {
+    if (!tsvObj || !location?.timeseries?.length) {
       console.log('--returning--');
       return;
     }
-    let temp_location = location;
-    let temp_timeseries = location?.timeseries?.map((obj) => {
+
+    let updated_timeseries = location?.timeseries?.map((obj) => {
       // console.log('--obj--');
       // console.log(obj);
 
@@ -104,7 +105,9 @@ export default function ProjectDetail() {
       if (tsvArray?.length) {
         const lastRecord = LastValueSet(tsvArray);
         obj['latest_time'] = lastRecord.latest_time || null;
-        obj['latest_value'] = lastRecord.latest_value || null;
+        obj['latest_value'] = !isNaN(lastRecord.latest_value)
+          ? lastRecord.latest_value
+          : null;
         const lookBackRecord = LookBackValueSet(tsvArray, 24);
         obj['delta24hr'] =
           lookBackRecord &&
@@ -114,11 +117,13 @@ export default function ProjectDetail() {
 
       return obj;
     });
-    temp_location.timeseries = temp_timeseries;
-    // console.log('--temp location--');
-    // console.log(temp_location);
-    location.timeseries = temp_timeseries;
-    //setLocation(temp_location);
+
+    location.timeseries = updated_timeseries;
+    // temp_location.timeseries = temp_timeseries;
+    // // console.log('--temp location--');
+    // // console.log(temp_location);
+    // location.timeseries = temp_timeseries;
+    // //setLocation(temp_location);
   }, [location, location?.timeseries, tsvObj]);
 
   if (!location && !providerLocationIsLoading) {
@@ -147,7 +152,9 @@ export default function ProjectDetail() {
         <>
           {/* <ProjectStatusDescription /> */}
 
-          <DamProfileChart />
+          <Placeholder ready={location?.levels?.length} className="h-96 w-full">
+            <DamProfileChart />
+          </Placeholder>
         </>
       ),
     },
@@ -206,7 +213,9 @@ export default function ProjectDetail() {
               </div>
             </>
           ) : (
-            location && <LocationTimeseriesCharts location={location} />
+            <Placeholder ready={timeseriesIds.length} className="h-96 w-full">
+              <LocationTimeseriesCharts location={location} />
+            </Placeholder>
           )}
         </div>
 

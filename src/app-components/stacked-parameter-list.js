@@ -1,33 +1,25 @@
 import { ClockIcon } from '@heroicons/react/24/outline';
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/solid';
 import { parseISO, format } from 'date-fns';
+import { Placeholder } from './content-placeholder';
 
 // const parameters = [
-//   {
-//     id: 1,
-//     title: 'Pool/Lake Elevation',
-//     val: '1046.79',
-//     unit: 'FT',
-//     dateTime: '2023-01-09T:18:00+00:00',
-//     delta24hr: 0.89,
-//   },
-//   {
-//     id: 2,
-//     title: 'Inflow',
-//     val: '4829',
-//     unit: 'CFS',
-//     dateTime: '2023-01-09T:18:00+00:00',
-//   },
-//   {
-//     id: 3,
-//     title: 'Outflow',
-//     val: '4948',
-//     unit: 'CFS',
-//     dateTime: '2023-01-09T:18:00+00:00',
-//   },
+// {
+//   label: "Elevation",
+//   latest_time: "2023-04-12T16:30:00Z"
+//   latest_value: 408.96
+//   delta24hr: "-0.19",
+//   levels: []
+//   parameter: "Elev"
+//   sort_order: 1
+//   tsid: "Eureka-Meramec.Elev.Inst.30Minutes.0.lrgsShef-rev"
+//   unit: "ft"
+//   values:[]
+// }
 // ];
 
 export default function StackedParameterList({ parameters }) {
+  console.log('--StackedParameterList--');
   console.log(parameters);
   // return (
   //   <>
@@ -40,8 +32,7 @@ export default function StackedParameterList({ parameters }) {
   return (
     <div className="overflow-hidden bg-white shadow sm:rounded-md">
       <ul className="divide-y divide-gray-200">
-        {parameters &&
-          parameters.length &&
+        {parameters?.length &&
           parameters
             .filter((p) => p.hasOwnProperty('latest_value'))
             .sort((a, b) => (a.sort_order > b.sort_order ? 1 : -1))
@@ -55,24 +46,37 @@ export default function StackedParameterList({ parameters }) {
                     </p>
                     <div className="ml-2 flex flex-shrink-0">
                       <p className="inline-flex px-2 text-lg font-semibold leading-5 text-black">
-                        {p.latest_value?.toLocaleString()}
-                        <span className="ml-1 text-sm text-gray-400">
-                          ({p.unit})
-                        </span>
+                        <Placeholder
+                          ready={!isNaN(p.latest_value) && p.latest_value >= 0}
+                          className={'w-20 rounded-lg'}
+                        >
+                          {p.latest_value?.toLocaleString()}
+                          <span className="ml-1 text-sm font-normal text-gray-400">
+                            {p.unit}
+                          </span>
+                        </Placeholder>
                       </p>
                     </div>
                   </div>
                   <div className="mt-2 flex justify-between">
                     <div className="sm:flex">
                       <p className="flex items-center text-sm text-gray-500">
-                        <ClockIcon
-                          className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
-                          aria-hidden="true"
-                        />
-                        <time dateTime={p.latest_time}>
-                          {p.latest_time &&
-                            format(parseISO(p.latest_time), 'dd-LLL-yyyy @ p')}
-                        </time>
+                        <Placeholder
+                          ready={p.latest_time}
+                          className={'w- w-48 rounded-lg'}
+                        >
+                          <ClockIcon
+                            className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
+                            aria-hidden="true"
+                          />
+                          <time dateTime={p.latest_time}>
+                            {p.latest_time &&
+                              format(
+                                parseISO(p.latest_time),
+                                'dd-LLL-yyyy @ p'
+                              )}
+                          </time>
+                        </Placeholder>
                       </p>
                     </div>
                     <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
