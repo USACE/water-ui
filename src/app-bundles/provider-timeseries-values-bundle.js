@@ -77,7 +77,14 @@ export default createRestBundle({
         let fetchCount = store['selectProviderTimeseriesValuesFetchCount']();
 
         apiGet(url, (_err, body) => {
-          new Array(body).forEach((item) => (itemsById[item['key']] = item));
+          new Array(body).forEach((item) => {
+            // item can be undefined if the response is a 404
+            if (item === undefined) {
+              console.warn(`${url} returned an error`);
+              return;
+            }
+            return (itemsById[item['key']] = item);
+          });
 
           dispatch({
             type: 'TIMESERIES_MEASUREMENTS_UPDATED_ITEM',
