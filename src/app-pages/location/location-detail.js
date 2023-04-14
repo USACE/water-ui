@@ -15,6 +15,7 @@ import {
   LookBackValueSet,
 } from '../../helpers/timeseries-helper';
 import { Placeholder } from '../../app-components/content-placeholder';
+import { mapObjectArrayByKey } from '../../helpers/misc-helpers';
 
 export default function ProjectDetail() {
   const {
@@ -136,21 +137,32 @@ export default function ProjectDetail() {
 
   const isProject = location?.kind === 'PROJECT' && location?.levels?.length;
 
-  // const ProjectStatusDescription = () => (
-  //   <div className="sr-only bg-red-100 p-10" aria-label="Project Status">
-  //     Dewey Lake is located in the state of Kentucky. The current pool elevation
-  //     is 646.35 ft. The lake has decreased in elevation 0.37 ft in the last 24
-  //     hours. The project is currently utilizing 3.3% of it's total flood
-  //     storage.
-  //   </div>
-  // );
+  // ADA Screen reader text for dam profile chart
+  const ProjectStatusDescription = ({ location: l }) => {
+    if (!l?.timeseries) {
+      return null;
+    }
+    const tsMap = mapObjectArrayByKey(l?.timeseries, 'label');
+    const elevObj = tsMap['Elevation'];
+    const poolElev = elevObj?.latest_value || null;
+    const poolDirection = elevObj?.delta24hr > 0 ? 'increased' : 'decreased';
+
+    return (
+      <p className="sr-only bg-blue-100 p-5" aria-label="Project Status">
+        {l?.public_name} is located in the state of {l?.state}. The current pool
+        elevation is {poolElev} feet and has {poolDirection} in elevation{' '}
+        {elevObj?.delta24hr} feet in the last 24 hours.
+        {/* The project is currently utilizing 3.3% of it's total flood storage. */}
+      </p>
+    );
+  };
 
   const tabs = [
     {
       name: 'Dam Profile',
       content: (
         <>
-          {/* <ProjectStatusDescription /> */}
+          <ProjectStatusDescription location={location} />
 
           <Placeholder ready={location?.levels?.length} className="h-96 w-full">
             <DamProfileChart />
