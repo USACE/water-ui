@@ -11,7 +11,9 @@ import SurchargeIcon from './elements/SurchargeIcon.js';
 import WaterLevel from './elements/WaterLevel.js';
 import TailwaterLevel from './elements/TailwaterLevel.js';
 import Levels from './elements/Levels.js';
+import Turbine from './elements/Turbine.js';
 import Info from './elements/Info.js';
+import noLockTurbine from './elements/NoLockTurbine.js';
 
 export default function DamProfileChart(info, dom) {
   const {
@@ -21,6 +23,7 @@ export default function DamProfileChart(info, dom) {
     inflow,
     outflow,
     surcharge,
+    powerGeneration,
     dambottom,
     damtop,
     height = undefined,
@@ -121,6 +124,11 @@ export default function DamProfileChart(info, dom) {
   // if (options.hasTurbine) {
   //   createTurbine();
   // }
+
+  if (powerGeneration) {
+    noLockTurbine(svg);
+    Turbine(svg);
+  }
 
   //////////////////////////////////////
   // Middle Gradient

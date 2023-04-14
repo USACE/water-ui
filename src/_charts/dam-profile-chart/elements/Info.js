@@ -10,7 +10,17 @@ const Info = (svg, text) => {
     .attr('class', 'infoText')
     .attr('font-family', 'sans-serif')
     .attr('font-size', '1.2em')
-    .text(`${text || ''} ${new Date().toUTCString()}`);
+    .text(
+      `${text || ' '} - ${new Date().toLocaleDateString(undefined, {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timeZoneName: 'longGeneric',
+      })}`
+    );
 };
 
 export default Info;

@@ -61,6 +61,7 @@ export default function ReactDamProfileChart() {
         null,
       inflow: timeseriesMap['Inflow']?.latest_value || null,
       outflow: timeseriesMap['Outflow']?.latest_value || null,
+      powerGeneration: timeseriesMap['Power Generation']?.latest_value || null,
       surcharge: timeseriesMap['Surcharge Release']?.latest_value || null,
       gradientBottom: levelsMap['Top of Flood']?.latest_value || null,
       gradientTop: levelsMap['Bottom of Flood']?.latest_value || null,
@@ -81,6 +82,8 @@ export default function ReactDamProfileChart() {
         <svg
           ref={ref}
           aria-hidden={true}
+          // title="Dam Profile Chart"
+          // description="this is my description"
           preserveAspectRatio="xMinYMin meet"
           viewBox="0 0 1240 650"
         ></svg>
