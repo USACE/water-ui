@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { useConnect } from 'redux-bundler-hook';
 import { Fragment } from 'react';
 import { Disclosure } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import UsaceLogo from '../images/usace-logo-color.svg';
 import LocationCombobox from '../app-components/inputs/location-search-input';
 
@@ -10,6 +11,7 @@ import LocationCombobox from '../app-components/inputs/location-search-input';
 // }
 
 export default function Header() {
+  const { pathname } = useConnect('selectPathname');
   //const [name, setName] = useState(null);
   //const [type, setType] = useState(null);
   const [location, setLocation] = useState(null);
@@ -87,23 +89,18 @@ export default function Header() {
                       Search
                     </label> */}
                     <div className="relative">
-                      {/* <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                        <MagnifyingGlassIcon
-                          className="h-5 w-5 text-gray-400"
-                          aria-hidden="true"
+                      {pathname !== '/' ? (
+                        <LocationCombobox
+                          label=""
+                          value={location}
+                          setValue={setLocation}
+                          isValid={!location || locationIsValid}
+                          setIsValid={setLocationIsValid}
+                          isRequired={false}
+                          placeholder="Search"
+                          className="bg-gray-700"
                         />
-                      </div> */}
-
-                      <LocationCombobox
-                        label=""
-                        value={location}
-                        setValue={setLocation}
-                        isValid={!location || locationIsValid}
-                        setIsValid={setLocationIsValid}
-                        isRequired={false}
-                        placeholder="Search"
-                        className="bg-gray-700"
-                      />
+                      ) : null}
                     </div>
                   </div>
                 </div>
@@ -118,7 +115,7 @@ export default function Header() {
                     )}
                   </Disclosure.Button>
                 </div>
-                <div className="hidden lg:ml-4 lg:block">
+                {/* <div className="hidden lg:ml-4 lg:block">
                   <div className="flex items-center">
                     <button
                       type="button"
@@ -128,7 +125,7 @@ export default function Header() {
                       <BellIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
 
