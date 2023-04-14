@@ -58,9 +58,11 @@ const OutflowIcon = (svg, outflow, position = { x: 0, y: 0 }) => {
     .attr('dx', 610)
     .attr('dy', 325)
     .attr('font-family', 'sans-serif')
-    .attr('font-size', '1em')
+    .attr('font-size', '1.2em')
     .attr('class', 'outflowText')
-    .text(!isNaN(outflow) && outflow ? outflow + ' cfs' : 'Not Available');
+    .text(
+      !isNaN(outflow) && outflow ? outflow.toFixed(0) + ' cfs' : 'Not Available'
+    );
 };
 
 export default OutflowIcon;
