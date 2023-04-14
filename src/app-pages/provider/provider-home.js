@@ -71,7 +71,7 @@ export default function ProviderHome() {
   ];
 
   return (
-    <PageWrapper title={provider?.name} subTitle="SubTitle">
+    <PageWrapper title={provider?.name} subTitle="">
       {/* <div className=""> */}
 
       <SimpleStats stats={stats} title="" />
@@ -107,7 +107,9 @@ export default function ProviderHome() {
               ]}
             />
           ) : (
-            'no watersheds available - showing all projects'
+            <span className="inline-block w-full bg-yellow-100 p-2 text-center">
+              dev note: no watersheds available - showing all projects
+            </span>
           )}
           {!watersheds?.length && (
             <ProjectsTable projects={provider_projects} />
