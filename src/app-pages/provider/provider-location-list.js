@@ -1,6 +1,6 @@
 import React from 'react';
 import { useConnect } from 'redux-bundler-hook';
-import SimpleTable from '../../app-components/table-simple';
+import { SimpleTable, TableLink } from '../../app-components/table-simple';
 import PageWrapper from '../page-wrapper';
 
 export default function ProviderLocationList() {
@@ -14,14 +14,6 @@ export default function ProviderLocationList() {
     'selectProviderByRoute'
   );
 
-  const LocationLink = ({ href, title }) => {
-    return (
-      <a className="hover:underline" href={href}>
-        {title}
-      </a>
-    );
-  };
-
   const allowedKinds = ['SITE', 'STREAM_LOCATION', 'PROJECT', 'BASIN'];
 
   const filteredLocations = locations.filter(
@@ -34,15 +26,15 @@ export default function ProviderLocationList() {
       subTitle={provider?.name && `provided by ${provider?.name}`}
     >
       <SimpleTable
-        headers={['Name', 'Kind', 'State']}
+        headers={['Name', 'Latest Data', 'Kind', 'State']}
         items={filteredLocations}
         itemFields={[
           {
             key: 'slug',
             render: (location) => {
               return (
-                <LocationLink
-                  title={location.public_name}
+                <TableLink
+                  text={location.public_name}
                   href={''.concat(
                     pathname,
                     '/',
@@ -50,6 +42,18 @@ export default function ProviderLocationList() {
                   )}
                 />
               );
+            },
+          },
+          {
+            key: 'kind',
+            render: (l) => {
+              return l.timeseries
+                ? l.timeseries[0].parameter +
+                    ' - ' +
+                    l.timeseries[0]?.latest_value +
+                    ' @ ' +
+                    l.timeseries[0]?.latest_time
+                : null;
             },
           },
           {

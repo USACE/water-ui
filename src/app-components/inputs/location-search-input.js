@@ -18,7 +18,8 @@ const LocationIcon = ({ kind, size }) => {
 };
 
 const LocationItem = ({
-  attributes,
+  kind,
+  public_name,
   code,
   provider,
   provider_name,
@@ -29,10 +30,10 @@ const LocationItem = ({
   return (
     <div key={slug} className="flex">
       <div className="flex-none">
-        <LocationIcon kind={attributes?.kind} size={25} />
+        <LocationIcon kind={kind} size={25} />
       </div>
       <div className="flex-auto pl-2">
-        <div className="font-bold">{attributes?.public_name || code}</div>
+        <div className="font-bold">{public_name || code}</div>
         <div className="text-sm">Office: {provider_name}</div>
         <div className="text-sm">
           State: {state_name} ({state})
@@ -87,7 +88,7 @@ function LocationCombobox({
           //setValue(v);
           //setIsValid(true); // TODO; Automatically setIsValid true when location is selected. May want to add more explicit validation checking
           console.log(v);
-          doUpdateUrl(`/overview/${v.provider}/location/${v.slug}`);
+          doUpdateUrl(`/overview/${v.provider}/locations/${v.slug}`);
         }}
       >
         <Combobox.Label>{label}</Combobox.Label>

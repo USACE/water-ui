@@ -30,20 +30,27 @@ export default function ReactDamProfileChart() {
     const _levels = location?.levels
       ?.filter(
         (lvl) =>
-          allowedLevels.includes(lvl.label) && lvl.base_parameter === 'Elev'
+          allowedLevels.includes(lvl.label) &&
+          (lvl.base_parameter === 'Elev' || lvl.parameter === 'Elev')
       )
       .map((lvl) => {
         return { name: lvl.label, value: lvl.latest_value };
       });
 
     const levelsMap = mapObjectArrayByKey(
-      location?.levels.filter((lvl) => lvl.base_parameter === 'Elev'),
+      location?.levels.filter(
+        (lvl) => lvl.base_parameter === 'Elev' || lvl.parameter === 'Elev'
+      ),
       'label'
     );
     // console.log('-----');
     // console.log(levelsMap);
 
     const timeseriesMap = mapObjectArrayByKey(location?.timeseries, 'label');
+
+    console.log('-----');
+    console.log(timeseriesMap);
+    console.log(timeseriesMap['Elevation']?.latest_value);
 
     const _info = {
       // levels: [

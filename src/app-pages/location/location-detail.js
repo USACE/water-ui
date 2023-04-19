@@ -61,15 +61,15 @@ export default function ProjectDetail() {
   }, [location]);
 
   /** Fetch the timeseries measurements in regards to date range */
-  useEffect(() => {
-    location &&
-      timeseriesIds &&
-      timeseriesIds.forEach((id) => {
-        // console.log(`fetching ${id}`);
-        doProviderTimeseriesValuesFetchById({ timeseriesId: id, dateRange });
-        //doProviderTimeseriesValuesFetch();
-      });
-  }, [location, timeseriesIds, dateRange, doProviderTimeseriesValuesFetchById]);
+  // useEffect(() => {
+  //   location &&
+  //     timeseriesIds &&
+  //     timeseriesIds.forEach((id) => {
+  //       // console.log(`fetching ${id}`);
+  //       doProviderTimeseriesValuesFetchById({ timeseriesId: id, dateRange });
+  //       //doProviderTimeseriesValuesFetch();
+  //     });
+  // }, [location, timeseriesIds, dateRange, doProviderTimeseriesValuesFetchById]);
 
   // useEffect(() => {
   //   // Note: timeSeriesValues may contain the more tsids than we want for this location
@@ -90,6 +90,7 @@ export default function ProjectDetail() {
     // console.log(location?.timeseries);
     // console.log('--tsvObj--');
     // console.log(tsvObj);
+
     if (!tsvObj || !location?.timeseries?.length) {
       console.log('--returning--');
       return;

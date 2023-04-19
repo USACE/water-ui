@@ -19,8 +19,8 @@ import { Placeholder } from './content-placeholder';
 // ];
 
 export default function StackedParameterList({ parameters }) {
-  console.log('--StackedParameterList--');
-  console.log(parameters);
+  // console.log('--StackedParameterList--');
+  // console.log(parameters);
   // return (
   //   <>
   //     {/* JSON.stringify(parameters) */}
@@ -47,7 +47,7 @@ export default function StackedParameterList({ parameters }) {
                     <div className="ml-2 flex flex-shrink-0">
                       <p className="inline-flex px-2 text-lg font-semibold leading-5 text-black">
                         <Placeholder
-                          ready={!isNaN(p.latest_value) && p.latest_value >= 0}
+                          ready={!isNaN(p.latest_value)}
                           className={'w-20 rounded-lg'}
                         >
                           {p.latest_value?.toLocaleString()}

@@ -3,19 +3,18 @@ import { useConnect } from 'redux-bundler-hook';
 // import { subDays } from 'date-fns';
 import MultiParamChart from './highchart-multiparam';
 import DateLookbackSelector from './date-lookback-selector';
+// import { Placeholder } from '../content-placeholder';
 
-export default function ProjectTimeseriesCharts({
-  location: _location,
-  dateRange,
-  setDateRange,
-}) {
+export default function ProjectTimeseriesCharts({ location: _location }) {
   console.log('im rendering');
   const {
     providerTimeseriesValuesItems: timeSeriesValues,
-    // doProviderTimeseriesValuesFetchById,
+    doProviderTimeseriesValuesFetchById,
+    timeseriesDateRange: dateRange,
   } = useConnect(
-    'selectProviderTimeseriesValuesItems'
-    //'doProviderTimeseriesValuesFetchById'
+    'selectProviderTimeseriesValuesItems',
+    'doProviderTimeseriesValuesFetchById',
+    'selectTimeseriesDateRange'
   );
 
   const [location] = useState(_location);
@@ -39,14 +38,14 @@ export default function ProjectTimeseriesCharts({
   }, [location]);
 
   /** Fetch the timeseries measurements in regards to date range */
-  // useEffect(() => {
-  //   location &&
-  //     timeseriesIds &&
-  //     timeseriesIds.forEach((id) => {
-  //       // console.log(`fetching ${id}`);
-  //       doProviderTimeseriesValuesFetchById({ timeseriesId: id, dateRange });
-  //     });
-  // }, [location, timeseriesIds, dateRange, doProviderTimeseriesValuesFetchById]);
+  useEffect(() => {
+    location &&
+      timeseriesIds &&
+      timeseriesIds.forEach((id) => {
+        // console.log(`fetching ${id}`);
+        doProviderTimeseriesValuesFetchById({ timeseriesId: id, dateRange });
+      });
+  }, [location, timeseriesIds, dateRange, doProviderTimeseriesValuesFetchById]);
 
   useEffect(() => {
     // Note: timeSeriesValues may contain the more tsids than we want for this location
@@ -58,6 +57,8 @@ export default function ProjectTimeseriesCharts({
       timeseriesIds.includes(v.key)
     );
 
+    console.log('--Setting measurements to: ---');
+    console.log(locationTsValues);
     setMeasurements(locationTsValues);
   }, [timeSeriesValues, timeseriesIds]);
 
@@ -76,6 +77,7 @@ export default function ProjectTimeseriesCharts({
           tsLabel: 'Elevation',
           displayLevels: ['elev.top of flood', 'elev.bottom of flood'],
         },
+        { tsLabel: 'Elevation Rule Curve', visible: false },
         { tsLabel: 'Stage' },
       ],
       [
@@ -143,6 +145,11 @@ export default function ProjectTimeseriesCharts({
             tsObj.tsid
           ];
 
+          if (!paramMeasurements?.values?.length) {
+            // bail on this parameter - there is no data to draw
+            return;
+          }
+
           // inject the values from the measurements payload into the tsObj
           tsObj['values'] = paramMeasurements?.values;
 
@@ -153,7 +160,11 @@ export default function ProjectTimeseriesCharts({
           );
 
           // inject the values from levels into the tsObj
-          tsObj['levels'] = levels;
+          tsObj['levels'] = Array.isArray(levels) ? levels : [];
+
+          // default is visble unless specified as false in config above
+          tsObj['chartVisible'] =
+            cfgObj?.hasOwnProperty('visible') && !cfgObj.visible ? false : true;
 
           chartParams.push(tsObj);
         } else {
@@ -176,5 +187,5 @@ export default function ProjectTimeseriesCharts({
     });
   }, [location, measurements, dateRange]);
 
-  return chartComponents;
+  return chartComponents.length > 1 ? chartComponents : null;
 }

@@ -43,8 +43,8 @@ export default function MultiParamChart({ chartParams }) {
     let yMin = null;
     let yMax = null;
 
-    const allEqual = (arr) => arr.every((val) => val === arr[0]);
-    const equalUnits = allEqual(chartParams?.map((item) => item?.unit));
+    //const allEqual = (arr) => arr.every((val) => val === arr[0]);
+    //const equalUnits = allEqual(chartParams?.map((item) => item?.unit));
 
     // Loop over each tsLabel (aka descriptive parameter) for each chart
     // ------------------------
@@ -53,9 +53,16 @@ export default function MultiParamChart({ chartParams }) {
       // console.log(chartParamObj);
       const isStorage = chartParamObj?.label === 'Storage' || false;
 
-      chartTitle = chartTitle
-        ? chartTitle.concat(' / ', chartParamObj?.label)
-        : chartParamObj?.label;
+      chartTitle =
+        // chartVisible is true and chartTitle is set
+        chartParamObj?.chartVisible && chartTitle
+          ? chartTitle.concat(' / ', chartParamObj?.label)
+          : // chartVisible is false and chartTitle is set
+          !chartParamObj?.chartVisible && chartTitle
+          ? // use existing chart title (even if null)
+            chartTitle
+          : // otherwise use the label as the chart title
+            chartParamObj?.label;
 
       // setup data as array of arrays [[time, value], [time, value]]
       const data = chartParamObj?.values?.map((v) => {
@@ -83,6 +90,10 @@ export default function MultiParamChart({ chartParams }) {
         }
       };
 
+      // console.log(`--${chartTitle}--`);
+      // console.log(`yMin = ${yMin}`);
+      // console.log(`yMax = ${yMax}`);
+
       // console.log(`pushing data to chart series for ${chartParamObj?.label}`);
       chartSeries.push({
         name: chartParamObj?.label,
@@ -91,6 +102,7 @@ export default function MultiParamChart({ chartParams }) {
         color: isStorage ? '#4d4b46' : null,
         fillOpacity: isStorage ? 0.1 : null,
         data: data,
+        visible: chartParamObj?.chartVisible,
         marker: {
           enabled: true,
           radius: 2,
@@ -102,10 +114,12 @@ export default function MultiParamChart({ chartParams }) {
 
       yAxis.push({
         title: { text: chartParamObj?.label + ` (${chartParamObj?.unit})` },
+        // force yaxis to match
+        linkedTo: idx > 0 ? 0 : null,
         opposite: idx > 0,
         // force yaxis to match if two parameters have same units
-        min: chartParams.length > 1 && equalUnits ? yMin : null,
-        max: chartParams.length > 1 && equalUnits ? yMax : null,
+        // min: chartParams.length > 1 && equalUnits ? yMin : null,
+        // max: chartParams.length > 1 && equalUnits ? yMax : null,
         tickInterval: null,
         labels: {
           format: `{value} ${chartParamObj?.unit}`,
@@ -113,6 +127,7 @@ export default function MultiParamChart({ chartParams }) {
         accessibility: {
           description: `${chartParamObj?.label} measured in ${chartParamObj?.unit}`,
         },
+
         // plotBands: [
         //   {
         //     // Light air

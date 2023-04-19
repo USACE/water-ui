@@ -11,8 +11,43 @@ const HighchartsWrapper = (props) => {
   highchartsExportData(Highcharts);
   highchartsAccessibility(Highcharts);
 
-  //console.log('--Highcharts Wrapper--');
+  // console.log('--Highcharts Wrapper--');
   //console.log(props.chartOptions);
+  // console.log(props.chartOptions?.series);
+
+  // Hack to get the max data value from a chart with multiple yAxis
+  const maxVal = Math.max(
+    ...props?.chartOptions?.series?.map((axis) => {
+      var max = 0;
+      var _newMax = Math.max(...axis?.data?.map((item) => item[1]));
+      if (_newMax > max) {
+        max = _newMax;
+      }
+      return max;
+    })
+  );
+
+  const minVal = Math.min(
+    ...props?.chartOptions?.series?.map((axis) => {
+      var min = 0;
+      var _newMin = Math.min(...axis?.data?.map((item) => item[1]));
+      if (_newMin > min) {
+        min = _newMin;
+      }
+      return min;
+    })
+  );
+
+  // Set or update the "max" property with the computed property above
+  props.chartOptions?.yAxis.forEach((axis) => {
+    axis['max'] = maxVal + maxVal * 0.001; // extra buffer above computed max
+  });
+  props.chartOptions?.yAxis.forEach((axis) => {
+    axis['min'] = minVal - minVal * 0.001; // extra buffer below computed min
+  });
+
+  // console.log('--maxVal--');
+  // console.log(maxVal);
 
   let options = {
     chart: {
@@ -22,7 +57,7 @@ const HighchartsWrapper = (props) => {
       panning: true,
       panKey: 'shift',
     },
-
+    time: { useUTC: false },
     title: props.chartOptions?.title || {
       text: 'No title set',
       align: 'center',
@@ -40,11 +75,18 @@ const HighchartsWrapper = (props) => {
       enabled: true,
     },
     tooltip: {
+      // xDateFormat: '%d-%b-%Y',
+      shared: true,
       style: {
         // color: 'blue',
         fontWeight: 'bold',
         fontSize: '14px',
       },
+      // formatter: function () {
+      //   return this.points.reduce(function (s, point) {
+      //     return s + '<br/>' + point.series.name + ': ' + point.y + 'm';
+      //   }, '<b>' + this.x + '</b>');
+      // },
     },
   };
 

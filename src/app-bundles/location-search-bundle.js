@@ -18,7 +18,7 @@ export default createSearchableBundle({
         return;
       }
       apiGet(
-        `${process.env.REACT_APP_MOCK_API_URL}/locations?q=${encodeURIComponent(
+        `${process.env.REACT_APP_WATER_API_URL}/search?q=${encodeURIComponent(
           q
         )}`,
         (err, json) => {

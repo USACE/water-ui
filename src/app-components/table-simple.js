@@ -1,4 +1,4 @@
-export default function SimpleTable({ headers, items, itemFields }) {
+const SimpleTable = ({ headers, items, itemFields }) => {
   return (
     <div className="flex flex-col shadow-lg">
       {/* <div className="overflow-x-auto sm:-mx-6 lg:-mx-8"> */}
@@ -45,4 +45,26 @@ export default function SimpleTable({ headers, items, itemFields }) {
       </div>
     </div>
   );
-}
+};
+
+const TableLink = ({
+  href,
+  title,
+  text,
+  target = '_self',
+  download = null,
+}) => {
+  return (
+    <a
+      className="hover:underline"
+      href={href}
+      title={title || text}
+      target={target}
+      download={download}
+    >
+      {text}
+    </a>
+  );
+};
+
+export { SimpleTable, TableLink };

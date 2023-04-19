@@ -27,13 +27,19 @@ export default function WatershedDetail() {
   //   (location) => location.provider === provider.provider
   // );
 
-  const projects = !watershed
-    ? []
-    : locations.filter(
-        (location) => location.kind === 'PROJECT'
-        // location.kind === 'PROJECT' &&
-        // location.watershed_slug === watershed.slug
-      );
+  // const projects = !watershed
+  //   ? []
+  //   : locations.filter(
+  //       (location) => location.kind === 'PROJECT'
+  //       // location.kind === 'PROJECT' &&
+  //       // location.watershed_slug === watershed.slug
+  //     );
+
+  const projects = locations.filter(
+    (location) => location.kind === 'PROJECT'
+    // location.kind === 'PROJECT' &&
+    // location.watershed_slug === watershed.slug
+  );
 
   const stats = [
     { name: 'Projects', stat: projects.length },

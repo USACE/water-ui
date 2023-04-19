@@ -6,11 +6,11 @@ export default function DateLookbackSelector() {
   const {
     timeseriesDateRange: dateRange,
     doTimeseriesDateRangeUpdate,
-    providerTimeseriesValuesIsLoading: tsIsLoading,
+    // providerTimeseriesValuesIsLoading: tsIsLoading,
   } = useConnect(
     'selectTimeseriesDateRange',
-    'doTimeseriesDateRangeUpdate',
-    'selectProviderTimeseriesValuesIsLoading'
+    'doTimeseriesDateRangeUpdate'
+    // 'selectProviderTimeseriesValuesIsLoading'
   );
   const options = [
     { name: 'last 7 days', value: 7 },

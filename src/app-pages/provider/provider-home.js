@@ -1,9 +1,8 @@
-//import { useEffect } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 import MockDistrictMap from '../../images/mockup/map-district-focus.png';
 import SimpleStats from '../../app-components/stats-simple';
 import CardSimple from '../../app-components/card-simple';
-import SimpleTable from '../../app-components/table-simple';
+import { SimpleTable, TableLink } from '../../app-components/table-simple';
 import ProjectsTable from '../../app-components/projects-table';
 import PageWrapper from '../page-wrapper';
 
@@ -22,14 +21,6 @@ export default function ProviderHome() {
     'selectProviderWatershedsItems'
   );
 
-  const TableLink = ({ href, title }) => {
-    return (
-      <a className="hover:underline" href={href}>
-        {title}
-      </a>
-    );
-  };
-
   const MockStorage = () => {
     return <>{parseInt(Math.floor(Math.random() * (15 - 2 + 1) + 2)) + '%'}</>;
   };
@@ -47,7 +38,7 @@ export default function ProviderHome() {
             render: (p) => {
               return (
                 <TableLink
-                  title={p.name}
+                  text={p.name}
                   href={''.concat('/overview/', `${p.slug}`)}
                 />
               );
@@ -93,7 +84,7 @@ export default function ProviderHome() {
                   render: (watershed) => {
                     return (
                       <TableLink
-                        title={watershed.public_name}
+                        text={watershed.public_name}
                         href={''.concat(
                           pathname,
                           '/watershed/',
@@ -108,10 +99,10 @@ export default function ProviderHome() {
             />
           ) : (
             <span className="inline-block w-full bg-yellow-100 p-2 text-center">
-              dev note: no watersheds available - showing all projects
+              no watersheds available
             </span>
           )}
-          {!watersheds?.length && (
+          {!watersheds?.length && provider?.type === 'dis' && (
             <ProjectsTable projects={provider_projects} />
           )}
         </div>
