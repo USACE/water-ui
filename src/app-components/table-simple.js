@@ -1,4 +1,4 @@
-const SimpleTable = ({ headers, items, itemFields }) => {
+const SimpleTable = ({ headers, items, itemFields, striped = false }) => {
   return (
     <div className="flex flex-col shadow-lg">
       {/* <div className="overflow-x-auto sm:-mx-6 lg:-mx-8"> */}
@@ -24,7 +24,16 @@ const SimpleTable = ({ headers, items, itemFields }) => {
                 {!items || !items.length
                   ? null
                   : items.map((item, idx) => (
-                      <tr key={idx}>
+                      <tr
+                        key={idx}
+                        className={
+                          striped
+                            ? idx % 2 === 0
+                              ? undefined
+                              : 'bg-gray-50'
+                            : null
+                        }
+                      >
                         {/* Item Fields */}
                         {itemFields &&
                           itemFields.length &&

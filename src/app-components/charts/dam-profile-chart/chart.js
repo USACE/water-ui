@@ -60,7 +60,9 @@ export default function ReactDamProfileChart() {
       infoText: location?.public_name || null,
       levels: _levels,
       damtop: levelsMap['Top of Dam']?.latest_value || null,
-      dambottom: levelsMap['Streambed']?.latest_value || null,
+      // for some projects like Lake Okeechobee, streambed could be 0
+      // setting to null will mess with the scale
+      dambottom: levelsMap['Streambed']?.latest_value,
       pool: timeseriesMap['Elevation']?.latest_value || null,
       tail:
         timeseriesMap['Stage Tailwater']?.latest_value ||

@@ -1,5 +1,7 @@
 import { subHours, parseJSON } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
+// import { useConnect } from 'redux-bundler-hook';
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/solid';
 
 // Function to take array of [time, value] and return last [time, value]
 const LastValueSet = (tsvArray) => {
@@ -46,10 +48,17 @@ const LookBackValueSet = (tsvArray, hoursBack = 24) => {
     "yyyy-MM-dd'T'HH:mm:ssXXX"
   );
 
+  // console.log(`--Looking for ${lookBackDateTimeSearchString}`);
+
   // Find the index based on the lookBackDateTimeSearchString
   const lookBackDateTimeIndex = tsvArray.findIndex((arr) =>
     arr.includes(lookBackDateTimeSearchString)
   );
+
+  if (lookBackDateTimeIndex === -1) {
+    // no match found
+    return null;
+  }
 
   // console.log(
   //   `-- returning lookBackDateTimeIndex of ${lookBackDateTimeIndex} --`
@@ -61,4 +70,47 @@ const LookBackValueSet = (tsvArray, hoursBack = 24) => {
   return _obj;
 };
 
-export { LastValueSet, LookBackValueSet };
+const ConvertUnitsToEn = (unitLookup, param, units, value) => {
+  //const param = tsObj.base_parameter || tsObj.parameter;
+  console.log(param);
+
+  const unitConversion = unitLookup[param];
+
+  console.log('--convertUnits()--');
+  console.log(`got param of ${param} and unit of ${units}`);
+  console.log(unitConversion);
+
+  const newValue = value / unitConversion.factor;
+
+  return { value: newValue, units: unitConversion.transform_to_unit };
+};
+
+const DeltaChange = ({ delta }, { title = '24 hour change' }) => {
+  return delta ? (
+    <>
+      {delta > 0 ? (
+        <ArrowUpIcon
+          className="h-5 w-5 flex-shrink-0 self-center text-green-500"
+          aria-hidden="true"
+        />
+      ) : (
+        <ArrowDownIcon
+          className="h-5 w-5 flex-shrink-0 self-center text-red-500"
+          aria-hidden="true"
+        />
+      )}
+      {/* <span className="">
+                              {' '}
+                              {p.delta24hr > 0
+                                ? '24hr increase'
+                                : '24hr decrease'}{' '}
+                              of
+                            </span> */}
+      <span className="ml-1 cursor-default" aria-label={title} title={title}>
+        {delta}
+      </span>
+    </>
+  ) : null;
+};
+
+export { LastValueSet, LookBackValueSet, ConvertUnitsToEn, DeltaChange };

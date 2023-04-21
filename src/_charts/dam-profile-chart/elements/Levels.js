@@ -2,7 +2,10 @@ import { createLine, straightLine } from './Lines.js';
 
 const Levels = (svg, damScale, damTop, damBottom, levels = []) => {
   // short circuit
-  if (!levels.length || !damTop || !damBottom || !damScale) {
+  if (!levels.length || !damTop || isNaN(damBottom) || !damScale) {
+    console.log('Unable to draw dam profile levels');
+    console.log(levels);
+    console.log(damScale);
     return;
   }
 

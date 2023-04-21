@@ -72,7 +72,7 @@ export default createRestBundle({
         const provider = store['selectProviderByRoute']();
 
         let tsUurl = apiUrl.replace('/cwms', '/cda');
-        const tsid = timeseriesId.replace('&', '%26');
+        const tsid = timeseriesId.replace('%', '%25').replace('&', '%26');
         const url = `${tsUurl}/providers/${provider?.slug}/timeseries?name=${tsid}&begin=${isoAfter}&end=${isoBefore}&page-size=-1`;
         const flags = store['selectProviderTimeseriesValuesFlags']();
         const itemsById = store['selectProviderTimeseriesValuesItemsObject']();

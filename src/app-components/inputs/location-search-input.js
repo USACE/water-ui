@@ -33,11 +33,13 @@ const LocationItem = ({
         <LocationIcon kind={kind} size={25} />
       </div>
       <div className="flex-auto pl-2">
-        <div className="font-bold">{public_name || code}</div>
-        <div className="text-sm">Office: {provider_name}</div>
-        <div className="text-sm">
-          State: {state_name} ({state})
+        <div
+          className={`font-bold ${public_name.length > 15 ? 'text-sm' : null}`}
+        >
+          {public_name || code}
         </div>
+        <div className="text-sm">Office: {provider_name}</div>
+        <div className="text-sm">State: {state}</div>
       </div>
     </div>
   );
@@ -120,7 +122,7 @@ function LocationCombobox({
           {locationSearchItems.map((l) => (
             <Combobox.Option
               autoComplete="off"
-              key={l.slug}
+              key={l.provider + '_' + l.slug}
               value={l}
               // styles below are for the list item (li) element
               className="cursor-pointer border-b-2 border-gray-100"

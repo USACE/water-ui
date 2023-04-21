@@ -147,7 +147,10 @@ export default function LocationSideBarAccordian({ location }) {
     const filteredLocsWithDistance = locations
       .filter(
         (l) =>
-          l.public_name && l.state !== '00' && allowedKinds.includes(l.kind)
+          l.public_name &&
+          l.state !== '00' &&
+          allowedKinds.includes(l.kind) &&
+          l.geometry?.coordinates?.length === 2
       )
       .map((l) => {
         l['distance'] = distance(locationCoords, l.geometry?.coordinates, {

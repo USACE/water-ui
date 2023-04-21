@@ -1,6 +1,7 @@
 import { useConnect } from 'redux-bundler-hook';
 import { SimpleTable, TableLink } from './table-simple';
 import { mapObjectArrayByKey } from '../helpers/misc-helpers';
+import { DeltaChange } from '../helpers/timeseries-helper';
 
 export default function ProjectsTable({ projects }) {
   const { providerByRoute: provider } = useConnect('selectProviderByRoute');
@@ -67,7 +68,11 @@ export default function ProjectsTable({ projects }) {
           key: null,
           render: (l) => {
             return (
-              getTsObjByLabel(l?.timeseries, 'Elevation')?.delta24hr || null
+              <div className="flex items-baseline text-sm">
+                <DeltaChange
+                  delta={getTsObjByLabel(l?.timeseries, 'Elevation')?.delta24hr}
+                />
+              </div>
             );
           },
         },
