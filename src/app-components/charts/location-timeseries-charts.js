@@ -57,8 +57,8 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
       timeseriesIds.includes(v.key)
     );
 
-    console.log('--Setting measurements to: ---');
-    console.log(locationTsValues);
+    // console.log('--Setting measurements to: ---');
+    // console.log(locationTsValues);
     setMeasurements(locationTsValues);
   }, [timeSeriesValues, timeseriesIds]);
 
@@ -78,8 +78,8 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
           displayLevels: ['elev.top of flood', 'elev.bottom of flood'],
         },
         { tsLabel: 'Elevation Rule Curve', visible: false },
-        { tsLabel: 'Stage' },
       ],
+      [{ tsLabel: 'Stage' }],
       [
         {
           tsLabel: 'Storage',

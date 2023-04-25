@@ -22,12 +22,11 @@ export default function LocationSideBarAccordian({ location }) {
     //convert object into list with key pairs
     const meta_array = useMemo(
       () => [
+        { name: 'Elevation', value: metadata?.elevation },
+        { name: 'Horizontal Datum', value: metadata?.horizontal_datum },
+        { name: 'Nearest City', value: metadata?.nearest_city },
+        { name: 'Provider', value: metadata?.provider.toUpperCase() },
         { name: 'State', value: metadata?.state },
-        { name: 'Provider', value: metadata?.provider },
-        {
-          name: 'Project Purpose',
-          value: metadata?.project_purpose,
-        },
       ],
       [metadata]
     );

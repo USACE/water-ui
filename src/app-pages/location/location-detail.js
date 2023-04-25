@@ -16,27 +16,28 @@ import {
 } from '../../helpers/timeseries-helper';
 import { Placeholder } from '../../app-components/content-placeholder';
 import { mapObjectArrayByKey } from '../../helpers/misc-helpers';
+import { hasRequiredLevels } from '../../helpers/project-helper';
 
 export default function ProjectDetail() {
   const {
+    providerByRoute: provider,
     providerLocationByRoute: location,
     providerLocationIsLoading,
-    providerByRoute: provider,
     providerTimeseriesValuesItemsObject: tsvObj,
-    doProviderTimeseriesValuesFetchById,
-    timeseriesDateRange: dateRange,
+    // doProviderTimeseriesValuesFetchById,
+    // timeseriesDateRange: dateRange,
   } = useConnect(
+    'selectProviderByRoute',
     'selectProviderLocationByRoute',
     'selectProviderLocationIsLoading',
-    'selectProviderByRoute',
-    'selectProviderTimeseriesValuesItemsObject',
-    'doProviderTimeseriesValuesFetchById',
-    'selectTimeseriesDateRange'
+    'selectProviderTimeseriesValuesItemsObject'
+    // 'doProviderTimeseriesValuesFetchById',
+    // 'selectTimeseriesDateRange'
   );
 
   console.log('############# LOCATION DETAIL RENDER #################');
 
-  //const [location, setLocation] = useState();
+  // const [location, setLocation] = useState(_location);
   const [expanded, setExpanded] = useState(false);
   const [timeseriesIds, setTimeseriesId] = useState([]);
   //const [measurements, setMeasurements] = useState([]);
@@ -216,7 +217,7 @@ export default function ProjectDetail() {
         <div className={`flex-auto ${expanded ? 'lg:w-full' : 'lg:w-3/5'}`}>
           <ToggleExpandButton />
 
-          {isProject ? (
+          {isProject && hasRequiredLevels(location) ? (
             <>
               <div className="mb-5">
                 {isProject && <ProjectStats location={location} />}

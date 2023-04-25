@@ -23,7 +23,9 @@ export default function ReactDamProfileChart() {
       'Top of Dam',
       'Top of Surcharge',
       'Top of Flood',
+      'Top of Flood Control',
       'Bottom of Flood',
+      'Bottom of Flood Control',
       'Bottom of Conservation',
     ];
 
@@ -39,18 +41,17 @@ export default function ReactDamProfileChart() {
 
     const levelsMap = mapObjectArrayByKey(
       location?.levels.filter(
-        (lvl) => lvl.base_parameter === 'Elev' || lvl.parameter === 'Elev'
+        (lvl) =>
+          lvl.base_parameter === 'Elev' ||
+          lvl.parameter === 'Elev' ||
+          lvl.parameter === 'Stage'
       ),
-      'label'
+      'slug'
     );
     // console.log('-----');
     // console.log(levelsMap);
 
     const timeseriesMap = mapObjectArrayByKey(location?.timeseries, 'label');
-
-    console.log('-----');
-    console.log(timeseriesMap);
-    console.log(timeseriesMap['Elevation']?.latest_value);
 
     const _info = {
       // levels: [
@@ -59,11 +60,19 @@ export default function ReactDamProfileChart() {
       // ],
       infoText: location?.public_name || null,
       levels: _levels,
-      damtop: levelsMap['Top of Dam']?.latest_value || null,
+      damtop:
+        levelsMap['elev.top of dam']?.latest_value ||
+        levelsMap['stage.top of dam']?.latest_value ||
+        null,
       // for some projects like Lake Okeechobee, streambed could be 0
       // setting to null will mess with the scale
-      dambottom: levelsMap['Streambed']?.latest_value,
-      pool: timeseriesMap['Elevation']?.latest_value || null,
+      dambottom:
+        levelsMap['elev.streambed']?.latest_value ||
+        levelsMap['stage.streambed']?.latest_value,
+      pool:
+        timeseriesMap['Elevation']?.latest_value ||
+        timeseriesMap['Stage']?.latest_value ||
+        null,
       tail:
         timeseriesMap['Stage Tailwater']?.latest_value ||
         timeseriesMap['Elev Tailwater']?.latest_value ||

@@ -3,14 +3,14 @@ import createRestBundle from '@usace/create-rest-bundle';
 const apiUrl = process.env.REACT_APP_WATER_API_URL;
 
 export default createRestBundle({
-  name: 'provider',
-  uid: 'slug',
+  name: 'unit',
+  uid: 'parameter_id',
   prefetch: true,
-  staleAfter: 86400000, //24 hrs
+  staleAfter: 259200000, //3 days
   persist: true,
-  routeParam: 'provider_slug',
-  getTemplate: `${apiUrl}/providers`,
-  fetchActions: [],
+  routeParam: '',
+  getTemplate: `${apiUrl}/units`,
+  fetchActions: ['URL_UPDATED'],
   urlParamSelectors: [],
   forceFetchActions: [],
   sortBy: '',

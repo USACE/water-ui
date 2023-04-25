@@ -71,9 +71,10 @@ export default createRestBundle({
         const isoBefore = endDate ? endDate?.toISOString() : null;
         const provider = store['selectProviderByRoute']();
 
-        let tsUurl = apiUrl.replace('/cwms', '/cda');
+        //let tsUurl = apiUrl.replace('/cwms', '/cda');
         const tsid = timeseriesId.replace('%', '%25').replace('&', '%26');
-        const url = `${tsUurl}/providers/${provider?.slug}/timeseries?name=${tsid}&begin=${isoAfter}&end=${isoBefore}&page-size=-1`;
+        // const url = `${tsUurl}/providers/${provider?.slug}/timeseries?name=${tsid}&begin=${isoAfter}&end=${isoBefore}&page-size=-1`;
+        const url = `${apiUrl}/timeseries?name=${tsid}&office=${provider?.slug}&begin=${isoAfter}&end=${isoBefore}`;
         const flags = store['selectProviderTimeseriesValuesFlags']();
         const itemsById = store['selectProviderTimeseriesValuesItemsObject']();
         let fetchCount = store['selectProviderTimeseriesValuesFetchCount']();

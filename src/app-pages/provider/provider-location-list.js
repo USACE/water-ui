@@ -5,10 +5,12 @@ import { SimpleTable, TableLink } from '../../app-components/table-simple';
 import PageWrapper from '../page-wrapper';
 import { FcDam } from 'react-icons/fc';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
-import { BsCloudRain } from 'react-icons/bs';
+import { BsCloudRain, BsWater } from 'react-icons/bs';
 import { isPrecipOnly } from '../../helpers/location-helper';
 import { DeltaChange } from '../../helpers/timeseries-helper';
 // import LocationFilterInput from '../../app-components/inputs/location-filter-input';
+import { CiTempHigh } from 'react-icons/ci';
+import { GiWaterfall } from 'react-icons/gi';
 
 export default function ProviderLocationList() {
   const {
@@ -35,10 +37,12 @@ export default function ProviderLocationList() {
     setDisplayedLocations(filteredLocations);
   }, [locations]);
 
+  // @TODO: This filter needs work
+
   const filterBySearch = (e) => {
     const query = e.target.value;
     setQuery(query);
-    if (query.length > 2) {
+    if (query.length > 1) {
       console.log(e);
 
       const results = locations.filter((item) => {
@@ -63,6 +67,34 @@ export default function ProviderLocationList() {
     );
   };
 
+  const LocationIcons = ({ locationTimeseries }) => {
+    //const paramArray = locationTimeseries.map((ts) => ts?.parameter);
+    let icons = [];
+    locationTimeseries
+      ?.sort((a, b) => (a.sort_order > b.sort_order ? 1 : -1))
+      .forEach((ts) => {
+        if (ts?.parameter === 'Stage') {
+          icons.push(<BsWater key={ts?.label} title={ts?.label} size={20} />);
+        }
+        if (ts?.parameter === 'Flow' && !icons.includes(ts?.parameter)) {
+          icons.push(
+            <GiWaterfall key={ts?.label} title={ts?.label} size={20} />
+          );
+        }
+        if (ts.parameter === 'Precip') {
+          icons.push(
+            <BsCloudRain key={ts?.label} title={ts?.label} size={20} />
+          );
+        }
+        if (ts.parameter === 'Temp') {
+          icons.push(
+            <CiTempHigh key={ts?.label} title={ts?.label} size={20} />
+          );
+        }
+      });
+    return <div className="flex space-x-2 text-gray-400">{icons}</div>;
+  };
+
   return (
     <PageWrapper
       title={provider?.name || 'Loading Locations'}
@@ -73,10 +105,12 @@ export default function ProviderLocationList() {
         headers={[
           'Kind',
           'Name',
+          'Test',
           'Latest Data',
           'Elev',
           'Elev 24hr Change',
           'Stage',
+          'Stage 24hr Change',
           'State',
         ]}
         items={displayedLocations}
@@ -112,21 +146,22 @@ export default function ProviderLocationList() {
           {
             key: null,
             render: (l) => {
-              return l.timeseries
-                ? l.timeseries[0].parameter +
-                    ' - ' +
-                    l.timeseries[0]?.latest_value +
-                    ' @ ' +
-                    l.timeseries[0]?.latest_time
+              return l?.timeseries?.length ? (
+                <LocationIcons locationTimeseries={l?.timeseries} />
+              ) : null;
+            },
+          },
+          {
+            key: null,
+            render: (l) => {
+              return l.timeseries?.sort((a, b) =>
+                a.sort_order > b.sort_order ? 1 : -1
+              )
+                ? l.timeseries[0]?.latest_time
                 : null;
             },
           },
-          // {
-          //   key: 'kind',
-          //   render: (location) => {
-          //     return location?.kind;
-          //   },
-          // },
+
           {
             key: null,
             render: (l) => {
@@ -160,7 +195,21 @@ export default function ProviderLocationList() {
               return stageObj?.latest_value || null;
             },
           },
-
+          {
+            key: null,
+            render: (l) => {
+              const stageObj =
+                l?.timeseries?.length &&
+                l?.timeseries?.filter((ts) => ts.label === 'Stage')[0];
+              return (
+                (
+                  <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                    <DeltaChange delta={stageObj?.delta24hr} />
+                  </div>
+                ) || null
+              );
+            },
+          },
           {
             key: 'state',
           },

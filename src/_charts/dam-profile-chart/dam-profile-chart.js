@@ -79,6 +79,7 @@ export default function DamProfileChart(info, dom) {
   // replaces drawWaterLevel()
   ////////////////////////////
   pool && WaterLevel(svg, damScale, pool);
+  // display tailwater component regardless of value set or not
   TailwaterLevel(svg, damScale, tail);
 
   //////////////////////////

@@ -1,3 +1,5 @@
+import { mapObjectArrayByKey } from '../helpers/misc-helpers';
+
 /**
  * Calculates project flood storage utilized
  * @param  {Number} topFlood Top of Flood level value
@@ -26,4 +28,22 @@ const ProjectConservationStoragePercent = (topCon, bottomCon, currentVal) => {
   return (1 - (topCon - currentVal) / (topCon - bottomCon)) * 100;
 };
 
-export { ProjectFloodStoragePercent, ProjectConservationStoragePercent };
+/**
+ * Determines if a location has the required levels to create the dam profile chart
+ * @param {object} l
+ * @returns {boolean}
+ */
+const hasRequiredLevels = (l) => {
+  const levelsMap = mapObjectArrayByKey(l?.levels, 'label');
+  if (levelsMap['Top of Dam'] && levelsMap['Streambed']) {
+    return true;
+  }
+  console.log('--does not have required levels--');
+  return false;
+};
+
+export {
+  ProjectFloodStoragePercent,
+  ProjectConservationStoragePercent,
+  hasRequiredLevels,
+};

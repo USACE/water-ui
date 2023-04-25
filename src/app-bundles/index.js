@@ -23,15 +23,16 @@ import createSearchBundle from './create-search-bundle';
 import locationSearchBundle from './location-search-bundle';
 
 import providerBundle from './provider-bundle';
-import locationBundle from './location-bundle';
+// import locationBundle from './location-bundle';
 import mapsBundle from './maps-bundle';
 import providerLocationBundle from './provider-location-bundle';
 import providerLocationsBundle from './provider-locations-bundle';
 import providerTimeseriesValuesBundle from './provider-timeseries-values-bundle';
 import providerWatershedBundle from './provider-watershed-bundle';
 import providerWatershedsBundle from './provider-watersheds-bundle';
-import watershedBundle from './watershed-bundle';
+// import watershedBundle from './watershed-bundle';
 import timeseriesDateRangeBundle from './timeseries-date-range-bundle';
+//import unitBundle from './unit-bundle';
 // Searchable Bundles
 // import locationSearchBundle from './location-search-bundle';
 // import timeseriesSearchBundle from './timeseries-search-bundle';
@@ -87,7 +88,7 @@ export default composeBundles(
     searchableBundles: [locationSearchBundle],
   }),
   createSearchBundle,
-  locationBundle,
+  //locationBundle,
   locationSearchBundle,
   mapsBundle,
   modalBundle,
@@ -95,9 +96,10 @@ export default composeBundles(
   providerLocationBundle,
   providerLocationsBundle,
   providerTimeseriesValuesBundle,
-  watershedBundle,
+  // watershedBundle,
   providerWatershedBundle,
   providerWatershedsBundle,
   routeBundle,
   timeseriesDateRangeBundle
+  //unitBundle
 );
