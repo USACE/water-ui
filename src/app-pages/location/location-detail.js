@@ -114,7 +114,7 @@ export default function ProjectDetail() {
         const lookBackRecord = LookBackValueSet(tsvArray, 24);
         obj['delta24hr'] =
           lookBackRecord &&
-          (lastRecord.latest_value - lookBackRecord.latest_value).toFixed(2);
+          (lastRecord.latest_value - lookBackRecord.latest_value)?.toFixed(2);
         obj['unit'] = tsvObj[obj.tsid]?.unit;
       }
 

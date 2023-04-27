@@ -195,7 +195,7 @@ export default function LocationSideBarAccordian({ location }) {
           {
             key: null,
             render: (l) => {
-              return l.distance.toFixed(2);
+              return l.distance?.toFixed(2);
             },
           },
         ]}

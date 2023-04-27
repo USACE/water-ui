@@ -61,9 +61,10 @@ export default function ProjectsTable({ projects }) {
           key: null,
           render: (l) => {
             return (
-              getTsObjByLabel(l?.timeseries, 'Elevation')?.latest_value.toFixed(
-                1
-              ) || null
+              getTsObjByLabel(
+                l?.timeseries,
+                'Elevation'
+              )?.latest_value?.toFixed(1) || null
             );
           },
         },
@@ -91,7 +92,7 @@ export default function ProjectsTable({ projects }) {
             return getTsObjByLabel(
               l?.timeseries,
               'Outflow'
-            )?.latest_value.toFixed(0);
+            )?.latest_value?.toFixed(0);
           },
         },
       ]}

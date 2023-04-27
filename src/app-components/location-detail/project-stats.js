@@ -22,7 +22,7 @@ export default function ProjectStats({ location }) {
       id: 1,
       name: 'Flood Storage Utilized',
       stat: FloodStorageUtilized
-        ? FloodStorageUtilized.toFixed(1) + '%'
+        ? FloodStorageUtilized?.toFixed(1) + '%'
         : 'N/A',
       icon: FaDatabase,
       // change: '0.8%',
@@ -35,7 +35,7 @@ export default function ProjectStats({ location }) {
         ConservationStorageUtilized && ConservationStorageUtilized >= 100
           ? '100%'
           : ConservationStorageUtilized && ConservationStorageUtilized < 100
-          ? ConservationStorageUtilized.toFixed(1) + '%'
+          ? ConservationStorageUtilized?.toFixed(1) + '%'
           : 'N/A',
       icon: MdWaterDrop,
       // change: '5.4%',
