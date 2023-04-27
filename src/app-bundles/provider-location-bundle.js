@@ -7,7 +7,7 @@ export default createRestBundle({
   uid: 'slug',
   prefetch: true,
   staleAfter: 300000, //5min
-  persist: false,
+  persist: true,
   routeParam: 'location_slug',
   getTemplate: `${apiUrl}/providers/:provider_slug/locations/:location_slug`,
   fetchActions: ['URL_UPDATED'],

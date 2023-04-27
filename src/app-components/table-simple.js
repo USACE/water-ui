@@ -1,11 +1,17 @@
-const SimpleTable = ({ headers, items, itemFields, striped = false }) => {
+const SimpleTable = ({ headers, items, itemFields, options = {} }) => {
+  const { striped, shadow, rounded } = options;
+
   return (
-    <div className="flex flex-col shadow-lg">
+    <div className={`flex flex-col ${shadow ? 'shadow-lg' : null}`}>
       {/* <div className="overflow-x-auto sm:-mx-6 lg:-mx-8"> */}
       <div className="overflow-x-auto ">
         {/* <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"> */}
         <div className="inline-block min-w-full align-middle">
-          <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+          <div
+            className={`overflow-hidden shadow ring-1 ring-black ring-opacity-5 ${
+              rounded ? 'md:rounded-lg' : null
+            }`}
+          >
             <table className="min-w-full divide-y divide-gray-300">
               <thead className="bg-gray-50">
                 <tr>

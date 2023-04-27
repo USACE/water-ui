@@ -67,7 +67,7 @@ export default function Breadcrumb() {
                 className="ml-0 text-sm font-medium text-gray-400 hover:text-gray-700"
                 aria-current={page.current ? 'page' : undefined}
               >
-                {page.name}
+                {decodeURI(page.name)}
               </a>
             </div>
           </li>

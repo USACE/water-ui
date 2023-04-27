@@ -33,7 +33,9 @@ export default function ProviderLocationList() {
   const [searchQuery, setQuery] = useState('');
 
   useEffect(() => {
-    const filteredLocations = locations?.filter((l) => l?.timeseries?.length);
+    const filteredLocations = locations?.filter(
+      (l) => l?.timeseries?.length && l.public_name
+    );
     setDisplayedLocations(filteredLocations);
   }, [locations]);
 
@@ -73,20 +75,23 @@ export default function ProviderLocationList() {
     locationTimeseries
       ?.sort((a, b) => (a.sort_order > b.sort_order ? 1 : -1))
       .forEach((ts) => {
-        if (ts?.parameter === 'Stage') {
+        if (ts?.base_parameter === 'Stage') {
           icons.push(<BsWater key={ts?.label} title={ts?.label} size={20} />);
         }
-        if (ts?.parameter === 'Flow' && !icons.includes(ts?.parameter)) {
+        if (
+          ts?.base_parameter === 'Flow' &&
+          !icons.includes(ts?.base_parameter)
+        ) {
           icons.push(
             <GiWaterfall key={ts?.label} title={ts?.label} size={20} />
           );
         }
-        if (ts.parameter === 'Precip') {
+        if (ts.base_parameter === 'Precip') {
           icons.push(
             <BsCloudRain key={ts?.label} title={ts?.label} size={20} />
           );
         }
-        if (ts.parameter === 'Temp') {
+        if (ts.base_parameter === 'Temp') {
           icons.push(
             <CiTempHigh key={ts?.label} title={ts?.label} size={20} />
           );
@@ -105,7 +110,7 @@ export default function ProviderLocationList() {
         headers={[
           'Kind',
           'Name',
-          'Test',
+          'Available Data',
           'Latest Data',
           'Elev',
           'Elev 24hr Change',

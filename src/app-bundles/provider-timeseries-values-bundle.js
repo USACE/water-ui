@@ -74,7 +74,7 @@ export default createRestBundle({
         //let tsUurl = apiUrl.replace('/cwms', '/cda');
         const tsid = timeseriesId.replace('%', '%25').replace('&', '%26');
         // const url = `${tsUurl}/providers/${provider?.slug}/timeseries?name=${tsid}&begin=${isoAfter}&end=${isoBefore}&page-size=-1`;
-        const url = `${apiUrl}/timeseries?name=${tsid}&office=${provider?.slug}&begin=${isoAfter}&end=${isoBefore}`;
+        const url = `${apiUrl}/providers/${provider?.slug}/timeseries?name=${tsid}&begin=${isoAfter}&end=${isoBefore}`;
         const flags = store['selectProviderTimeseriesValuesFlags']();
         const itemsById = store['selectProviderTimeseriesValuesItemsObject']();
         let fetchCount = store['selectProviderTimeseriesValuesFetchCount']();

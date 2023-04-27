@@ -13,6 +13,7 @@ const ProjectFloodStoragePercent = (topFlood, bottomFlood, currentVal) => {
   }
   return (1 - (topFlood - currentVal) / (topFlood - bottomFlood)) * 100;
 };
+// ---------------------------------------------------------------------
 
 /**
  * Calculates project conservation storage utilized
@@ -27,6 +28,59 @@ const ProjectConservationStoragePercent = (topCon, bottomCon, currentVal) => {
   }
   return (1 - (topCon - currentVal) / (topCon - bottomCon)) * 100;
 };
+// ---------------------------------------------------------------------
+
+const GetProjectFloodStorage = (location) => {
+  const levelsMap = mapObjectArrayByKey(location?.levels, 'slug');
+  const timeseriesMap = mapObjectArrayByKey(location?.timeseries, 'label');
+
+  const floodTop =
+    levelsMap['stor.top of flood']?.latest_value ||
+    levelsMap['stor.top of flood control']?.latest_value ||
+    null;
+
+  const floodBottom =
+    levelsMap['stor.bottom of flood']?.latest_value ||
+    levelsMap['stor.bottom of flood control']?.latest_value ||
+    null;
+  // Current Storage Value
+  const currentFloodStorage =
+    timeseriesMap['Flood Storage']?.latest_value || null;
+
+  console.log('--FloodStorageUtilized--');
+  console.log(`Top of Flood Storage: ${floodTop}`);
+  console.log(`Bottom of Flood Storage: ${floodBottom}`);
+  console.log(`Curent Flood Storage: ${currentFloodStorage}`);
+  console.log('---end--');
+
+  return ProjectFloodStoragePercent(floodTop, floodBottom, currentFloodStorage);
+};
+// ---------------------------------------------------------------------
+
+const GetProjectConStorage = (location) => {
+  const levelsMap = mapObjectArrayByKey(location?.levels, 'slug');
+  const timeseriesMap = mapObjectArrayByKey(location?.timeseries, 'label');
+
+  const conTop = levelsMap['stor.top of conservation']?.latest_value || null;
+  const conBottom =
+    levelsMap['stor.bottom of conservation']?.latest_value || null;
+  // Current Storage Value
+  const currentConStorage =
+    timeseriesMap['Conservation Storage']?.latest_value || null;
+
+  console.log('--ConservationStorageUtilized--');
+  console.log(`Top of Conservation Storage: ${conTop}`);
+  console.log(`Bottom of Conservation Storage: ${conBottom}`);
+  console.log(`Curent Conservation Storage: ${currentConStorage}`);
+  console.log('---end--');
+
+  return ProjectConservationStoragePercent(
+    conTop,
+    conBottom,
+    currentConStorage
+  );
+};
+// ---------------------------------------------------------------------
 
 /**
  * Determines if a location has the required levels to create the dam profile chart
@@ -41,9 +95,12 @@ const hasRequiredLevels = (l) => {
   console.log('--does not have required levels--');
   return false;
 };
+// ---------------------------------------------------------------------
 
 export {
   ProjectFloodStoragePercent,
   ProjectConservationStoragePercent,
   hasRequiredLevels,
+  GetProjectFloodStorage,
+  GetProjectConStorage,
 };

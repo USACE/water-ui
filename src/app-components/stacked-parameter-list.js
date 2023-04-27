@@ -30,7 +30,7 @@ export default function StackedParameterList({ parameters }) {
   //   </>
   // );
   return (
-    <div className="overflow-hidden bg-white shadow sm:rounded-md">
+    <div className="overflow-hidden bg-white shadow">
       <ul className="divide-y divide-gray-200">
         {parameters?.length &&
           parameters

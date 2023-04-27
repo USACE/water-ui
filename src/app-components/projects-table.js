@@ -2,6 +2,7 @@ import { useConnect } from 'redux-bundler-hook';
 import { SimpleTable, TableLink } from './table-simple';
 import { mapObjectArrayByKey } from '../helpers/misc-helpers';
 import { DeltaChange } from '../helpers/timeseries-helper';
+import { GetProjectFloodStorage } from '../helpers/project-helper';
 
 export default function ProjectsTable({ projects }) {
   const { providerByRoute: provider } = useConnect('selectProviderByRoute');
@@ -60,7 +61,9 @@ export default function ProjectsTable({ projects }) {
           key: null,
           render: (l) => {
             return (
-              getTsObjByLabel(l?.timeseries, 'Elevation')?.latest_value || null
+              getTsObjByLabel(l?.timeseries, 'Elevation')?.latest_value.toFixed(
+                1
+              ) || null
             );
           },
         },
@@ -78,17 +81,21 @@ export default function ProjectsTable({ projects }) {
         },
         {
           key: null,
-          render: () => {
-            return <>-</>;
+          render: (l) => {
+            return GetProjectFloodStorage(l)?.toFixed(1);
           },
         },
         {
           key: null,
           render: (l) => {
-            return getTsObjByLabel(l?.timeseries, 'Outflow')?.latest_value;
+            return getTsObjByLabel(
+              l?.timeseries,
+              'Outflow'
+            )?.latest_value.toFixed(0);
           },
         },
       ]}
+      options={{ shadow: true }}
     />
   );
 }

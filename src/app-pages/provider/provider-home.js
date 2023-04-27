@@ -46,6 +46,7 @@ export default function ProviderHome() {
           },
           { key: 'slug', render: MockStorage },
         ]}
+        options={{ shadow: true }}
       />
     ) : null;
   };
@@ -96,6 +97,7 @@ export default function ProviderHome() {
                 },
                 { key: 'drainage_total' },
               ]}
+              options={{ shadow: true }}
             />
           ) : (
             <span className="inline-block w-full bg-yellow-100 p-2 text-center">

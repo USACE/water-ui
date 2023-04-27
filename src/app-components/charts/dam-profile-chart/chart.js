@@ -32,8 +32,7 @@ export default function ReactDamProfileChart() {
     const _levels = location?.levels
       ?.filter(
         (lvl) =>
-          allowedLevels.includes(lvl.label) &&
-          (lvl.base_parameter === 'Elev' || lvl.parameter === 'Elev')
+          allowedLevels.includes(lvl.label) && lvl.base_parameter === 'Elev'
       )
       .map((lvl) => {
         return { name: lvl.label, value: lvl.latest_value };
@@ -41,10 +40,7 @@ export default function ReactDamProfileChart() {
 
     const levelsMap = mapObjectArrayByKey(
       location?.levels.filter(
-        (lvl) =>
-          lvl.base_parameter === 'Elev' ||
-          lvl.parameter === 'Elev' ||
-          lvl.parameter === 'Stage'
+        (lvl) => lvl.base_parameter === 'Elev' || lvl.base_parameter === 'Stage'
       ),
       'slug'
     );
@@ -89,6 +85,8 @@ export default function ReactDamProfileChart() {
 
   useEffect(() => {
     if (info) {
+      console.log('--info--');
+      console.log(info);
       DamProfileChart(info, ref.current);
     }
   }, [info, ref]);

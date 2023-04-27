@@ -4,7 +4,7 @@ import Accordion from '../accordion';
 import { SimpleTable, TableLink } from '../table-simple';
 import StackedParameterList from '../stacked-parameter-list';
 import { GrDocumentDownload } from 'react-icons/gr';
-import { BsFiletypeJson } from 'react-icons/bs';
+import { BsFiletypeJson, BsFiletypeCsv } from 'react-icons/bs';
 import distance from '@turf/distance';
 
 export default function LocationSideBarAccordian({ location }) {
@@ -36,6 +36,7 @@ export default function LocationSideBarAccordian({ location }) {
         headers={['Name', 'Value']}
         items={meta_array}
         itemFields={[{ key: 'name' }, { key: 'value' }]}
+        options={{ shadow: true }}
       />
     );
   };
@@ -60,6 +61,7 @@ export default function LocationSideBarAccordian({ location }) {
             key: 'units',
           },
         ]}
+        options={{ shadow: true }}
       />
     );
   };
@@ -68,17 +70,19 @@ export default function LocationSideBarAccordian({ location }) {
     // 'https://cwms-data.usace.army.mil/cwms-data/timeseries?name=BEND.Precip.Inst.1Hour.0.Best-MRBWM&office=NWDM&begin=2023-04-10T14%3A49%3A52%2B00%3A00&end=2023-04-16T14%3A49%3A52%2B00%3A00';
 
     const createApiUrl = (tsid) => {
-      const cdaHost = 'https://cwms-data.usace.army.mil/cwms-data';
+      // const cdaHost = 'https://cwms-data.usace.army.mil/cwms-data';
+      const apiUrl = process.env.REACT_APP_WATER_API_URL;
+
       return (
-        cdaHost +
-        '/' +
-        type.toLowerCase() +
-        `?name=${tsid}&office=${provider}&begin=${dateRange.beginDate.toISOString()}&end=${dateRange.endDate.toISOString()}`
+        apiUrl +
+        '/providers/' +
+        provider.toLowerCase() +
+        `/timeseries?name=${tsid}&begin=${dateRange.beginDate.toISOString()}&end=${dateRange.endDate.toISOString()}`
       );
     };
     return (
       <SimpleTable
-        headers={['Parameter', 'Source URL']}
+        headers={['Parameter', 'JSON', 'CSV']}
         items={sources}
         itemFields={[
           {
@@ -88,24 +92,31 @@ export default function LocationSideBarAccordian({ location }) {
             key: 'parameter',
             render: (p) => {
               return (
-                <>
-                  <TableLink
-                    text={<BsFiletypeJson size={18} />}
-                    title={p.label}
-                    href={createApiUrl(p.tsid)}
-                    target="_blank"
-                  />
-                  {/* <TableLink
-                    title={p.label}
-                    href={createApiUrl(p.tsid) + '&format=csv'}
-                    target="_blank"
-                    download={createApiUrl(p.tsid) + '&format=csv'}
-                  /> */}
-                </>
+                <TableLink
+                  text={<BsFiletypeJson size={18} />}
+                  title={p.label}
+                  href={createApiUrl(p.tsid)}
+                  target="_blank"
+                />
+              );
+            },
+          },
+          {
+            key: 'parameter',
+            render: (p) => {
+              return (
+                <TableLink
+                  text={<BsFiletypeCsv size={18} />}
+                  title={p.label}
+                  href={createApiUrl(p.tsid) + '&format=csv'}
+                  target="_blank"
+                  download={createApiUrl(p.tsid) + '&format=csv'}
+                />
               );
             },
           },
         ]}
+        options={{ shadow: true }}
       />
     );
   };
@@ -136,6 +147,7 @@ export default function LocationSideBarAccordian({ location }) {
             },
           },
         ]}
+        options={{ shadow: true }}
       />
     );
   };
@@ -147,6 +159,7 @@ export default function LocationSideBarAccordian({ location }) {
       .filter(
         (l) =>
           l.public_name &&
+          l.timeseries?.length &&
           l.state !== '00' &&
           allowedKinds.includes(l.kind) &&
           l.geometry?.coordinates?.length === 2
@@ -186,6 +199,7 @@ export default function LocationSideBarAccordian({ location }) {
             },
           },
         ]}
+        options={{ shadow: true }}
       />
     );
   };

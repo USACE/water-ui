@@ -1,43 +1,21 @@
 import StatsWIcon from '../stats-with-icon';
-import {
-  ProjectFloodStoragePercent,
-  ProjectConservationStoragePercent,
-} from '../../helpers/project-helper';
+
 import { CursorArrowRaysIcon } from '@heroicons/react/24/outline';
 //import { BiWater } from 'react-icons/bi';
 import { MdWaterDrop } from 'react-icons/md';
 import { FaDatabase } from 'react-icons/fa';
-import { mapObjectArrayByKey } from '../../helpers/misc-helpers';
+import {
+  GetProjectFloodStorage,
+  GetProjectConStorage,
+} from '../../helpers/project-helper';
 
 export default function ProjectStats({ location }) {
   if (!location || !location?.levels?.length || !location?.timeseries?.length) {
     return;
   }
 
-  const levelsMap = mapObjectArrayByKey(location?.levels, 'slug');
-  const timeseriesMap = mapObjectArrayByKey(location?.timeseries, 'label');
-
-  // Flood Levels
-  const floodTop = levelsMap['stor.top of flood']?.latest_value || null;
-  const floodBottom = levelsMap['stor.bottom of flood']?.latest_value || null;
-  // Conservation Levels
-  const conTop = levelsMap['stor.top of conservation']?.latest_value || null;
-  const conBottom =
-    levelsMap['stor.bottom of conservation']?.latest_value || null;
-  // Current Storage Value
-  const currentStorage = timeseriesMap['Flood Storage']?.latest_value || null;
-
-  const FloodStorageUtilized = ProjectFloodStoragePercent(
-    floodTop,
-    floodBottom,
-    currentStorage
-  );
-
-  const ConservationStorageUtilized = ProjectConservationStoragePercent(
-    conTop,
-    conBottom,
-    currentStorage
-  );
+  const FloodStorageUtilized = GetProjectFloodStorage(location);
+  const ConservationStorageUtilized = GetProjectConStorage(location);
 
   const stats = [
     {

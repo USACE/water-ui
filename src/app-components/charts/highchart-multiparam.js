@@ -86,13 +86,9 @@ export default function MultiParamChart({ chartParams }) {
             return 'red';
 
           default:
-            return 'orange';
+            return 'navy';
         }
       };
-
-      // console.log(`--${chartTitle}--`);
-      // console.log(`yMin = ${yMin}`);
-      // console.log(`yMax = ${yMax}`);
 
       // console.log(`pushing data to chart series for ${chartParamObj?.label}`);
       chartSeries.push({
@@ -156,7 +152,7 @@ export default function MultiParamChart({ chartParams }) {
               // y: 20 /*moves label down*/,
               // x: -20,
               label: {
-                text: `${lvl?.label} ${lvl?.base_parameter} ${lvl?.latest_value} (${lvl?.unit})`,
+                text: `${lvl?.label} ${lvl?.parameter} ${lvl?.latest_value} (${lvl?.units})`,
                 align: 'left',
                 style: { color: levelColor(lvl?.label) },
               },
