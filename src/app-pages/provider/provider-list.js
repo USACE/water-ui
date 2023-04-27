@@ -39,19 +39,19 @@ export default function ProviderList() {
                     }`}
                   >
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {p.office_group.toUpperCase()}
+                      {p.office_group?.toUpperCase()}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       <ProviderLink
                         title={''.concat(
                           p.name,
                           ' (',
-                          p.slug.toUpperCase(),
+                          p.slug?.toUpperCase(),
                           ')'
                         )}
                         href={''.concat(
                           '/overview/',
-                          `${p.slug.toLowerCase()}`
+                          `${p.slug?.toLowerCase()}`
                         )}
                       />
                     </td>
