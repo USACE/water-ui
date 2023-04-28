@@ -56,6 +56,9 @@ export default function LocationSideBarAccordian({ location }) {
           },
           {
             key: 'latest_value',
+            render: (l) => {
+              return l.latest_value?.toLocaleString();
+            },
           },
           {
             key: 'units',
