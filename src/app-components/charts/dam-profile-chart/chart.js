@@ -77,8 +77,14 @@ export default function ReactDamProfileChart() {
       outflow: timeseriesMap['Outflow']?.latest_value || null,
       powerGeneration: timeseriesMap['Power Generation']?.latest_value || null,
       surcharge: timeseriesMap['Surcharge Release']?.latest_value || null,
-      gradientBottom: levelsMap['Top of Flood']?.latest_value || null,
-      gradientTop: levelsMap['Bottom of Flood']?.latest_value || null,
+      gradientBottom:
+        levelsMap['elev.top of flood']?.latest_value ||
+        levelsMap['elev.top of flood control']?.latest_value ||
+        null,
+      gradientTop:
+        levelsMap['elev.bottom of flood']?.latest_value ||
+        levelsMap['elev.bottom of flood control']?.latest_value ||
+        null,
     };
     setInfo(_info);
   }, [location, location.timeseries]);
