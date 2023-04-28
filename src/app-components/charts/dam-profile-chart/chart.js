@@ -27,6 +27,7 @@ export default function ReactDamProfileChart() {
       'Bottom of Flood',
       'Bottom of Flood Control',
       'Bottom of Conservation',
+      'Spillway Crest',
     ];
 
     const _levels = location?.levels
