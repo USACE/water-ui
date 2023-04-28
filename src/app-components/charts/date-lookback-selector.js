@@ -37,15 +37,15 @@ export default function DateLookbackSelector() {
     }
   };
   return (
-    <div className="-mt-2 mb-2 mr-2 flex justify-end">
+    <div className="-mt-2 mb-2 mr-2 flex justify-end space-x-1">
       {/* {tsIsLoading ? 'Loading...' : 'Done'} */}
       {options.map((option, idx) => (
         <button
           className={`${
             option.value === daysBack
-              ? 'cursor-default bg-blue-200'
-              : 'bg-gray-100'
-          } inline-flex items-center rounded-full px-2.5 py-0.5 text-sm font-medium text-gray-600 hover:bg-blue-300`}
+              ? 'cursor-default bg-blue-200 ring-blue-700/10'
+              : 'bg-gray-100 ring-gray-500/10'
+          } inline-flex items-center rounded-md px-2.5 py-0.5 text-sm font-medium text-gray-600 ring-1 ring-inset hover:bg-blue-300`}
           onClick={handleChange}
           value={option.value}
           key={idx}
