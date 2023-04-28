@@ -17,6 +17,7 @@ import {
 import { Placeholder } from '../../app-components/content-placeholder';
 import { mapObjectArrayByKey } from '../../helpers/misc-helpers';
 import { hasRequiredLevels } from '../../helpers/project-helper';
+import { FcDam, FcAreaChart } from 'react-icons/fc';
 
 export default function ProjectDetail() {
   const {
@@ -171,6 +172,7 @@ export default function ProjectDetail() {
           </Placeholder>
         </>
       ),
+      icon: <FcDam size={22} />,
     },
 
     {
@@ -181,6 +183,7 @@ export default function ProjectDetail() {
             <LocationTimeseriesCharts location={location} />
           </div>
         ) : null,
+      icon: <FcAreaChart size={22} />,
     },
   ];
 
