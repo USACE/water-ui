@@ -90,6 +90,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
       [{ tsLabel: 'Tailwater Elevation' }, { tsLabel: 'Stage Tailwater' }],
       [{ tsLabel: 'Water Temperature' }],
       [{ tsLabel: 'Precipitation' }],
+      [{ tsLabel: 'Disolved Oxygen' }],
     ];
 
     const LocationChartSetup = [
@@ -103,6 +104,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
       [{ tsLabel: 'Outflow' }],
       [{ tsLabel: 'Precipitation' }],
       [{ tsLabel: 'Water Temperature' }],
+      [{ tsLabel: 'Disolved Oxygen' }],
     ];
 
     const chartSetup =
