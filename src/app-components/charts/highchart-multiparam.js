@@ -52,6 +52,11 @@ export default function MultiParamChart({ chartParams }) {
       // console.log('-- chartParamObj --');
       // console.log(chartParamObj);
       const isStorage = chartParamObj?.label === 'Storage' || false;
+      const isTotalPrecip =
+        chartParamObj?.label === 'Precipitation' &&
+        chartParamObj?.tsid?.indexOf('Total') > 0
+          ? true
+          : false;
 
       chartTitle =
         // chartVisible is true and chartTitle is set
@@ -93,7 +98,7 @@ export default function MultiParamChart({ chartParams }) {
       // console.log(`pushing data to chart series for ${chartParamObj?.label}`);
       chartSeries.push({
         name: chartParamObj?.label,
-        type: isStorage ? 'areaspline' : 'spline',
+        type: isStorage ? 'areaspline' : isTotalPrecip ? 'column' : 'spline',
         yAxis: idx,
         color: isStorage ? '#4d4b46' : null,
         fillOpacity: isStorage ? 0.1 : null,
