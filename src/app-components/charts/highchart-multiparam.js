@@ -10,7 +10,7 @@ export default function MultiParamChart({ chartParams }) {
     chart: {
       type: 'spline',
     },
-    title: { text: 'Initial Chart Title' },
+    title: { text: 'Rendering Chart Data...' },
     xAxis: {
       type: 'datetime',
       // dateTimeLabelFormats: {
