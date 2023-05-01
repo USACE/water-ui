@@ -26,8 +26,10 @@ export default function Home() {
     'https://images.unsplash.com/photo-1516132006923-6cf348e5dee2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bGFrZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=700&q=60';
   const Card2ImgSrc =
     'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3270&q=80';
-  const Card3ImgSrc =
-    'https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTh8fGRhdGF8ZW58MHx8MHx8&auto=format&fit=crop&w=700&q=60';
+  // const Card3ImgSrc =
+  //   'https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTh8fGRhdGF8ZW58MHx8MHx8&auto=format&fit=crop&w=700&q=60';
+  const MapCardSrc =
+    'https://images.unsplash.com/photo-1451988336904-b1a6e8846746?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=60';
   return (
     <>
       <PageTitle useDefault={true} />
@@ -79,11 +81,11 @@ export default function Home() {
           <a href="/overview">
             <ImageCard title="Locations" imgSrc={Card1ImgSrc}></ImageCard>
           </a>
-          <a href="/">
-            <ImageCard title="Data Resources" imgSrc={Card2ImgSrc}></ImageCard>
+          <a href="/map">
+            <ImageCard title="Map View" imgSrc={MapCardSrc}></ImageCard>
           </a>
           <a href="/">
-            <ImageCard title="Reports" imgSrc={Card3ImgSrc}></ImageCard>
+            <ImageCard title="Data Resources" imgSrc={Card2ImgSrc}></ImageCard>
           </a>
         </div>
       </div>
