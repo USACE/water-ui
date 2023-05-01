@@ -66,7 +66,7 @@ export default function ProviderList() {
   );
 
   return (
-    <PageWrapper title="Data Providers" subTitle="">
+    <PageWrapper title="Data Management Offices" subTitle="">
       <ProviderTable providers={providers} />
       {/* <SimpleTable
         headers={['Reports to', 'Name']}
