@@ -18,6 +18,7 @@ import { Placeholder } from '../../app-components/content-placeholder';
 import { mapObjectArrayByKey } from '../../helpers/misc-helpers';
 import { hasRequiredLevels } from '../../helpers/project-helper';
 import { FcDam, FcAreaChart } from 'react-icons/fc';
+import { PrecipTotal } from '../../helpers/timeseries-helper';
 
 export default function ProjectDetail() {
   const {
@@ -117,6 +118,7 @@ export default function ProjectDetail() {
           lookBackRecord &&
           (lastRecord.latest_value - lookBackRecord.latest_value)?.toFixed(2);
         obj['unit'] = tsvObj[obj.tsid]?.unit;
+        obj['precip_total'] = PrecipTotal(obj, tsvArray);
       }
 
       return obj;
@@ -217,7 +219,11 @@ export default function ProjectDetail() {
           expanded ? 'lg:flex-wrap' : 'lg:flex'
         } flex flex-col-reverse lg:flex-row`}
       >
-        <div className={`flex-auto ${expanded ? 'lg:w-full' : 'lg:w-3/5'}`}>
+        <div
+          className={`mt-5 flex-auto lg:mt-0 ${
+            expanded ? 'lg:w-full' : 'lg:w-3/5'
+          }`}
+        >
           <ToggleExpandButton />
 
           {isProject && hasRequiredLevels(location) ? (
