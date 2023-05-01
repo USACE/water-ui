@@ -2,8 +2,9 @@
 import { useConnect } from 'redux-bundler-hook';
 import { FcDam } from 'react-icons/fc';
 import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
-//import { BsWater } from 'react-icons/bs';
 import { GrLocation } from 'react-icons/gr';
+import { BsCloudRain } from 'react-icons/bs';
+import { isPrecipOnly } from '../helpers/location-helper';
 export default function PageHead({ title, subTitle }) {
   const {
     providerByRoute: provider,
@@ -31,6 +32,8 @@ export default function PageHead({ title, subTitle }) {
               <FcDam size={50} />
             ) : !location && !watershed ? (
               <HiOutlineBuildingOffice2 size={50} />
+            ) : location && isPrecipOnly(location) ? (
+              <BsCloudRain size={50} />
             ) : (
               <GrLocation size={50} />
             )}
