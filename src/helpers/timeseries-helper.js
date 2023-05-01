@@ -1,11 +1,10 @@
 import { subHours, parseJSON } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
-// import { useConnect } from 'redux-bundler-hook';
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/solid';
 
 // Function to take array of [time, value] and return last [time, value]
 const LastValueSet = (tsvArray) => {
-  const arrayLen = tsvArray.length;
+  const arrayLen = tsvArray?.length;
   if (!arrayLen) {
     console.log('LastValueSet - tsvArray has no length');
     return null;
@@ -17,6 +16,16 @@ const LastValueSet = (tsvArray) => {
   return _obj;
 };
 
+const TsvIndexFromTime = (tsvArray, timeString) => {
+  // Find the index based on the lookBackDateTimeSearchString
+  const lookBackDateTimeIndex = tsvArray?.findIndex((arr) =>
+    arr.includes(timeString)
+  );
+
+  // can return -1 if not found
+  return lookBackDateTimeIndex;
+};
+
 // Given a tsvArray
 // Get the latest time/value
 // Go back "h"oursBack" number of hours
@@ -24,7 +33,7 @@ const LastValueSet = (tsvArray) => {
 // Compute value delta between the two
 
 const LookBackValueSet = (tsvArray, hoursBack = 24) => {
-  const arrayLen = tsvArray.length;
+  const arrayLen = tsvArray?.length;
   if (!arrayLen) {
     console.log('LookBackValueSet - tsvArray has no length');
     return null;
@@ -48,13 +57,10 @@ const LookBackValueSet = (tsvArray, hoursBack = 24) => {
     "yyyy-MM-dd'T'HH:mm:ssXXX"
   );
 
-  // console.log(`--Looking for ${lookBackDateTimeSearchString}`);
-
-  // Find the index based on the lookBackDateTimeSearchString
-  const lookBackDateTimeIndex = tsvArray.findIndex((arr) =>
-    arr.includes(lookBackDateTimeSearchString)
+  const lookBackDateTimeIndex = TsvIndexFromTime(
+    tsvArray,
+    lookBackDateTimeSearchString
   );
-
   if (lookBackDateTimeIndex === -1) {
     // no match found
     return null;
@@ -68,21 +74,6 @@ const LookBackValueSet = (tsvArray, hoursBack = 24) => {
   _obj['latest_value'] = tsvArray[lookBackDateTimeIndex][1];
 
   return _obj;
-};
-
-const ConvertUnitsToEn = (unitLookup, param, units, value) => {
-  //const param = tsObj.base_parameter || tsObj.parameter;
-  console.log(param);
-
-  const unitConversion = unitLookup[param];
-
-  console.log('--convertUnits()--');
-  console.log(`got param of ${param} and unit of ${units}`);
-  console.log(unitConversion);
-
-  const newValue = value / unitConversion.factor;
-
-  return { value: newValue, units: unitConversion.transform_to_unit };
 };
 
 const DeltaChange = ({ delta }, { title = '24 hour change' }) => {
@@ -113,4 +104,78 @@ const DeltaChange = ({ delta }, { title = '24 hour change' }) => {
   ) : null;
 };
 
-export { LastValueSet, LookBackValueSet, ConvertUnitsToEn, DeltaChange };
+const GetTsidParts = (tsid) => {
+  const tsidArray = tsid.split('.');
+  return {
+    location: tsidArray[0],
+    parameter: tsidArray[1],
+    parameter_type: tsidArray[2],
+    interval: tsidArray[3],
+    duration: tsidArray[4],
+    version: tsidArray[5],
+  };
+};
+
+const PrecipTotal = (paramObj, tsvArray) => {
+  // const {
+  //   providerTimeseriesValuesItemsObject: tsvObj,
+  //   doProviderTimeseriesValuesFetchById,
+  //   timeseriesDateRange: dateRange,
+  // } = useConnect(
+  //   'selectProviderTimeseriesValuesItemsObject',
+  //   'doProviderTimeseriesValuesFetchById',
+  //   'selectTimeseriesDateRange'
+  // );
+
+  const tsid = paramObj?.tsid;
+  const pathParts = GetTsidParts(tsid);
+
+  // if the timeseries is already cumuluative, return the 24hr delta
+  if (pathParts?.parameter_type === 'Inst' && pathParts?.duration === '0') {
+    return paramObj.delta24hr;
+  }
+
+  let precipTotal = 0;
+
+  if (pathParts.parameter_type === 'Total') {
+    // if no timeseries in state, make a request
+    // if (tsvObj[tsid] === undefined) {
+    //   doProviderTimeseriesValuesFetchById({
+    //     timeseriesId: tsid,
+    //     dateRange,
+    //   });
+    // }
+
+    //const tsvArray = tsvObj[tsid]?.values;
+
+    const lookBackRecord = LookBackValueSet(tsvArray, 24);
+    const index = TsvIndexFromTime(tsvArray, lookBackRecord?.latest_time);
+    // console.log('--lookbackRecord--');
+    // console.log(lookBackRecord);
+    // console.log('--index--');
+    // console.log(index);
+
+    // loop over all values from 24hrs back to end of array
+    // sum the total
+    for (let x = index; x < tsvArray?.length; x++) {
+      console.log(tsvArray[x]);
+      precipTotal += parseFloat(tsvArray[x][1]);
+    }
+  }
+
+  // console.log('--precipTotal--');
+  // console.log(precipTotal);
+
+  // console.log('--path parts--');
+  // console.log(GetTsidParts(tsid));
+  if (tsvArray?.length) {
+    console.log('--precip has values--');
+  }
+
+  // console.log(tsvObj[tsid]);
+  // console.log(tsvObj[tsid]?.values);
+  console.log(`-returning precip total of: ${precipTotal}`);
+  return precipTotal?.toFixed(2);
+};
+
+export { LastValueSet, LookBackValueSet, DeltaChange, PrecipTotal };
