@@ -1,39 +1,21 @@
+import { useState, useEffect } from 'react';
 import { ClockIcon } from '@heroicons/react/24/outline';
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/solid';
 import { parseISO, format } from 'date-fns';
 import { Placeholder } from './content-placeholder';
 
-// const parameters = [
-// {
-//   label: "Elevation",
-//   latest_time: "2023-04-12T16:30:00Z"
-//   latest_value: 408.96
-//   delta24hr: "-0.19",
-//   levels: []
-//   parameter: "Elev"
-//   sort_order: 1
-//   tsid: "Eureka-Meramec.Elev.Inst.30Minutes.0.lrgsShef-rev"
-//   unit: "ft"
-//   values:[]
-// }
-// ];
-
 export default function StackedParameterList({ parameters }) {
-  // console.log('--StackedParameterList--');
-  // console.log(parameters);
-  // return (
-  //   <>
-  //     {/* JSON.stringify(parameters) */}
-  //     {parameters.map((parameter, idx) => (
-  //       <li key={idx}>{JSON.stringify(parameters)}</li>
-  //     ))}
-  //   </>
-  // );
+  const [params, setParams] = useState();
+
+  useEffect(() => {
+    // ensure parameter values change properly when parameters object changes
+    setParams(parameters);
+  }, [parameters]);
   return (
     <div className="overflow-hidden bg-white shadow">
       <ul className="divide-y divide-gray-200">
-        {parameters?.length &&
-          parameters
+        {params?.length &&
+          params
             .filter((p) => p.hasOwnProperty('latest_value'))
             .sort((a, b) => (a.sort_order > b.sort_order ? 1 : -1))
             .map((p, idx) => (
@@ -50,7 +32,9 @@ export default function StackedParameterList({ parameters }) {
                           ready={!isNaN(p.latest_value)}
                           className={'w-20 rounded-lg'}
                         >
-                          {p.latest_value?.toLocaleString()}
+                          {p.base_parameter !== 'Precip'
+                            ? p.latest_value?.toLocaleString()
+                            : (p.precip_total && p.precip_total) || '-'}
                           <span className="ml-1 text-sm font-normal text-gray-400">
                             {p.unit}
                           </span>
@@ -81,7 +65,7 @@ export default function StackedParameterList({ parameters }) {
                     </div>
                     <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
                       <p className="flex items-baseline text-sm ">
-                        {p.delta24hr ? (
+                        {p.delta24hr && p.base_parameter !== 'Precip' ? (
                           <>
                             {p.delta24hr > 0 ? (
                               <ArrowUpIcon
@@ -105,7 +89,9 @@ export default function StackedParameterList({ parameters }) {
                               {p.delta24hr}
                             </span>
                           </>
-                        ) : null}
+                        ) : (
+                          '24hr total'
+                        )}
                       </p>
                     </div>
                   </div>
