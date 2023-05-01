@@ -20,6 +20,7 @@ export default function ReactDamProfileChart() {
 
     const allowedLevels = [
       'Streambed',
+      'Top of Conservation',
       'Top of Dam',
       'Top of Surcharge',
       'Top of Flood',
