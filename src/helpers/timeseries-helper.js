@@ -158,7 +158,7 @@ const PrecipTotal = (paramObj, tsvArray) => {
     // loop over all values from 24hrs back to end of array
     // sum the total
     for (let x = index; x < tsvArray?.length; x++) {
-      console.log(tsvArray[x]);
+      //console.log(tsvArray[x]);
       precipTotal += parseFloat(tsvArray[x][1]);
     }
   }
@@ -168,13 +168,13 @@ const PrecipTotal = (paramObj, tsvArray) => {
 
   // console.log('--path parts--');
   // console.log(GetTsidParts(tsid));
-  if (tsvArray?.length) {
-    console.log('--precip has values--');
-  }
+  // if (tsvArray?.length) {
+  //   console.log('--precip has values--');
+  // }
 
   // console.log(tsvObj[tsid]);
   // console.log(tsvObj[tsid]?.values);
-  console.log(`-returning precip total of: ${precipTotal}`);
+  // console.log(`-returning precip total of: ${precipTotal}`);
   return precipTotal?.toFixed(2);
 };
 
