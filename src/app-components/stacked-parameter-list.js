@@ -3,6 +3,7 @@ import { ClockIcon } from '@heroicons/react/24/outline';
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/solid';
 import { parseISO, format } from 'date-fns';
 import { Placeholder } from './content-placeholder';
+import { Tooltip } from 'react-tooltip';
 
 export default function StackedParameterList({ parameters }) {
   const [params, setParams] = useState();
@@ -65,7 +66,7 @@ export default function StackedParameterList({ parameters }) {
                     </div>
                     <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
                       <p className="flex items-baseline text-sm ">
-                        {p.delta24hr && p.base_parameter !== 'Precip' ? (
+                        {p.base_parameter !== 'Precip' ? (
                           <>
                             {p.delta24hr > 0 ? (
                               <ArrowUpIcon
@@ -85,7 +86,13 @@ export default function StackedParameterList({ parameters }) {
                                 : '24hr decrease'}{' '}
                               of
                             </span> */}
-                            <span className="ml-1" aria-label="24 hour change">
+                            <span
+                              className="ml-1 cursor-default border-b-2 border-dotted border-b-gray-300"
+                              // title="24 hour change"
+                              aria-label="24 hour change"
+                              data-tooltip-id="delta24-tooltip"
+                              data-tooltip-content="24 hour change"
+                            >
                               {p.delta24hr}
                             </span>
                           </>
@@ -99,6 +106,7 @@ export default function StackedParameterList({ parameters }) {
                 {/* </a> */}
               </li>
             ))}
+        <Tooltip id="delta24-tooltip" />
       </ul>
     </div>
   );
