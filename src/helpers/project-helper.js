@@ -1,4 +1,5 @@
 import { mapObjectArrayByKey } from '../helpers/misc-helpers';
+const debug = parseInt(process.env.REACT_APP_DEBUG);
 
 /**
  * Calculates project flood storage utilized
@@ -52,13 +53,20 @@ const GetProjectFloodStorage = (location) => {
   const currentFloodStorage =
     timeseriesMap['Flood Storage']?.latest_value || null;
 
-  console.log('--FloodStorageUtilized--');
-  console.log(`Top of Flood Storage: ${floodTop}`);
-  console.log(`Bottom of Flood Storage: ${floodBottom}`);
-  console.log(`Curent Flood Storage: ${currentFloodStorage}`);
-  console.log('---end--');
+  const FloodStoragePercentage = ProjectFloodStoragePercent(
+    floodTop,
+    floodBottom,
+    currentFloodStorage
+  );
 
-  return ProjectFloodStoragePercent(floodTop, floodBottom, currentFloodStorage);
+  if (debug) {
+    console.log(
+      `FloodStorageUtilized = ${FloodStoragePercentage}
+      Top of Flood Storage: ${floodTop} | Bottom of Flood Storage: ${floodBottom} | Curent Flood Storage: ${currentFloodStorage}`
+    );
+  }
+
+  return FloodStoragePercentage;
 };
 // ---------------------------------------------------------------------
 
@@ -83,17 +91,20 @@ const GetProjectConStorage = (location) => {
     timeseriesMap['Flood Storage']?.latest_value ||
     null;
 
-  console.log('--ConservationStorageUtilized--');
-  console.log(`Top of Conservation Storage: ${conTop}`);
-  console.log(`Bottom of Conservation Storage: ${conBottom}`);
-  console.log(`Curent Conservation Storage: ${currentConStorage}`);
-  console.log('---end--');
-
-  return ProjectConservationStoragePercent(
+  const ConservationStoragePercentage = ProjectConservationStoragePercent(
     conTop,
     conBottom,
     currentConStorage
   );
+
+  if (debug) {
+    console.log(
+      `ConservationStorageUtilized = ${ConservationStoragePercentage}
+      conTop: ${conTop} | conBottom: ${conBottom} | currentConStorage: ${currentConStorage}`
+    );
+  }
+
+  return ConservationStoragePercentage;
 };
 // ---------------------------------------------------------------------
 
@@ -114,8 +125,9 @@ const GetProjectTotalStorage = (location) => {
     ? levelsMap['stor.streambed']?.latest_value
     : null;
 
-  console.log(`--storTop = ${storTop}--`);
-  console.log(`--storBottom = ${storBottom}--`);
+  if (!storTop || !storBottom) {
+    return null;
+  }
 
   const currentVal = () => {
     if (
@@ -145,14 +157,15 @@ const GetProjectTotalStorage = (location) => {
   };
 
   const projectTotalStorage =
+    !isNaN(storTop) &&
+    !isNaN(storBottom) &&
+    !isNaN(currentVal()) &&
     (1 - (storTop - currentVal()) / (storTop - storBottom)) * 100;
 
-  console.log('--projectTotalStorage--');
-  console.log(`Top of Storage: ${storTop}`);
-  console.log(`Bottom of Storage: ${storBottom}`);
-  console.log(`Current Storage: ${currentVal()}`);
-  console.log(`Computed Total Project Storage: ${projectTotalStorage}`);
-  console.log('---end--');
+  if (debug) {
+    console.log(`projectTotalStorage: ${projectTotalStorage}
+    storTop: ${storTop} | storBottom: ${storBottom} | currentVal: ${currentVal()}`);
+  }
 
   return projectTotalStorage;
 };

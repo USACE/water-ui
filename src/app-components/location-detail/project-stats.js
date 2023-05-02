@@ -16,12 +16,13 @@ export default function ProjectStats({ location }) {
 
   const FloodStorageUtilized = GetProjectFloodStorage(location);
   const ConservationStorageUtilized = GetProjectConStorage(location);
+  const TotalProjectStorageUtilized = GetProjectTotalStorage(location);
 
   const FloodStorageUtilizedDisplay =
     FloodStorageUtilized < 0
       ? 0 + '%'
       : FloodStorageUtilized > 0
-      ? FloodStorageUtilized.toFixed(0) + '%'
+      ? FloodStorageUtilized?.toFixed(0) + '%'
       : 'N/A';
 
   const ConservationStorageUtilizedDisplay =
@@ -30,8 +31,15 @@ export default function ProjectStats({ location }) {
       : ConservationStorageUtilized > 100
       ? 100 + '%'
       : ConservationStorageUtilized > 0
-      ? ConservationStorageUtilized.toFixed(0) + '%'
+      ? ConservationStorageUtilized?.toFixed(0) + '%'
       : 'N/A';
+
+  const TotalProjectStorageUtilizedDisplay = TotalProjectStorageUtilized
+    ? TotalProjectStorageUtilized?.toFixed(0) + '%'
+    : 'N/A';
+
+  console.log('--TotalProjectStorageUtilized--');
+  console.log(TotalProjectStorageUtilized);
 
   const stats = [
     {
@@ -53,7 +61,7 @@ export default function ProjectStats({ location }) {
     {
       id: 3,
       name: 'Total Storage Utilized',
-      stat: GetProjectTotalStorage(location)?.toFixed(0) + '%',
+      stat: TotalProjectStorageUtilizedDisplay,
       icon: FaDatabase,
       // change: '3.2%',
       // changeType: 'decrease',

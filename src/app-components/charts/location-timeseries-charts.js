@@ -98,7 +98,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
       [
         {
           tsLabel: 'Stage',
-          displayLevels: ['elev.top of flood', 'stage.flood'],
+          displayLevels: ['elev.top of flood', 'stage.flood', 'stage.control'],
         },
       ],
       [{ tsLabel: 'Outflow' }],

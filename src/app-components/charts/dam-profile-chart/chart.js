@@ -35,7 +35,8 @@ export default function ReactDamProfileChart() {
     const _levels = location?.levels
       ?.filter(
         (lvl) =>
-          allowedLevels.includes(lvl.label) && lvl.base_parameter === 'Elev'
+          allowedLevels.includes(lvl.label) &&
+          (lvl.base_parameter === 'Elev' || lvl.base_parameter === 'Stage')
       )
       .map((lvl) => {
         return { name: lvl.label, value: lvl.latest_value };
