@@ -31,6 +31,9 @@ const ProjectConservationStoragePercent = (topCon, bottomCon, currentVal) => {
 // ---------------------------------------------------------------------
 
 const GetProjectFloodStorage = (location) => {
+  if (!location || !location?.timeseries?.length || !location?.levels?.length) {
+    return null;
+  }
   const levelsMap = mapObjectArrayByKey(location?.levels, 'slug');
   const timeseriesMap = mapObjectArrayByKey(location?.timeseries, 'label');
 
@@ -60,6 +63,9 @@ const GetProjectFloodStorage = (location) => {
 // ---------------------------------------------------------------------
 
 const GetProjectConStorage = (location) => {
+  if (!location || !location?.timeseries?.length || !location?.levels?.length) {
+    return null;
+  }
   const levelsMap = mapObjectArrayByKey(location?.levels, 'slug');
   const timeseriesMap = mapObjectArrayByKey(location?.timeseries, 'label');
 
@@ -92,10 +98,17 @@ const GetProjectConStorage = (location) => {
 // ---------------------------------------------------------------------
 
 const GetProjectTotalStorage = (location) => {
+  if (!location || !location?.timeseries?.length || !location?.levels?.length) {
+    return null;
+  }
   const levelsMap = mapObjectArrayByKey(location?.levels, 'slug');
   const timeseriesMap = mapObjectArrayByKey(location?.timeseries, 'label');
 
-  const storTop = levelsMap['stor.top of flood']?.latest_value || null;
+  const storTop =
+    levelsMap['stor.spillway crest']?.latest_value ||
+    levelsMap['stor.top of flood']?.latest_value ||
+    levelsMap['stor.top of flood control']?.latest_value ||
+    null;
   // bottom of storage could be 0 as the streambed
   const storBottom = !isNaN(levelsMap['stor.streambed']?.latest_value)
     ? levelsMap['stor.streambed']?.latest_value
@@ -137,7 +150,7 @@ const GetProjectTotalStorage = (location) => {
   console.log('--projectTotalStorage--');
   console.log(`Top of Storage: ${storTop}`);
   console.log(`Bottom of Storage: ${storBottom}`);
-  console.log(`Curent Storage: ${currentVal()}`);
+  console.log(`Current Storage: ${currentVal()}`);
   console.log(`Computed Total Project Storage: ${projectTotalStorage}`);
   console.log('---end--');
 
