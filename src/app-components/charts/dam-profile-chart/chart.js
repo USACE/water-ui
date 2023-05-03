@@ -66,9 +66,11 @@ export default function ReactDamProfileChart() {
         null,
       // for some projects like Lake Okeechobee, streambed could be 0
       // setting to null will mess with the scale
-      dambottom:
-        levelsMap['elev.streambed']?.latest_value ||
-        levelsMap['stage.streambed']?.latest_value,
+      dambottom: !isNaN(levelsMap['elev.streambed']?.latest_value)
+        ? levelsMap['elev.streambed']?.latest_value
+        : !isNaN(levelsMap['stage.streambed']?.latest_value)
+        ? levelsMap['stage.streambed']?.latest_value
+        : null,
       pool:
         timeseriesMap['Elevation']?.latest_value ||
         timeseriesMap['Stage']?.latest_value ||
