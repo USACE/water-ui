@@ -119,7 +119,7 @@ export default function Footer() {
             <img
               src={CwbiLogo}
               alt="CWBI Logo"
-              title="Civi Works Business Intelligence"
+              title="Civil Works Business Intelligence"
               width="50"
               className="ml-5 inline h-10 w-auto md:h-20"
             />

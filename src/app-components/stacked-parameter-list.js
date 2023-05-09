@@ -4,6 +4,7 @@ import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/solid';
 import { parseISO, format } from 'date-fns';
 import { Placeholder } from './content-placeholder';
 import { Tooltip } from 'react-tooltip';
+import { displayValue } from '../helpers/timeseries-helper';
 
 export default function StackedParameterList({ parameters }) {
   const [params, setParams] = useState();
@@ -34,7 +35,7 @@ export default function StackedParameterList({ parameters }) {
                           className={'w-20 rounded-lg'}
                         >
                           {p.base_parameter !== 'Precip'
-                            ? p.latest_value?.toLocaleString()
+                            ? displayValue(p)
                             : (p.precip_total && p.precip_total) || '-'}
                           <span className="ml-1 text-sm font-normal text-gray-400">
                             {p.unit}

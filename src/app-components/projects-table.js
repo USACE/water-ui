@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 import { SimpleTable, TableLink, TableValueWithTime } from './table-simple';
-import { DeltaChange, getTsObjByLabel } from '../helpers/timeseries-helper';
+import {
+  DeltaChange,
+  getTsObjByLabel,
+  displayValue,
+} from '../helpers/timeseries-helper';
 import { GetProjectFloodStorage } from '../helpers/project-helper';
 import { FcDam } from 'react-icons/fc';
 import { Switch } from '@headlessui/react';
@@ -182,18 +186,13 @@ export default function ProjectsTable({ projects }) {
           {
             key: null,
             render: (l) => {
-              return getTsObjByLabel(l?.timeseries, 'Inflow')
-                ?.latest_value?.toFixed(0)
-                ?.toLocaleString();
+              return displayValue(getTsObjByLabel(l?.timeseries, 'Inflow'));
             },
           },
           {
             key: null,
             render: (l) => {
-              return getTsObjByLabel(
-                l?.timeseries,
-                'Outflow'
-              )?.latest_value?.toFixed(0);
+              return displayValue(getTsObjByLabel(l?.timeseries, 'Outflow'));
             },
           },
         ]}

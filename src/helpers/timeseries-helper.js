@@ -184,10 +184,23 @@ const getTsObjByLabel = (timeseries, label) => {
   return tsMap[label];
 };
 
+// display timeseries values with different precision based on parameter
+const displayValue = (tsObj) => {
+  if (tsObj?.base_parameter === 'Flow' || tsObj?.base_parameter === 'Stor') {
+    return tsObj?.latest_value?.toLocaleString(undefined, {
+      maximumFractionDigits: 0,
+    });
+  }
+  return tsObj?.latest_value?.toLocaleString(undefined, {
+    maximumFractionDigits: 1,
+  });
+};
+
 export {
   LastValueSet,
   LookBackValueSet,
   DeltaChange,
   PrecipTotal,
   getTsObjByLabel,
+  displayValue,
 };
