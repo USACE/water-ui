@@ -7,12 +7,12 @@ export default function TabsComponent({ tabs }) {
   //     { name: 'Tab 3', content: 'tab 3 content' },
   //   ];
   return (
-    <div className="text-center text-sm font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400">
+    <div className="text-sm font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400">
       <Tab.Group
         defaultIndex={0}
-        onChange={(index) => {
-          console.log('Changed selected tab to:', index);
-        }}
+        // onChange={(index) => {
+        //   console.log('Changed selected tab to:', index);
+        // }}
       >
         <Tab.List className="mb-2 flex flex-wrap gap-x-1 border-b-2 border-gray-300">
           {tabs.map((tab, idx) => (
@@ -25,7 +25,15 @@ export default function TabsComponent({ tabs }) {
             >
               <div className="flex justify-center">
                 <div className="mr-2">{tab.icon}</div>
-                <div className="">{tab.name}</div>
+                <div className="font-semibold">
+                  {tab.name}
+
+                  {tab?.badge?.text && (
+                    <span className="ml-2 inline-flex items-center rounded-full bg-gray-200 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                      {tab?.badge?.text}
+                    </span>
+                  )}
+                </div>
               </div>
             </Tab>
           ))}

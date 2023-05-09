@@ -1,6 +1,7 @@
 import { subHours, parseJSON } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/solid';
+import { mapObjectArrayByKey } from '../helpers/misc-helpers';
 
 // Function to take array of [time, value] and return last [time, value]
 const LastValueSet = (tsvArray) => {
@@ -178,4 +179,15 @@ const PrecipTotal = (paramObj, tsvArray) => {
   return precipTotal?.toFixed(2);
 };
 
-export { LastValueSet, LookBackValueSet, DeltaChange, PrecipTotal };
+const getTsObjByLabel = (timeseries, label) => {
+  const tsMap = mapObjectArrayByKey(timeseries, 'label');
+  return tsMap[label];
+};
+
+export {
+  LastValueSet,
+  LookBackValueSet,
+  DeltaChange,
+  PrecipTotal,
+  getTsObjByLabel,
+};

@@ -1,16 +1,22 @@
+import { useState } from 'react';
 import { useConnect } from 'redux-bundler-hook';
-import { SimpleTable, TableLink } from './table-simple';
-import { mapObjectArrayByKey } from '../helpers/misc-helpers';
-import { DeltaChange } from '../helpers/timeseries-helper';
+import { SimpleTable, TableLink, TableValueWithTime } from './table-simple';
+import { DeltaChange, getTsObjByLabel } from '../helpers/timeseries-helper';
 import { GetProjectFloodStorage } from '../helpers/project-helper';
+import { FcDam } from 'react-icons/fc';
+import { Switch } from '@headlessui/react';
+// import {
+//   parseISO,
+//   format,
+//   formatDistanceStrict,
+//   differenceInHours,
+// } from 'date-fns';
 
 export default function ProjectsTable({ projects }) {
-  const { providerByRoute: provider } = useConnect('selectProviderByRoute');
-
-  const getTsObjByLabel = (timeseries, label) => {
-    const tsMap = mapObjectArrayByKey(timeseries, 'label');
-    return tsMap[label];
-  };
+  const { providerByRoute: provider, providerLocationsIsLoading } = useConnect(
+    'selectProviderByRoute',
+    'selectProviderLocationsIsLoading'
+  );
 
   // const MockElevationStorage = () => {
   //   return <>{parseInt(Math.floor(Math.random() * (1500 - 900 + 1) + 900))}</>;
@@ -30,73 +36,169 @@ export default function ProjectsTable({ projects }) {
   //   return <>{parseInt(Math.floor(Math.random() * (3000 - 100 + 1) + 100))}</>;
   // };
 
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ');
+  }
+
+  const ProjectFilter = () => {
+    const [enabled, setEnabled] = useState(false);
+
+    return (
+      <Switch.Group as="div" className="flex items-center bg-slate-100 p-2">
+        <Switch
+          checked={enabled}
+          onChange={setEnabled}
+          className={classNames(
+            enabled ? 'bg-blue-400' : 'bg-gray-200',
+            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2'
+          )}
+        >
+          <span className="sr-only">Use setting</span>
+          <span
+            aria-hidden="true"
+            className={classNames(
+              enabled ? 'translate-x-5' : 'translate-x-0',
+              'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out'
+            )}
+          />
+        </Switch>
+        <Switch.Label as="span" className="ml-3 text-sm">
+          <span className="font-medium text-gray-900">Flood Control Only</span>{' '}
+          {/* <span className="text-gray-500">(Save 10%)</span> */}
+        </Switch.Label>
+      </Switch.Group>
+    );
+  };
+
+  const StorageBar = ({ percent }) => {
+    if (isNaN(percent)) {
+      return null;
+    }
+    const p = parseInt(percent) < 0 ? 0 : parseInt(percent);
+    const pString = p?.toFixed(0);
+
+    return (
+      <div className="flex w-2/3 bg-gray-200 text-right shadow">
+        <div
+          style={{ width: `${p}%` }}
+          className={`bg-blue-400  py-1 text-center text-xs leading-none text-white`}
+        >
+          {p >= 15 ? pString + '%' : null}
+        </div>
+
+        {p < 15 ? <div className="w-full text-center">{pString}%</div> : null}
+      </div>
+    );
+  };
+
   return (
-    <SimpleTable
-      headers={[
-        'Project',
-        'Current Elevation (ft)',
-        '24 Hour Change (ft)',
-        'Flood Storage Utilized',
-        'Outflow (cfs)',
-      ]}
-      items={projects}
-      itemFields={[
-        {
-          key: 'code',
-          render: (location) => {
-            return (
-              <TableLink
-                text={location.public_name}
-                href={''.concat(
-                  '/overview/',
-                  `${provider.slug}`,
-                  '/locations/',
-                  `${location.slug}`
-                )}
-              />
-            );
+    <>
+      <ProjectFilter />
+      <SimpleTable
+        headers={[
+          'Kind',
+          'Project',
+          'Pool Elevation/Stage (ft)',
+          '24 Hour Change (ft)',
+          'Flood Storage Utilized (%)',
+          'Inflow (cfs)',
+          'Outflow (cfs)',
+        ]}
+        items={projects}
+        itemFields={[
+          {
+            key: 'kind',
+            render: (l) => {
+              return <FcDam size="32" alt={l.kind} title={l.kind} />;
+            },
           },
-        },
-        {
-          key: null,
-          render: (l) => {
-            return (
-              getTsObjByLabel(
+          {
+            key: 'public_name',
+            render: (l) => {
+              return (
+                <TableLink
+                  text={l.public_name}
+                  href={''.concat(
+                    '/overview/',
+                    `${provider.slug}`,
+                    '/locations/',
+                    `${l.slug}`
+                  )}
+                />
+              );
+            },
+          },
+          {
+            key: null,
+            render: (l) => {
+              const elev = getTsObjByLabel(l?.timeseries, 'Elevation');
+              const stage = getTsObjByLabel(l?.timeseries, 'Stage');
+              return elev ? (
+                <TableValueWithTime tsObj={elev} />
+              ) : (
+                <TableValueWithTime tsObj={stage} />
+              );
+            },
+            // return (
+            //   getTsObjByLabel(
+            //     l?.timeseries,
+            //     'Elevation'
+            //   )?.latest_value?.toFixed(1) || null
+            // );
+          },
+          {
+            key: null,
+            render: (l) => {
+              const elevChange = getTsObjByLabel(
                 l?.timeseries,
                 'Elevation'
-              )?.latest_value?.toFixed(1) || null
-            );
+              )?.delta24hr;
+              const stageChange = getTsObjByLabel(
+                l?.timeseries,
+                'Stage'
+              )?.delta24hr;
+              return (
+                <div className="flex items-baseline text-sm">
+                  {elevChange ? (
+                    <DeltaChange delta={elevChange} />
+                  ) : (
+                    <DeltaChange delta={stageChange} />
+                  )}
+                </div>
+              );
+            },
           },
-        },
-        {
-          key: null,
-          render: (l) => {
-            return (
-              <div className="flex items-baseline text-sm">
-                <DeltaChange
-                  delta={getTsObjByLabel(l?.timeseries, 'Elevation')?.delta24hr}
-                />
-              </div>
-            );
+          {
+            key: null,
+            render: (l) => {
+              const FloodStorageUtilized = GetProjectFloodStorage(l);
+              return FloodStorageUtilized && !isNaN(FloodStorageUtilized) ? (
+                <StorageBar percent={FloodStorageUtilized} />
+              ) : (
+                'n/a'
+              );
+            },
           },
-        },
-        {
-          key: null,
-          render: (l) => {
-            return GetProjectFloodStorage(l)?.toFixed(1);
+          {
+            key: null,
+            render: (l) => {
+              return getTsObjByLabel(l?.timeseries, 'Inflow')
+                ?.latest_value?.toFixed(0)
+                ?.toLocaleString();
+            },
           },
-        },
-        {
-          key: null,
-          render: (l) => {
-            return getTsObjByLabel(
-              l?.timeseries,
-              'Outflow'
-            )?.latest_value?.toFixed(0);
+          {
+            key: null,
+            render: (l) => {
+              return getTsObjByLabel(
+                l?.timeseries,
+                'Outflow'
+              )?.latest_value?.toFixed(0);
+            },
           },
-        },
-      ]}
-      options={{ shadow: true }}
-    />
+        ]}
+        options={{ shadow: true, rowBlur: providerLocationsIsLoading }}
+      />
+    </>
   );
 }

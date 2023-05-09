@@ -46,8 +46,8 @@ const GetProjectFloodStorage = (location) => {
   const floodBottom =
     levelsMap['stor.bottom of flood']?.latest_value ||
     levelsMap['stor.bottom of flood control']?.latest_value ||
-    levelsMap['stor.top of normal']?.latest_value ||
     levelsMap['stor.top of conservation']?.latest_value ||
+    levelsMap['stor.top of normal']?.latest_value ||
     null;
   // Current Storage Value
   const currentFloodStorage =
@@ -123,6 +123,8 @@ const GetProjectTotalStorage = (location) => {
   // bottom of storage could be 0 as the streambed
   const storBottom = !isNaN(levelsMap['stor.streambed']?.latest_value)
     ? levelsMap['stor.streambed']?.latest_value
+    : !isNaN(levelsMap['stor.top of inactive']?.latest_value)
+    ? levelsMap['stor.top of inactive']?.latest_value
     : null;
 
   if (!storTop || !storBottom) {

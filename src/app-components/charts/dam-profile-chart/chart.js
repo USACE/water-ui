@@ -90,6 +90,7 @@ export default function ReactDamProfileChart() {
       gradientTop:
         levelsMap['elev.bottom of flood']?.latest_value ||
         levelsMap['elev.bottom of flood control']?.latest_value ||
+        levelsMap['elev.top of conservation']?.latest_value ||
         null,
     };
     setInfo(_info);

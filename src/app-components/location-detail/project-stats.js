@@ -2,7 +2,7 @@ import StatsWIcon from '../stats-with-icon';
 
 //import { BiWater } from 'react-icons/bi';
 import { MdWaterDrop } from 'react-icons/md';
-import { FaDatabase } from 'react-icons/fa';
+import { FaDatabase, FaFaucet } from 'react-icons/fa';
 import {
   GetProjectFloodStorage,
   GetProjectConStorage,
@@ -46,7 +46,7 @@ export default function ProjectStats({ location }) {
       id: 1,
       name: 'Flood Storage Utilized',
       stat: FloodStorageUtilizedDisplay,
-      icon: FaDatabase,
+      icon: MdWaterDrop,
       // change: '0.8%',
       // changeType: 'increase',
     },
@@ -54,7 +54,7 @@ export default function ProjectStats({ location }) {
       id: 2,
       name: 'Conservation Storage Utilized',
       stat: ConservationStorageUtilizedDisplay,
-      icon: MdWaterDrop,
+      icon: FaFaucet,
       // change: '5.4%',
       // changeType: 'increase',
     },

@@ -213,6 +213,7 @@ export default function ProjectDetail() {
     <PageWrapper
       title={location?.public_name}
       subTitle={`provided by ${provider?.name}`}
+      isLoading={providerLocationIsLoading}
     >
       <div
         className={`mt-0 duration-300 ease-in-out md:gap-x-8 ${

@@ -1,36 +1,39 @@
 import { useConnect } from 'redux-bundler-hook';
-import MockDistrictMap from '../../images/mockup/map-district-focus.png';
-import SimpleStats from '../../app-components/stats-simple';
-import CardSimple from '../../app-components/card-simple';
+//import MockDistrictMap from '../../images/mockup/map-district-focus.png';
+//import SimpleStats from '../../app-components/stats-simple';
+//import CardSimple from '../../app-components/card-simple';
 import { SimpleTable, TableLink } from '../../app-components/table-simple';
-import ProjectsTable from '../../app-components/projects-table';
+//import ProjectsTable from '../../app-components/projects-table';
 import PageWrapper from '../page-wrapper';
+import ProviderLocationsTabs from '../provider/provider-home/locations-tabs';
 
 export default function ProviderHome() {
   const {
-    pathname,
+    //pathname,
     providerByRoute: provider,
     providerItems: providers,
     providerLocationsItems: locations,
-    providerWatershedsItems: watersheds,
+    providerLocationsIsLoading,
+    //providerWatershedsItems: watersheds,
   } = useConnect(
-    'selectPathname',
+    //'selectPathname',
     'selectProviderItems',
     'selectProviderByRoute',
     'selectProviderLocationsItems',
-    'selectProviderWatershedsItems'
+    'selectProviderLocationsIsLoading'
+    //'selectProviderWatershedsItems'
   );
 
-  const MockStorage = () => {
-    return <>{parseInt(Math.floor(Math.random() * (15 - 2 + 1) + 2)) + '%'}</>;
-  };
+  // const MockStorage = () => {
+  //   return <>{parseInt(Math.floor(Math.random() * (15 - 2 + 1) + 2)) + '%'}</>;
+  // };
 
   const MscDistrictsTable = ({ mscSlug }) => {
     const districts = providers.filter((p) => p.parent_provider === mscSlug);
 
     return districts?.length ? (
       <SimpleTable
-        headers={['Office', 'Flood Storage Utilized']}
+        headers={['Office', 'Watersheds', 'Projects']}
         items={districts}
         itemFields={[
           {
@@ -44,29 +47,46 @@ export default function ProviderHome() {
               );
             },
           },
-          { key: 'slug', render: MockStorage },
+          { key: null, render: () => '-' },
+          { key: null, render: () => '-' },
         ]}
         options={{ shadow: true }}
       />
     ) : null;
   };
 
-  const provider_projects = locations.filter(
-    (location) => location.kind === 'PROJECT'
-  );
+  // const provider_projects = locations.filter(
+  //   (location) => location.kind === 'PROJECT'
+  // );
 
-  const stats = [
-    { name: 'Watersheds', stat: watersheds.length },
-    { name: 'Projects', stat: provider_projects.length },
-    { name: 'Locations', stat: locations.length },
-    { name: 'Flood Storage Utilized', stat: '1%' },
-  ];
+  // const stats = [
+  //   { name: 'Watersheds', stat: watersheds.length },
+  //   { name: 'Projects', stat: provider_projects.length },
+  //   { name: 'Locations', stat: locations.length },
+  //   { name: 'Flood Storage Utilized', stat: '1%' },
+  // ];
+
+  // const stats = [
+  //   { name: 'Projects Above 90% Flood Storage', stat: 99 },
+  //   { name: 'Location at or above Flood Stage', stat: 9 },
+  //   { name: 'Flood Storage Utilized', stat: '1%' },
+  // ];
 
   return (
-    <PageWrapper title={provider?.name} subTitle="">
+    <PageWrapper
+      title={provider?.name}
+      subTitle=""
+      isLoading={providerLocationsIsLoading}
+    >
       {/* <div className=""> */}
 
-      <SimpleStats stats={stats} title="" />
+      {/* <SimpleStats stats={stats} title="" /> */}
+
+      {locations?.length ? (
+        <div className="mt-5">
+          <ProviderLocationsTabs />
+        </div>
+      ) : null}
 
       <div className="mt-4 flex-none md:flex md:gap-x-8">
         <div className="w-full flex-auto lg:w-1/3">
@@ -75,7 +95,7 @@ export default function ProviderHome() {
           {(provider?.type === 'msc' || provider?.type === 'hq') && (
             <MscDistrictsTable mscSlug={provider?.slug} />
           )}
-          {watersheds?.length ? (
+          {/* {watersheds?.length ? (
             <SimpleTable
               headers={['Watershed', 'Total Drainage Area (sq. mi)']}
               items={watersheds}
@@ -103,16 +123,16 @@ export default function ProviderHome() {
             <span className="inline-block w-full bg-yellow-100 p-2 text-center">
               no watersheds available
             </span>
-          )}
-          {!watersheds?.length && provider?.type === 'dis' && (
+          )} */}
+          {/* {!watersheds?.length && provider?.type === 'dis' && (
             <ProjectsTable projects={provider_projects} />
-          )}
+          )} */}
         </div>
-        <div className="w-full flex-auto lg:w-1/3">
+        {/* <div className="w-full flex-auto lg:w-1/3">
           <CardSimple title={provider && provider.provider_name}>
             <img src={MockDistrictMap} alt="mockup district map" />
           </CardSimple>
-        </div>
+        </div> */}
       </div>
       {/* </div> */}
     </PageWrapper>

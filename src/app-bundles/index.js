@@ -36,6 +36,7 @@ import timeseriesDateRangeBundle from './timeseries-date-range-bundle';
 // Searchable Bundles
 // import locationSearchBundle from './location-search-bundle';
 // import timeseriesSearchBundle from './timeseries-search-bundle';
+import providerLocationsFloodBundle from './provider-locations-flood-bundle';
 
 const mockTokens = {
   ADMIN:
@@ -100,6 +101,7 @@ export default composeBundles(
   providerWatershedBundle,
   providerWatershedsBundle,
   routeBundle,
-  timeseriesDateRangeBundle
+  timeseriesDateRangeBundle,
+  providerLocationsFloodBundle
   //unitBundle
 );

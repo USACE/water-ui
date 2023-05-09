@@ -1,5 +1,7 @@
+import { parseISO, formatDistanceStrict, differenceInHours } from 'date-fns';
+
 const SimpleTable = ({ headers, items, itemFields, options = {} }) => {
-  const { striped, shadow, rounded } = options;
+  const { striped, shadow, rounded, rowBlur } = options;
 
   return (
     <div className={`flex flex-col ${shadow ? 'shadow-lg' : null}`}>
@@ -46,7 +48,9 @@ const SimpleTable = ({ headers, items, itemFields, options = {} }) => {
                           itemFields.map((f, idx) => (
                             <td
                               key={idx}
-                              className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                              className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 ${
+                                rowBlur ? 'blur-sm' : null
+                              }`}
                             >
                               {!f.render ? item[f.key] : f.render(item)}
                             </td>
@@ -82,4 +86,36 @@ const TableLink = ({
   );
 };
 
-export { SimpleTable, TableLink };
+const TableValueWithTime = ({ tsObj }) => {
+  const ageInHours = differenceInHours(
+    new Date(),
+    parseISO(tsObj?.latest_time)
+  );
+  return (
+    <>
+      <span className="block font-bold">
+        {tsObj?.latest_value?.toLocaleString(undefined, {
+          maximumFractionDigits: 1,
+        })}
+      </span>
+      <span
+        className={`block font-light ${
+          ageInHours > 3 ? 'text-red-400' : 'text-gray-400'
+        } `}
+        title={tsObj?.latest_time}
+      >
+        {tsObj?.latest_time &&
+          formatDistanceStrict(parseISO(tsObj?.latest_time), new Date(), {
+            addSuffix: true,
+            unit: 'minute',
+          })}
+      </span>
+      {/* <span className="block text-gray-400" title={tsObj?.latest_time}>
+        {tsObj?.latest_time &&
+          format(parseISO(tsObj?.latest_time), 'dd-LLL-yyyy @ p')}
+      </span> */}
+    </>
+  );
+};
+
+export { SimpleTable, TableLink, TableValueWithTime };

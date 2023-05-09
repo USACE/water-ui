@@ -10,7 +10,7 @@ export default createRestBundle({
   persist: true,
   routeParam: 'provider_slug',
   getTemplate: `${apiUrl}/providers`,
-  fetchActions: [],
+  fetchActions: ['URL_UPDATED'],
   urlParamSelectors: [],
   forceFetchActions: [],
   sortBy: '',
