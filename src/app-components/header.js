@@ -31,7 +31,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-gray-900">
+    <header className="sticky top-0 z-50 bg-gray-900 shadow-md">
       <Disclosure as="nav" className="">
         {({ open }) => (
           <>
