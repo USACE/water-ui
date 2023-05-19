@@ -21,9 +21,9 @@ const SimpleTable = ({ headers, items, itemFields, options = {} }) => {
                     <th
                       key={idx}
                       scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      className={`px-3 py-3.5 text-left text-sm font-semibold text-gray-900 ${th.className}`}
                     >
-                      {th}
+                      {th.text}
                     </th>
                   ))}
                 </tr>
@@ -49,8 +49,8 @@ const SimpleTable = ({ headers, items, itemFields, options = {} }) => {
                             <td
                               key={idx}
                               className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 ${
-                                rowBlur ? 'blur-sm' : null
-                              }`}
+                                f.className
+                              } ${rowBlur ? 'blur-sm' : null}`}
                             >
                               {!f.render ? item[f.key] : f.render(item)}
                             </td>
@@ -107,7 +107,7 @@ const TableValueWithTime = ({ tsObj }) => {
         {tsObj?.latest_time &&
           formatDistanceStrict(parseISO(tsObj?.latest_time), new Date(), {
             addSuffix: true,
-            unit: 'minute',
+            unit: 'hour',
           })}
       </span>
       {/* <span className="block text-gray-400" title={tsObj?.latest_time}>

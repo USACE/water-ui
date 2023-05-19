@@ -100,24 +100,26 @@ export default function ProjectsTable({ projects }) {
       <ProjectFilter />
       <SimpleTable
         headers={[
-          'Kind',
-          'Project',
-          'Pool Elevation/Stage (ft)',
-          '24 Hour Change (ft)',
-          'Flood Storage Utilized (%)',
-          'Inflow (cfs)',
-          'Outflow (cfs)',
+          { text: 'Kind', className: 'hidden lg:table-cell' },
+          { text: 'Project', className: null },
+          { text: 'Pool Elevation/Stage (ft)', className: 'w-14 lg:w-auto' },
+          { text: '24 Hour Change (ft)', className: null },
+          { text: 'Flood Storage Utilized (%)', className: null },
+          { text: 'Inflow (cfs)', className: null },
+          { text: 'Outflow (cfs)', className: null },
         ]}
         items={projects}
         itemFields={[
           {
             key: 'kind',
+            className: 'hidden lg:table-cell',
             render: (l) => {
               return <FcDam size="32" alt={l.kind} title={l.kind} />;
             },
           },
           {
             key: 'public_name',
+            className: 'block w-40 lg:w-auto truncate',
             render: (l) => {
               return (
                 <TableLink
@@ -134,6 +136,7 @@ export default function ProjectsTable({ projects }) {
           },
           {
             key: null,
+            className: 'w-14 lg:w-auto',
             render: (l) => {
               const elev = getTsObjByLabel(l?.timeseries, 'Elevation');
               const stage = getTsObjByLabel(l?.timeseries, 'Stage');
