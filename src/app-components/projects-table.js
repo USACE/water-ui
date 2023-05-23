@@ -17,43 +17,41 @@ import { Switch } from '@headlessui/react';
 // } from 'date-fns';
 
 export default function ProjectsTable({ projects }) {
-  const { providerByRoute: provider, providerLocationsIsLoading } = useConnect(
+  const {
+    providerByRoute: provider,
+    providerLocationsIsLoading,
+    providerProjectsWithFloodStorage: projectsWithFloodStorage,
+  } = useConnect(
     'selectProviderByRoute',
-    'selectProviderLocationsIsLoading'
+    'selectProviderLocationsIsLoading',
+    'selectProviderProjectsWithFloodStorage'
   );
 
-  // const MockElevationStorage = () => {
-  //   return <>{parseInt(Math.floor(Math.random() * (1500 - 900 + 1) + 900))}</>;
-  // };
-
-  // const MockElevationChange = () => {
-  //   return (
-  //     <>{parseInt(Math.floor(Math.random() * (4 - -3 + 1) + -3)).toFixed(2)}</>
-  //   );
-  // };
-
-  // const MockStorage = () => {
-  //   return <>{parseInt(Math.floor(Math.random() * (15 - 2 + 1) + 2)) + '%'}</>;
-  // };
-
-  // const MockFlow = () => {
-  //   return <>{parseInt(Math.floor(Math.random() * (3000 - 100 + 1) + 100))}</>;
-  // };
+  const [displayProjects, setDisplayProjects] = useState(projects);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
   }
 
-  const ProjectFilter = () => {
-    const [enabled, setEnabled] = useState(false);
+  const [floodStorageEnabled, setFloodStorageEnabled] = useState(false);
+
+  const FloodStorageFilter = () => {
+    const FloodStorageToggle = (e) => {
+      e === true
+        ? setDisplayProjects(projectsWithFloodStorage)
+        : setDisplayProjects(projects);
+
+      setFloodStorageEnabled(e);
+      // console.log(e);
+    };
 
     return (
       <Switch.Group as="div" className="flex items-center bg-slate-100 p-2">
         <Switch
-          checked={enabled}
-          onChange={setEnabled}
+          checked={floodStorageEnabled}
+          onChange={FloodStorageToggle}
           className={classNames(
-            enabled ? 'bg-blue-400' : 'bg-gray-200',
+            floodStorageEnabled ? 'bg-blue-400' : 'bg-gray-200',
             'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2'
           )}
         >
@@ -61,13 +59,13 @@ export default function ProjectsTable({ projects }) {
           <span
             aria-hidden="true"
             className={classNames(
-              enabled ? 'translate-x-5' : 'translate-x-0',
+              floodStorageEnabled ? 'translate-x-5' : 'translate-x-0',
               'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out'
             )}
           />
         </Switch>
         <Switch.Label as="span" className="ml-3 text-sm">
-          <span className="font-medium text-gray-900">Flood Control Only</span>{' '}
+          <span className="font-medium text-gray-900">Has Flood Storage</span>{' '}
           {/* <span className="text-gray-500">(Save 10%)</span> */}
         </Switch.Label>
       </Switch.Group>
@@ -97,7 +95,7 @@ export default function ProjectsTable({ projects }) {
 
   return (
     <>
-      <ProjectFilter />
+      <FloodStorageFilter />
       <SimpleTable
         headers={[
           { text: 'Kind', className: 'hidden lg:table-cell' },
@@ -108,7 +106,7 @@ export default function ProjectsTable({ projects }) {
           { text: 'Inflow (cfs)', className: null },
           { text: 'Outflow (cfs)', className: null },
         ]}
-        items={projects}
+        items={displayProjects}
         itemFields={[
           {
             key: 'kind',
