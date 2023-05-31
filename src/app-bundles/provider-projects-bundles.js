@@ -7,7 +7,7 @@ const providerProjectsBundle = {
   selectProviderProjects: createSelector(
     'selectProviderLocationsItems',
     (locations) => {
-      return locations.filter((loc) => loc.kind === 'PROJECT');
+      return locations?.filter((loc) => loc?.kind === 'PROJECT');
     }
   ),
   selectProviderProjectsWithFloodStorage: createSelector(

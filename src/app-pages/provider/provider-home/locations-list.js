@@ -29,6 +29,7 @@ export default function ProviderLocationList2({ locations }) {
     );
 
   useEffect(() => {
+    // by default, only show locations with a public name and configured timeseries
     const filteredLocations = locations?.filter(
       (l) => l?.timeseries?.length && l.public_name
     );
@@ -43,7 +44,7 @@ export default function ProviderLocationList2({ locations }) {
     if (query.length > 1) {
       console.log(e);
 
-      const results = locations.filter((item) => {
+      const results = locations?.filter((item) => {
         return (
           item.public_name.toLowerCase().indexOf(query.toLowerCase()) !== -1
         );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 import { SimpleTable, TableLink, TableValueWithTime } from './table-simple';
 import {
@@ -27,7 +27,11 @@ export default function ProjectsTable({ projects }) {
     'selectProviderProjectsWithFloodStorage'
   );
 
-  const [displayProjects, setDisplayProjects] = useState(projects);
+  const [displayProjects, setDisplayProjects] = useState();
+
+  useEffect(() => {
+    setDisplayProjects(projects);
+  }, [projects]);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ');

@@ -99,7 +99,7 @@ const TableValueWithTime = ({ tsObj }) => {
         })}
       </span>
       <span
-        className={`block font-light ${
+        className={`block text-xs font-light ${
           ageInHours > 3 ? 'text-red-400' : 'text-gray-400'
         } `}
         title={tsObj?.latest_time}
