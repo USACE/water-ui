@@ -9,12 +9,15 @@ export default function PageHead({ title, subTitle }) {
   const {
     providerByRoute: provider,
     providerLocationByRoute: location,
-    providerWatershedByRoute: watershed,
+    // providerWatershedByRoute: watershed,
   } = useConnect(
     'selectProviderByRoute',
-    'selectProviderLocationByRoute',
-    'selectProviderWatershedByRoute'
+    'selectProviderLocationByRoute'
+    // 'selectProviderWatershedByRoute'
   );
+
+  // @TODO REMOVE THIS LATER
+  const watershed = false;
 
   return (
     <div className="md:flex md:items-center md:justify-between md:space-x-5">

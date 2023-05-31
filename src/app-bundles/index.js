@@ -28,8 +28,8 @@ import mapsBundle from './maps-bundle';
 import providerLocationBundle from './provider-location-bundle';
 import providerLocationsBundle from './provider-locations-bundle';
 import providerTimeseriesValuesBundle from './provider-timeseries-values-bundle';
-import providerWatershedBundle from './provider-watershed-bundle';
-import providerWatershedsBundle from './provider-watersheds-bundle';
+// import providerWatershedBundle from './provider-watershed-bundle';
+// import providerWatershedsBundle from './provider-watersheds-bundle';
 // import watershedBundle from './watershed-bundle';
 import timeseriesDateRangeBundle from './timeseries-date-range-bundle';
 //import unitBundle from './unit-bundle';
@@ -99,8 +99,8 @@ export default composeBundles(
   providerLocationsBundle,
   providerTimeseriesValuesBundle,
   // watershedBundle,
-  providerWatershedBundle,
-  providerWatershedsBundle,
+  // providerWatershedBundle,
+  // providerWatershedsBundle,
   routeBundle,
   timeseriesDateRangeBundle,
   providerLocationsFloodBundle,
