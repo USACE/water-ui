@@ -7,6 +7,7 @@ import PageWrapper from '../page-wrapper';
 //import CardSimple from '../../app-components/card-simple';
 import Accordion from '../../app-components/accordion';
 import { mapObjectArrayByKey } from '../../helpers/misc-helpers';
+import { AiFillCheckCircle, AiFillWarning } from 'react-icons/ai';
 
 export default function ProviderQA() {
   const {
@@ -31,109 +32,132 @@ export default function ProviderQA() {
   const [projects, SetProjects] = useState();
   const [sections, setSections] = useState();
 
+  const SectionInstructions = ({ instructions }) => {
+    return <div className="bg-yellow-100 p-2 font-medium">{instructions}</div>;
+  };
+
   const MissingPublicNameTable = ({ dataArray }) => (
-    <SimpleTable
-      headers={[{ text: 'Location' }, { text: 'Public Name' }]}
-      items={dataArray}
-      itemFields={[
-        {
-          key: 'code',
-          className: 'text-blue-500',
-          render: (l) => {
-            return (
-              <TableLink
-                text={l.code}
-                href={''.concat(
-                  '/overview',
-                  `/${provider.slug}`,
-                  '/locations/',
-                  `${l?.slug?.toLowerCase()}`
-                )}
-              />
-            );
+    <>
+      <SectionInstructions
+        instructions={'Every location is required to have a public name.'}
+      />
+      <SimpleTable
+        headers={[{ text: 'Location' }, { text: 'Public Name' }]}
+        items={dataArray}
+        itemFields={[
+          {
+            key: 'code',
+            className: 'text-blue-500',
+            render: (l) => {
+              return (
+                <TableLink
+                  text={l.code}
+                  href={''.concat(
+                    '/overview',
+                    `/${provider.slug}`,
+                    '/locations/',
+                    `${l?.slug?.toLowerCase()}`
+                  )}
+                />
+              );
+            },
           },
-        },
-        {
-          key: 'public_name',
-          className: 'text-red-500 italic',
-          render: () => 'missing',
-        },
-      ]}
-    />
+          {
+            key: 'public_name',
+            className: 'text-red-500 italic',
+            render: () => 'missing',
+          },
+        ]}
+      />
+    </>
   );
 
   const MissingTimeseriesTable = ({ dataArray }) => (
-    <SimpleTable
-      headers={[
-        { text: 'Location' },
-        { text: 'Public Name' },
-        { text: 'Timeseries' },
-      ]}
-      items={dataArray}
-      itemFields={[
-        {
-          key: 'code',
-          className: 'text-blue-500',
-          render: (l) => {
-            return (
-              <TableLink
-                text={l.code}
-                href={''.concat(
-                  '/overview',
-                  `/${provider.slug}`,
-                  '/locations/',
-                  `${l?.slug?.toLowerCase()}`
-                )}
-              />
-            );
+    <>
+      <SectionInstructions
+        instructions={
+          'Upward report timeseries assignments were found, but recent timeseries records were not.  Verify published timeseries paths are correct.'
+        }
+      />
+      <SimpleTable
+        headers={[
+          { text: 'Location' },
+          { text: 'Public Name' },
+          { text: 'Timeseries' },
+        ]}
+        items={dataArray}
+        itemFields={[
+          {
+            key: 'code',
+            className: 'text-blue-500',
+            render: (l) => {
+              return (
+                <TableLink
+                  text={l.code}
+                  href={''.concat(
+                    '/overview',
+                    `/${provider.slug}`,
+                    '/locations/',
+                    `${l?.slug?.toLowerCase()}`
+                  )}
+                />
+              );
+            },
           },
-        },
-        { key: 'public_name' },
-        {
-          key: 'timeseries',
-          render: (l) => {
-            return JSON.stringify(l.timeseries);
+          { key: 'public_name' },
+          {
+            key: 'timeseries',
+            render: (l) => {
+              return JSON.stringify(l.timeseries);
+            },
           },
-        },
-      ]}
-    />
+        ]}
+      />
+    </>
   );
 
   const ProjectsMissingLevelsTable = ({ dataArray }) => (
-    <SimpleTable
-      headers={[
-        { text: 'Location' },
-        { text: 'Public Name' },
-        { text: 'Levels' },
-      ]}
-      items={dataArray}
-      itemFields={[
-        {
-          key: 'code',
-          className: 'text-blue-500',
-          render: (l) => {
-            return (
-              <TableLink
-                text={l.code}
-                href={''.concat(
-                  '/overview',
-                  `/${provider.slug}`,
-                  '/locations/',
-                  `${l?.slug?.toLowerCase()}`
-                )}
-              />
-            );
+    <>
+      <SectionInstructions
+        instructions={
+          'No location levels were found for the following projects.  If the project does not have storage (ex: lock and dam) OR you do not wish to display a dam profile chart, you can ignore it.'
+        }
+      />
+      <SimpleTable
+        headers={[
+          { text: 'Location' },
+          { text: 'Public Name' },
+          { text: 'Levels' },
+        ]}
+        items={dataArray}
+        itemFields={[
+          {
+            key: 'code',
+            className: 'text-blue-500',
+            render: (l) => {
+              return (
+                <TableLink
+                  text={l.code}
+                  href={''.concat(
+                    '/overview',
+                    `/${provider.slug}`,
+                    '/locations/',
+                    `${l?.slug?.toLowerCase()}`
+                  )}
+                />
+              );
+            },
           },
-        },
-        { key: 'public_name' },
-        {
-          key: 'levels',
-          render: (l) => {
-            return JSON.stringify(l.levels);
+          { key: 'public_name' },
+          {
+            key: 'levels',
+            render: (l) => {
+              return JSON.stringify(l.levels);
+            },
           },
-        },
-      ]}
-    />
+        ]}
+      />
+    </>
   );
 
   const ProjectsLevelsTable = ({ dataArray }) => (
@@ -191,10 +215,17 @@ export default function ProviderQA() {
       return (
         <li
           key={item.slug}
-          className={`${
+          className={`mb-1 list-none ${
             levelsMap[item.slug] ? 'text-green-600' : 'text-red-500'
           }`}
         >
+          <span className="mr-2 inline-block align-middle">
+            {levelsMap[item.slug] ? (
+              <AiFillCheckCircle size={18} />
+            ) : (
+              <AiFillWarning size={18} />
+            )}
+          </span>
           {levelsMap[item.slug]
             ? levelsMap[item.slug].label +
               ' - ' +
@@ -259,7 +290,7 @@ export default function ProviderQA() {
       },
 
       {
-        title: `Projects Levels (${projects?.length})`,
+        title: `Projects Levels Review (${projects?.length})`,
         content: <ProjectsLevelsTable dataArray={projects} />,
         defaultOpen: projects?.length > 0 ? true : false,
       },
