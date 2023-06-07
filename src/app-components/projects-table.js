@@ -128,7 +128,7 @@ export default function ProjectsTable({ projects }) {
                   text={l.public_name}
                   href={''.concat(
                     '/overview/',
-                    `${provider.slug}`,
+                    `${provider?.slug}`,
                     '/locations/',
                     `${l.slug}`
                   )}

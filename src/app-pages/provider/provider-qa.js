@@ -54,7 +54,7 @@ export default function ProviderQA() {
                 text={l.code}
                 href={''.concat(
                   '/overview',
-                  `/${provider.slug}`,
+                  `/${provider?.slug}`,
                   '/locations/',
                   `${l?.slug?.toLowerCase()}`
                 )}
@@ -74,9 +74,24 @@ export default function ProviderQA() {
     />
   );
 
+  const LocationIssueHelp = () => {
+    return (
+      <ul className="list-inside list-disc">
+        <li>
+          project levels missing - Flood Control projects need appropraite
+          levels set. Nav only Projects can ignore.
+        </li>
+        <li>
+          timeseries missing - upward reporting paths have been set, but have no
+          valid data
+        </li>
+      </ul>
+    );
+  };
+
   const LocationIssuesTable = ({ dataArray }) => (
     <>
-      <SectionInstructions instructions={'These locations has issues.'} />
+      <SectionInstructions instructions={<LocationIssueHelp />} />
       <SimpleTable
         headers={[
           { text: 'Location' },
@@ -98,7 +113,7 @@ export default function ProviderQA() {
                   text={l.code}
                   href={''.concat(
                     '/overview',
-                    `/${provider.slug}`,
+                    `/${provider?.slug}`,
                     '/locations/',
                     `${l?.slug?.toLowerCase()}`
                   )}
@@ -257,7 +272,7 @@ export default function ProviderQA() {
     >
       <ul className="mt-5">
         {providers
-          .filter((p) => p.type === 'dis')
+          .filter((p) => p.type === 'dis' || p.type === 'mscr')
           .map((p) => (
             <li
               key={p.slug}
