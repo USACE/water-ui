@@ -16,14 +16,16 @@ export default function ProviderQA() {
     providerItems: providers,
     providerLocationsItems: locations,
     providerLocationsIsLoading,
-    //providerWatershedsItems: watersheds,
+    //providerWatershedsItems: watersheds,,
+    doProviderLocationsFetch,
   } = useConnect(
     //'selectPathname',
     'selectProviderItems',
     'selectProviderByRoute',
     'selectProviderLocationsItems',
-    'selectProviderLocationsIsLoading'
-    //'selectProviderWatershedsItems'
+    'selectProviderLocationsIsLoading',
+    //'selectProviderWatershedsItems',
+    'doProviderLocationsFetch'
   );
 
   const [publicNameIssues, SetPublicNameIssues] = useState();
@@ -84,6 +86,7 @@ export default function ProviderQA() {
             },
           },
         ]}
+        options={{ shadow: true, rowBlur: providerLocationsIsLoading }}
       />
     </>
   );
@@ -128,6 +131,7 @@ export default function ProviderQA() {
             },
           },
         ]}
+        options={{ shadow: true, rowBlur: providerLocationsIsLoading }}
       />
     </>
   );
@@ -172,6 +176,7 @@ export default function ProviderQA() {
             },
           },
         ]}
+        options={{ shadow: true, rowBlur: providerLocationsIsLoading }}
       />
     </>
   );
@@ -210,6 +215,7 @@ export default function ProviderQA() {
           },
         },
       ]}
+      options={{ shadow: true, rowBlur: providerLocationsIsLoading }}
     />
   );
 
@@ -260,7 +266,11 @@ export default function ProviderQA() {
   };
 
   useEffect(() => {
-    const locationsPublicNameIssues = locations.length
+    doProviderLocationsFetch();
+  }, [doProviderLocationsFetch]);
+
+  useEffect(() => {
+    const locationsPublicNameIssues = locations?.length
       ? locations.filter(
           (l) =>
             l.public_name === '' ||
