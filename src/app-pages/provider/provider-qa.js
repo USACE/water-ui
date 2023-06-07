@@ -28,158 +28,13 @@ export default function ProviderQA() {
     'doProviderLocationsFetch'
   );
 
-  const [publicNameIssues, SetPublicNameIssues] = useState();
-  const [missingTimeseries, SetMissingTimeseries] = useState();
-  const [projectsMissingLevels, SetProjectsMissingLevels] = useState();
   const [projects, SetProjects] = useState();
   const [sections, setSections] = useState();
+  const [locationIssues, setLocationIssues] = useState();
 
   const SectionInstructions = ({ instructions }) => {
     return <div className="bg-yellow-100 p-2 font-medium">{instructions}</div>;
   };
-
-  const MissingPublicNameTable = ({ dataArray }) => (
-    <>
-      <SectionInstructions
-        instructions={'Every location is required to have a public name.'}
-      />
-      <SimpleTable
-        headers={[
-          { text: 'Location' },
-          { text: 'Public Name' },
-          { text: 'Issue' },
-        ]}
-        items={dataArray}
-        itemFields={[
-          {
-            key: 'code',
-            className: 'text-blue-500',
-            render: (l) => {
-              return (
-                <TableLink
-                  text={l.code}
-                  href={''.concat(
-                    '/overview',
-                    `/${provider.slug}`,
-                    '/locations/',
-                    `${l?.slug?.toLowerCase()}`
-                  )}
-                />
-              );
-            },
-          },
-          {
-            key: 'public_name',
-          },
-          {
-            key: 'public_name',
-            className: 'text-red-500 italic',
-            render: (l) => {
-              if (
-                l.kind === 'PROJECT' &&
-                l.public_name?.split(' ')?.length === 1
-              ) {
-                return 'project public name is single word';
-              } else {
-                return 'missing public name';
-              }
-            },
-          },
-        ]}
-        options={{ shadow: true, rowBlur: providerLocationsIsLoading }}
-      />
-    </>
-  );
-
-  const MissingTimeseriesTable = ({ dataArray }) => (
-    <>
-      <SectionInstructions
-        instructions={
-          'Upward report timeseries assignments were found, but recent timeseries records were not.  Verify published timeseries paths are correct.'
-        }
-      />
-      <SimpleTable
-        headers={[
-          { text: 'Location' },
-          { text: 'Public Name' },
-          { text: 'Timeseries' },
-        ]}
-        items={dataArray}
-        itemFields={[
-          {
-            key: 'code',
-            className: 'text-blue-500',
-            render: (l) => {
-              return (
-                <TableLink
-                  text={l.code}
-                  href={''.concat(
-                    '/overview',
-                    `/${provider.slug}`,
-                    '/locations/',
-                    `${l?.slug?.toLowerCase()}`
-                  )}
-                />
-              );
-            },
-          },
-          { key: 'public_name' },
-          {
-            key: 'timeseries',
-            render: (l) => {
-              return JSON.stringify(l.timeseries);
-            },
-          },
-        ]}
-        options={{ shadow: true, rowBlur: providerLocationsIsLoading }}
-      />
-    </>
-  );
-
-  const ProjectsMissingLevelsTable = ({ dataArray }) => (
-    <>
-      <SectionInstructions
-        instructions={
-          'No location levels were found for the following projects.  If the project does not have storage (ex: lock and dam) OR you do not wish to display a dam profile chart, you can ignore it.'
-        }
-      />
-      <SimpleTable
-        headers={[
-          { text: 'Location' },
-          { text: 'Public Name' },
-          { text: 'Levels' },
-        ]}
-        items={dataArray}
-        itemFields={[
-          {
-            key: 'code',
-            className: 'text-blue-500',
-            render: (l) => {
-              return (
-                <TableLink
-                  text={l.code}
-                  href={''.concat(
-                    '/overview',
-                    `/${provider.slug}`,
-                    '/locations/',
-                    `${l?.slug?.toLowerCase()}`
-                  )}
-                />
-              );
-            },
-          },
-          { key: 'public_name' },
-          {
-            key: 'levels',
-            render: (l) => {
-              return JSON.stringify(l.levels);
-            },
-          },
-        ]}
-        options={{ shadow: true, rowBlur: providerLocationsIsLoading }}
-      />
-    </>
-  );
 
   const ProjectsLevelsTable = ({ dataArray }) => (
     <SimpleTable
@@ -217,6 +72,92 @@ export default function ProviderQA() {
       ]}
       options={{ shadow: true, rowBlur: providerLocationsIsLoading }}
     />
+  );
+
+  const LocationIssuesTable = ({ dataArray }) => (
+    <>
+      <SectionInstructions instructions={'These locations has issues.'} />
+      <SimpleTable
+        headers={[
+          { text: 'Location' },
+          { text: 'Kind' },
+          { text: 'Public Name' },
+          { text: 'State' },
+          { text: 'Timeseries' },
+          { text: 'Levels' },
+          { text: 'Issue' },
+        ]}
+        items={dataArray}
+        itemFields={[
+          {
+            key: 'code',
+            className: 'text-blue-500',
+            render: (l) => {
+              return (
+                <TableLink
+                  text={l.code}
+                  href={''.concat(
+                    '/overview',
+                    `/${provider.slug}`,
+                    '/locations/',
+                    `${l?.slug?.toLowerCase()}`
+                  )}
+                />
+              );
+            },
+          },
+          {
+            key: 'kind',
+          },
+          {
+            key: 'public_name',
+          },
+          {
+            key: 'state',
+          },
+          {
+            key: 'timeseries',
+            render: (l) => {
+              return l.timeseries?.length || 0;
+            },
+          },
+          {
+            key: 'levels',
+            render: (l) => {
+              return l.levels?.length || 0;
+            },
+          },
+          {
+            key: 'public_name',
+            className: 'text-red-500 italic',
+            render: (l) => {
+              let issues = [];
+              if (
+                l.kind === 'PROJECT' &&
+                l.public_name?.split(' ')?.length === 1
+              ) {
+                issues.push('project public name is single word');
+              }
+              if (l.public_name === null || l.public_name === '') {
+                issues.push('public name missing');
+              }
+              if (l.timeseries === null) {
+                issues.push('timeseries missing');
+              }
+              if (l.kind === 'PROJECT' && l.levels === null) {
+                issues.push('project levels missing');
+              }
+              if (l.state === null || l.state === '' || l.state === '00') {
+                issues.push('state missing');
+              }
+
+              return issues.join('; ');
+            },
+          },
+        ]}
+        options={{ shadow: true, rowBlur: providerLocationsIsLoading }}
+      />
+    </>
   );
 
   const ProjectLevelsCheckList = ({ levels }) => {
@@ -270,54 +211,32 @@ export default function ProviderQA() {
   }, [doProviderLocationsFetch]);
 
   useEffect(() => {
-    const locationsPublicNameIssues = locations?.length
-      ? locations.filter(
-          (l) =>
-            l.public_name === '' ||
-            l.public_name === null ||
-            (l.kind === 'PROJECT' && l.public_name?.split(' ')?.length === 1)
-        )
-      : [];
-
-    SetPublicNameIssues(locationsPublicNameIssues);
-
-    const locationsMissingTimeseries = locations.length
-      ? locations.filter((l) => l.timeseries === null)
-      : [];
-
-    SetMissingTimeseries(locationsMissingTimeseries);
-
-    const projLocationsMissingLevels = locations.length
-      ? locations.filter((l) => l.kind === 'PROJECT' && l.levels === null)
-      : [];
-
-    SetProjectsMissingLevels(projLocationsMissingLevels);
-
     const _projects = locations.length
       ? locations.filter((l) => l.kind === 'PROJECT' && l.levels !== null)
       : [];
 
     SetProjects(_projects);
+
+    const locationsIssues = locations?.length
+      ? locations.filter(
+          (l) =>
+            l.public_name === '' ||
+            l.public_name === null ||
+            (l.kind === 'PROJECT' && l.public_name?.split(' ')?.length === 1) ||
+            l.timeseries === null ||
+            (l.kind === 'PROJECT' && l.levels === null)
+        )
+      : [];
+
+    setLocationIssues(locationsIssues);
   }, [locations]);
 
   useEffect(() => {
     const _sections = [
       {
-        title: `Locations with Public Name Issues (${publicNameIssues?.length})`,
-        content: <MissingPublicNameTable dataArray={publicNameIssues} />,
-        defaultOpen: publicNameIssues?.length > 0 ? true : false,
-      },
-      {
-        title: `Locations Missing Timeseries (${missingTimeseries?.length})`,
-        content: <MissingTimeseriesTable dataArray={missingTimeseries} />,
-        defaultOpen: missingTimeseries?.length > 0 ? true : false,
-      },
-      {
-        title: `Projects Missing Levels (${projectsMissingLevels?.length})`,
-        content: (
-          <ProjectsMissingLevelsTable dataArray={projectsMissingLevels} />
-        ),
-        defaultOpen: projectsMissingLevels?.length > 0 ? true : false,
+        title: `Locations with Issues (${locationIssues?.length})`,
+        content: <LocationIssuesTable dataArray={locationIssues} />,
+        defaultOpen: locationIssues?.length > 0 ? true : false,
       },
 
       {
@@ -328,7 +247,7 @@ export default function ProviderQA() {
     ];
 
     setSections(_sections);
-  }, [publicNameIssues, missingTimeseries, projectsMissingLevels, projects]);
+  }, [locationIssues, projects]);
 
   return (
     <PageWrapper
