@@ -89,10 +89,10 @@ export default function ProjectsTable({ projects }) {
           style={{ width: `${p}%` }}
           className={`bg-blue-400  py-1 text-center text-xs leading-none text-white`}
         >
-          {p >= 15 ? pString + '%' : null}
+          {p >= 20 ? pString + '%' : null}
         </div>
 
-        {p < 15 ? <div className="w-full text-center">{pString}%</div> : null}
+        {p < 20 ? <div className="w-full text-center">{pString}%</div> : null}
       </div>
     );
   };

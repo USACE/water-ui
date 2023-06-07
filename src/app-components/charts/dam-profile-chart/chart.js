@@ -25,11 +25,12 @@ export default function ReactDamProfileChart() {
       'Top of Surcharge',
       'Top of Flood',
       'Top of Flood Control',
-      'Bottom of Flood',
-      'Bottom of Flood Control',
-      'Bottom of Conservation',
+      // 'Bottom of Flood',
+      // 'Bottom of Flood Control',
+      // 'Bottom of Conservation',
       'Spillway Crest',
-      'Top of Normal',
+      //'Top of Normal',
+      'Top of Inactive',
     ];
 
     const _levels = location?.levels

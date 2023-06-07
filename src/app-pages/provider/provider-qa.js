@@ -26,7 +26,7 @@ export default function ProviderQA() {
     //'selectProviderWatershedsItems'
   );
 
-  const [missingPublicName, SetMissingPublicName] = useState();
+  const [publicNameIssues, SetPublicNameIssues] = useState();
   const [missingTimeseries, SetMissingTimeseries] = useState();
   const [projectsMissingLevels, SetProjectsMissingLevels] = useState();
   const [projects, SetProjects] = useState();
@@ -42,7 +42,11 @@ export default function ProviderQA() {
         instructions={'Every location is required to have a public name.'}
       />
       <SimpleTable
-        headers={[{ text: 'Location' }, { text: 'Public Name' }]}
+        headers={[
+          { text: 'Location' },
+          { text: 'Public Name' },
+          { text: 'Issue' },
+        ]}
         items={dataArray}
         itemFields={[
           {
@@ -64,8 +68,20 @@ export default function ProviderQA() {
           },
           {
             key: 'public_name',
+          },
+          {
+            key: 'public_name',
             className: 'text-red-500 italic',
-            render: () => 'missing',
+            render: (l) => {
+              if (
+                l.kind === 'PROJECT' &&
+                l.public_name?.split(' ')?.length === 1
+              ) {
+                return 'project public name is single word';
+              } else {
+                return 'missing public name';
+              }
+            },
           },
         ]}
       />
@@ -244,11 +260,16 @@ export default function ProviderQA() {
   };
 
   useEffect(() => {
-    const locationsMissingPublicName = locations.length
-      ? locations.filter((l) => l.public_name === '' || l.public_name === null)
+    const locationsPublicNameIssues = locations.length
+      ? locations.filter(
+          (l) =>
+            l.public_name === '' ||
+            l.public_name === null ||
+            (l.kind === 'PROJECT' && l.public_name?.split(' ')?.length === 1)
+        )
       : [];
 
-    SetMissingPublicName(locationsMissingPublicName);
+    SetPublicNameIssues(locationsPublicNameIssues);
 
     const locationsMissingTimeseries = locations.length
       ? locations.filter((l) => l.timeseries === null)
@@ -272,9 +293,9 @@ export default function ProviderQA() {
   useEffect(() => {
     const _sections = [
       {
-        title: `Locations Missing Public Name (${missingPublicName?.length})`,
-        content: <MissingPublicNameTable dataArray={missingPublicName} />,
-        defaultOpen: missingPublicName?.length > 0 ? true : false,
+        title: `Locations with Public Name Issues (${publicNameIssues?.length})`,
+        content: <MissingPublicNameTable dataArray={publicNameIssues} />,
+        defaultOpen: publicNameIssues?.length > 0 ? true : false,
       },
       {
         title: `Locations Missing Timeseries (${missingTimeseries?.length})`,
@@ -297,7 +318,7 @@ export default function ProviderQA() {
     ];
 
     setSections(_sections);
-  }, [missingPublicName, missingTimeseries, projectsMissingLevels, projects]);
+  }, [publicNameIssues, missingTimeseries, projectsMissingLevels, projects]);
 
   return (
     <PageWrapper
