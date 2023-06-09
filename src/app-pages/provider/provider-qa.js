@@ -179,7 +179,6 @@ export default function ProviderQA() {
     const levelsMap = mapObjectArrayByKey(levels, 'slug');
     const required = [
       { slug: 'elev.streambed', label: 'Streambed (elev)' },
-      { slug: 'stor.streambed', label: 'Streambed (stor)' },
       { slug: 'elev.top of dam', label: 'Top of Dam (elev)' },
       { slug: 'stor.top of dam', label: 'Top of Dam (stor)' },
       { slug: 'elev.top of flood', label: 'Top of Flood (elev)' },
