@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import maplibregl from "maplibre-gl";
-import BasemapControl from "./maplibre-basemap-switcher";
-import "maplibre-gl/dist/maplibre-gl.css";
-import "maplibre-gl-basemaps/lib/basemaps.css";
+import React, { useEffect, useRef, useState } from 'react';
+import maplibregl from 'maplibre-gl';
+import BasemapControl from './maplibre-basemap-switcher';
+import 'maplibre-gl/dist/maplibre-gl.css';
+import 'maplibre-gl-basemaps/lib/basemaps.css';
 
 export default function Map({ controls, children, mapRef }) {
   const mapEl = useRef();
@@ -15,7 +15,7 @@ export default function Map({ controls, children, mapRef }) {
         attributionControl: false,
         container: mapEl.current,
         style:
-          "https://api.maptiler.com/maps/voyager/style.json?key=UYMc0uOxdLvOXIuWttnQ",
+          'https://api.maptiler.com/maps/voyager/style.json?key=UYMc0uOxdLvOXIuWttnQ',
         center: [-96, 39],
         zoom: 5,
       },
@@ -24,7 +24,7 @@ export default function Map({ controls, children, mapRef }) {
 
     if (controls.navigation) {
       const nav = new maplibregl.NavigationControl();
-      map.addControl(nav, "top-left");
+      map.addControl(nav, 'top-left');
     }
 
     if (controls.geolocation) {
@@ -41,7 +41,7 @@ export default function Map({ controls, children, mapRef }) {
     if (controls.scale) {
       const scale = new maplibregl.ScaleControl({
         maxWidth: 80,
-        unit: "imperial",
+        unit: 'imperial',
       });
       map.addControl(scale);
     }
@@ -57,11 +57,37 @@ export default function Map({ controls, children, mapRef }) {
     );
 
     if (controls.basemaps) {
-      map.addControl(new BasemapControl({ apiKey: "" }), "bottom-right");
+      map.addControl(new BasemapControl({ apiKey: '' }), 'bottom-right');
     }
+    setMap(map);
 
-    map.on("load", () => {
-      setMap(map);
+    map.on('load', () => {
+      map.addSource('location_points', {
+        type: 'geojson',
+        // data: 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_populated_places_simple.geojson',
+        data: 'http://localhost/providers/lrh/locations?fmt=geojson',
+      });
+      map.loadImage(
+        'https://cdn4.iconfinder.com/data/icons/evil-icons-user-interface/64/location-512.png',
+        function (error, image) {
+          if (error) throw error;
+          map.addImage('location_icon', image);
+        }
+      );
+      map.addLayer({
+        id: 'Locations',
+        type: 'symbol',
+        source: 'location_points',
+        layout: {
+          'icon-image': 'location_icon',
+          'icon-size': 0.07,
+          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          // get the name from the source's "name" property
+          'text-field': ['get', 'public_name'],
+          'text-offset': [0, 1.25],
+          'text-anchor': 'top',
+        },
+      });
     });
 
     if (mapRef) {
@@ -83,7 +109,7 @@ export default function Map({ controls, children, mapRef }) {
   return (
     <div
       ref={mapEl}
-      style={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0 }}
+      style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0 }}
     >
       {elements}
     </div>
