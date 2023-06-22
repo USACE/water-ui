@@ -6,8 +6,8 @@ const timeseriesDateRangeBundle = {
 
   getReducer: () => {
     const initialData = {
-      beginDate: subDays(new Date('2022-03-30T03:24:00'), 14),
-      endDate: new Date('2022-03-30T03:24:00'),
+      beginDate: subDays(new Date('2023-05-05T03:24:00'), 7),
+      endDate: new Date('2023-05-05T03:24:00'),
     };
 
     return (state = initialData, { type, payload }) => {
