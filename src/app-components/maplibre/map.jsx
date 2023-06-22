@@ -118,7 +118,7 @@ export default function Map({ controls, children, mapRef }) {
 
       doMapLocationSelectionUpdate(provider, slug);
 
-      doUpdateUrl(`/map/${provider}/location/${slug}`);
+      doUpdateUrl(`/map/${provider}/locations/${slug}`);
 
       new maplibregl.Popup()
         .setLngLat(coordinates)
