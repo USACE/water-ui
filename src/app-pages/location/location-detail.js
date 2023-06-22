@@ -170,7 +170,7 @@ export default function ProjectDetail() {
           <ProjectStatusDescription location={location} />
 
           <Placeholder ready={location?.levels?.length} className="h-96 w-full">
-            <DamProfileChart />
+            <DamProfileChart location={location} />
           </Placeholder>
         </>
       ),

@@ -12,6 +12,7 @@ import ProviderLocationList from '../app-pages/provider/provider-location-list.j
 
 export default createRouteBundle({
   '/': Home,
+  '/map/:provider_slug/location/:location_slug': MapHome,
   '/map': MapHome,
   '/overview': ProviderList,
   '/overview/:provider_slug': ProviderHome,

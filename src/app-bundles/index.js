@@ -24,7 +24,7 @@ import locationSearchBundle from './location-search-bundle';
 
 import providerBundle from './provider-bundle';
 // import locationBundle from './location-bundle';
-import mapsBundle from './maps-bundle';
+// import mapsBundle from './delete_maps-bundle';
 import providerLocationBundle from './provider-location-bundle';
 import providerLocationsBundle from './provider-locations-bundle';
 import providerTimeseriesValuesBundle from './provider-timeseries-values-bundle';
@@ -37,6 +37,7 @@ import timeseriesDateRangeBundle from './timeseries-date-range-bundle';
 // import locationSearchBundle from './location-search-bundle';
 // import timeseriesSearchBundle from './timeseries-search-bundle';
 import providerLocationsFloodBundle from './provider-locations-flood-bundle';
+import mapLocationBundle from './map-location-bundle';
 
 const mockTokens = {
   ADMIN:
@@ -91,7 +92,7 @@ export default composeBundles(
   createSearchBundle,
   //locationBundle,
   locationSearchBundle,
-  mapsBundle,
+  // mapsBundle,
   modalBundle,
   providerBundle,
   providerLocationBundle,
@@ -102,6 +103,7 @@ export default composeBundles(
   providerWatershedsBundle,
   routeBundle,
   timeseriesDateRangeBundle,
-  providerLocationsFloodBundle
+  providerLocationsFloodBundle,
+  mapLocationBundle
   //unitBundle
 );
