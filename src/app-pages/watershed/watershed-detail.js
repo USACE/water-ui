@@ -9,13 +9,16 @@ import ProjectsTable from '../../app-components/projects-table';
 export default function WatershedDetail() {
   const {
     providerByRoute: provider,
-    providerWatershedByRoute: watershed,
+    // providerWatershedByRoute: watershed,
     providerLocationsItems: locations,
   } = useConnect(
     'selectProviderByRoute',
-    'selectProviderWatershedByRoute',
+    // 'selectProviderWatershedByRoute',
     'selectProviderLocationsItems'
   );
+
+  // @TODO REMOVE THIS LATER
+  const watershed = false;
 
   // useEffect(() => {
   //   document.title = `${provider && provider.provider_name} | ${

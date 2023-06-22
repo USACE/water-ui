@@ -74,12 +74,12 @@ export default function StackedParameterList({ parameters }) {
                                 className="h-5 w-5 flex-shrink-0 self-center text-green-500"
                                 aria-hidden="true"
                               />
-                            ) : (
+                            ) : p.delta24hr < 0 ? (
                               <ArrowDownIcon
                                 className="h-5 w-5 flex-shrink-0 self-center text-red-500"
                                 aria-hidden="true"
                               />
-                            )}
+                            ) : null}
                             {/* <span className="">
                               {' '}
                               {p.delta24hr > 0
@@ -94,7 +94,7 @@ export default function StackedParameterList({ parameters }) {
                               data-tooltip-id="delta24-tooltip"
                               data-tooltip-content="24 hour change"
                             >
-                              {p.delta24hr}
+                              {p.delta24hr !== 0 && p.delta24hr}
                             </span>
                           </>
                         ) : (

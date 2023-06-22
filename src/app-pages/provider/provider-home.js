@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 //import MockDistrictMap from '../../images/mockup/map-district-focus.png';
 //import SimpleStats from '../../app-components/stats-simple';
@@ -15,18 +16,24 @@ export default function ProviderHome() {
     providerLocationsItems: locations,
     providerLocationsIsLoading,
     //providerWatershedsItems: watersheds,
+    doProviderLocationsFetch,
   } = useConnect(
     //'selectPathname',
     'selectProviderItems',
     'selectProviderByRoute',
     'selectProviderLocationsItems',
-    'selectProviderLocationsIsLoading'
-    //'selectProviderWatershedsItems'
+    'selectProviderLocationsIsLoading',
+    //'selectProviderWatershedsItems',
+    'doProviderLocationsFetch'
   );
 
   // const MockStorage = () => {
   //   return <>{parseInt(Math.floor(Math.random() * (15 - 2 + 1) + 2)) + '%'}</>;
   // };
+
+  useEffect(() => {
+    doProviderLocationsFetch();
+  }, [doProviderLocationsFetch]);
 
   const MscDistrictsTable = ({ mscSlug }) => {
     const districts = providers.filter((p) => p.parent_provider === mscSlug);

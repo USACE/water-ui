@@ -13,6 +13,7 @@ const ProjectFloodStoragePercent = (topFlood, bottomFlood, currentVal) => {
     return null;
   }
   return (1 - (topFlood - currentVal) / (topFlood - bottomFlood)) * 100;
+  // return (topFlood - currentVal) / (topFlood - bottomFlood);
 };
 // ---------------------------------------------------------------------
 
@@ -62,7 +63,7 @@ const GetProjectFloodStorage = (location) => {
   if (debug) {
     console.log(
       `FloodStorageUtilized = ${FloodStoragePercentage}
-      Top of Flood Storage: ${floodTop} | Bottom of Flood Storage: ${floodBottom} | Curent Flood Storage: ${currentFloodStorage}`
+      Top of Flood Storage: ${floodTop} | Bottom of Flood Storage: ${floodBottom} | Current Flood Storage: ${currentFloodStorage}`
     );
   }
 
@@ -116,18 +117,23 @@ const GetProjectTotalStorage = (location) => {
   const timeseriesMap = mapObjectArrayByKey(location?.timeseries, 'label');
 
   const storTop =
-    levelsMap['stor.spillway crest']?.latest_value ||
-    levelsMap['stor.top of flood']?.latest_value ||
-    levelsMap['stor.top of flood control']?.latest_value ||
+    levelsMap['stor.top of dam']?.latest_value ||
+    // levelsMap['stor.spillway crest']?.latest_value ||
+    // levelsMap['stor.top of flood']?.latest_value ||
+    // levelsMap['stor.top of flood control']?.latest_value ||
     null;
   // bottom of storage could be 0 as the streambed
   const storBottom = !isNaN(levelsMap['stor.streambed']?.latest_value)
     ? levelsMap['stor.streambed']?.latest_value
-    : !isNaN(levelsMap['stor.top of inactive']?.latest_value)
-    ? levelsMap['stor.top of inactive']?.latest_value
     : null;
+  // : !isNaN(levelsMap['stor.top of inactive']?.latest_value);
+  // ? levelsMap['stor.top of inactive']?.latest_value
+  // : null;
 
-  if (!storTop || !storBottom) {
+  // if (!storTop || !storBottom || isNaN(storBottom)) {
+  if (!storTop) {
+    console.log(`Cannot calculate total storage.
+    storTop: ${storTop} | storBottom: ${storBottom}`);
     return null;
   }
 
@@ -162,7 +168,8 @@ const GetProjectTotalStorage = (location) => {
     !isNaN(storTop) &&
     !isNaN(storBottom) &&
     !isNaN(currentVal()) &&
-    (1 - (storTop - currentVal()) / (storTop - storBottom)) * 100;
+    // (1 - (storTop - currentVal()) / (storTop - storBottom)) * 100;
+    (currentVal() / storTop) * 100;
 
   if (debug) {
     console.log(`projectTotalStorage: ${projectTotalStorage}

@@ -33,7 +33,7 @@ export default function LocationSideBarAccordian({ location }) {
 
     return (
       <SimpleTable
-        headers={['Name', 'Value']}
+        headers={[{ text: 'Name' }, { text: 'Value' }]}
         items={meta_array}
         itemFields={[{ key: 'name' }, { key: 'value' }]}
         options={{ shadow: true }}
@@ -45,7 +45,12 @@ export default function LocationSideBarAccordian({ location }) {
     console.log('hello from levels');
     return (
       <SimpleTable
-        headers={['Label', 'Parameter', 'Value', 'Units']}
+        headers={[
+          { text: 'Label' },
+          { text: 'Parameter' },
+          { text: 'Value' },
+          { text: 'Units' },
+        ]}
         items={levels}
         itemFields={[
           {
@@ -85,7 +90,7 @@ export default function LocationSideBarAccordian({ location }) {
     };
     return (
       <SimpleTable
-        headers={['Parameter', 'JSON', 'CSV']}
+        headers={[{ text: 'Parameter' }, { text: 'JSON' }, { text: 'CSV' }]}
         items={sources}
         itemFields={[
           {
@@ -179,7 +184,11 @@ export default function LocationSideBarAccordian({ location }) {
 
     return (
       <SimpleTable
-        headers={['Name', 'State', 'Distance (mi)']}
+        headers={[
+          { text: 'Name' },
+          { text: 'State' },
+          { text: 'Distance (mi)' },
+        ]}
         items={filteredLocsWithDistance}
         itemFields={[
           {

@@ -34,9 +34,10 @@ export default function ProjectStats({ location }) {
       ? ConservationStorageUtilized?.toFixed(0) + '%'
       : 'N/A';
 
-  const TotalProjectStorageUtilizedDisplay = TotalProjectStorageUtilized
-    ? TotalProjectStorageUtilized?.toFixed(0) + '%'
-    : 'N/A';
+  const TotalProjectStorageUtilizedDisplay =
+    TotalProjectStorageUtilized > 0
+      ? TotalProjectStorageUtilized?.toFixed(0) + '%'
+      : 'N/A';
 
   console.log('--TotalProjectStorageUtilized--');
   console.log(TotalProjectStorageUtilized);

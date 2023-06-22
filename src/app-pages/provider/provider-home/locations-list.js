@@ -29,6 +29,7 @@ export default function ProviderLocationList2({ locations }) {
     );
 
   useEffect(() => {
+    // by default, only show locations with a public name and configured timeseries
     const filteredLocations = locations?.filter(
       (l) => l?.timeseries?.length && l.public_name
     );
@@ -43,7 +44,7 @@ export default function ProviderLocationList2({ locations }) {
     if (query.length > 1) {
       console.log(e);
 
-      const results = locations.filter((item) => {
+      const results = locations?.filter((item) => {
         return (
           item.public_name.toLowerCase().indexOf(query.toLowerCase()) !== -1
         );
@@ -101,13 +102,13 @@ export default function ProviderLocationList2({ locations }) {
       <div className="my-5">{LocationFilterInput()}</div>
       <SimpleTable
         headers={[
-          'Kind',
-          'Name',
-          'Available Data',
-          'Elevation/Stage',
-          '24hr Change',
-          'Flood Stage',
-          'State',
+          { text: 'Kind' },
+          { text: 'Name' },
+          { text: 'Available Data', className: 'hidden lg:table-cell' },
+          { text: 'Elevation/Stage', className: 'w-14 lg:w-auto' },
+          { text: '24hr Change' },
+          { text: 'Flood Stage' },
+          { text: 'State' },
         ]}
         items={displayedLocations}
         itemFields={[
@@ -130,6 +131,7 @@ export default function ProviderLocationList2({ locations }) {
           },
           {
             key: 'public_name',
+            className: 'block w-28 lg:w-auto truncate',
             render: (l) => {
               return (
                 <TableLink
@@ -145,6 +147,7 @@ export default function ProviderLocationList2({ locations }) {
           },
           {
             key: null,
+            className: 'hidden lg:table-cell',
             render: (l) => {
               return l?.timeseries?.length ? (
                 <LocationIcons locationTimeseries={l?.timeseries} />

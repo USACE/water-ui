@@ -7,8 +7,7 @@ import { FcDam } from 'react-icons/fc';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 
 const LocationIcon = ({ kind, size }) => {
-  console.log(`--${kind.toLowerCase()}--`);
-  switch (kind.toLowerCase()) {
+  switch (kind?.toLowerCase()) {
     case 'project':
       return <FcDam size={size} />;
 
@@ -34,7 +33,7 @@ const LocationItem = ({
       </div>
       <div className="flex-auto pl-2">
         <div
-          className={`font-bold ${public_name.length > 15 ? 'text-sm' : null}`}
+          className={`font-bold ${public_name?.length > 15 ? 'text-sm' : null}`}
         >
           {public_name || code}
         </div>

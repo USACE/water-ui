@@ -12,7 +12,7 @@ export default createRestBundle({
   name: 'providerLocations',
   uid: 'slug',
   prefetch: true,
-  staleAfter: 300000, //5min
+  staleAfter: 0,
   persist: true,
   routeParam: 'provider_slug',
   getTemplate: `${apiUrl}/providers/:provider_slug/locations`,

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 
 export default function ProviderLocationList() {
@@ -6,7 +7,9 @@ export default function ProviderLocationList() {
     'doUpdateUrl'
   );
 
-  doUpdateUrl('/overview/' + provider?.slug);
+  useEffect(() => {
+    doUpdateUrl('/overview/' + provider?.slug);
+  }, [provider, doUpdateUrl]);
 
   return null;
 }
