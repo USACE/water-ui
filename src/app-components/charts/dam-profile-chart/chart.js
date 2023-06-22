@@ -1,19 +1,15 @@
 import { createRef, useEffect, useState } from 'react';
-import { useConnect } from 'redux-bundler-hook';
 //import DamProfileMockup from '../../../images/mockup/dam-profile-chart.png';
 import DamProfileChart from '../../../_charts/dam-profile-chart/dam-profile-chart';
 import { mapObjectArrayByKey } from '../../../helpers/misc-helpers';
 
-export default function ReactDamProfileChart() {
+export default function ReactDamProfileChart({ location }) {
   const ref = createRef(); // element where DamProfileChart will be rendered
   const [info, setInfo] = useState(null); // information DamProfileChart needs to draw itself
 
-  const { providerLocationByRoute: location } = useConnect(
-    'selectProviderLocationByRoute'
-  );
-
   useEffect(() => {
     if (!location?.levels?.length) {
+      console.log(location);
       console.warn('Unable to render dam profile chart');
       return;
     }
