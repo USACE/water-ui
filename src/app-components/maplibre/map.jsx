@@ -5,7 +5,7 @@ import BasemapControl from './maplibre-basemap-switcher';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import 'maplibre-gl-basemaps/lib/basemaps.css';
 
-const apiUrl = process.env.REACT_APP_WATER_API_URL;
+const apiUrl = import.meta.env.VITE_WATER_API_URL;
 
 export default function Map({ controls, children, mapRef }) {
   const { doMapLocationSelectionUpdate, doUpdateUrl } = useConnect(

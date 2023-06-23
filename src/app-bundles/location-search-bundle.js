@@ -18,7 +18,7 @@ export default createSearchableBundle({
         return;
       }
       apiGet(
-        `${process.env.REACT_APP_WATER_API_URL}/search?q=${encodeURIComponent(
+        `${import.meta.env.VITE_WATER_API_URL}/search?q=${encodeURIComponent(
           q
         )}`,
         (err, json) => {
