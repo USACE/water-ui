@@ -1,5 +1,5 @@
 import { mapObjectArrayByKey } from '../helpers/misc-helpers';
-const debug = parseInt(process.env.REACT_APP_DEBUG);
+const debug = parseInt(import.meta.env.VITE_APP_DEBUG);
 
 /**
  * Calculates project flood storage utilized

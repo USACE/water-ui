@@ -1,6 +1,6 @@
 import createRestBundle from '@usace/create-rest-bundle';
 
-const apiUrl = process.env.REACT_APP_WATER_API_URL;
+const apiUrl = import.meta.env.VITE_WATER_API_URL;
 
 export default createRestBundle({
   name: 'providerTimeseriesValues',
