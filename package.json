@@ -8,8 +8,8 @@
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "deploy-develop": "aws s3 rm s3://$CASTLECI_DEVELOP_S3_BUCKET_APPS/water --recursive && aws s3 cp ./build/ s3://$CASTLECI_DEVELOP_S3_BUCKET_APPS/water --recursive",
-    "deploy-stable": "aws s3 rm s3://$CASTLECI_STABLE_S3_BUCKET_APPS/water --recursive && aws s3 cp ./build/ s3://$CASTLECI_STABLE_S3_BUCKET_APPS/water --recursive"
+    "deploy-develop": "aws s3 rm s3://$CASTLECI_DEVELOP_S3_BUCKET_APPS/water --recursive && aws s3 cp ./dist/ s3://$CASTLECI_DEVELOP_S3_BUCKET_APPS/water --recursive",
+    "deploy-stable": "aws s3 rm s3://$CASTLECI_STABLE_S3_BUCKET_APPS/water --recursive && aws s3 cp ./dist/ s3://$CASTLECI_STABLE_S3_BUCKET_APPS/water --recursive"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.15",
