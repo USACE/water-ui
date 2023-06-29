@@ -5,6 +5,7 @@ import DamProfileChart from './charts/dam-profile-chart/chart';
 import LocationSideBarAccordian from './location-detail/sidebar-accordian';
 import PageHead from './page-head';
 import ProjectTimeseriesCharts from './charts/location-timeseries-charts';
+import { hasRequiredLevels } from '../helpers/project-helper';
 
 export default function DetailPanel() {
   const [setOpen] = useState(true);
@@ -60,16 +61,18 @@ export default function DetailPanel() {
           </div>
         </div>
         <div className="relative mt-2 flex-1 overflow-auto px-4">
-          <PageHead
-            title={location?.public_name}
-            subTitle={`provided by ${provider?.name}`}
-          />
-
-          <div className="mt-5 w-full">
-            {location?.kind === 'PROJECT' && (
-              <DamProfileChart location={location} />
-            )}
+          <div className="mb-5">
+            <PageHead
+              title={location?.public_name}
+              subTitle={`provided by ${provider?.name}`}
+            />
           </div>
+
+          {location?.kind === 'PROJECT' && hasRequiredLevels(location) ? (
+            <div className="my-5 w-full">
+              <DamProfileChart location={location} />
+            </div>
+          ) : null}
 
           {/* <div className="mt-5">
             {timeseriesIds?.length ? (

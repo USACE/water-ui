@@ -5,13 +5,13 @@ import DetailPanel from '../app-components/map-panel';
 export default function MapHome() {
   const mapRef = useRef(null);
 
-  // useEffect(() => {
-  //   if (!mapRef.current) return null;
-  //   const map = mapRef.current;
-  //   map.on('load', () => {
-  //     window.map = map;
-  //   });
-  // }, []);
+  useEffect(() => {
+    if (!mapRef.current) return null;
+    const map = mapRef.current;
+    map.on('load', () => {
+      window.map = map;
+    });
+  }, []);
   return (
     <>
       {/* <div className="relative mx-0 h-[500px] w-auto"> */}

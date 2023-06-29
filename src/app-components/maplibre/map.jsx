@@ -99,6 +99,23 @@ export default function Map({ controls, children, mapRef }) {
       });
     });
 
+    // Center the map on the coordinates of any clicked symbol from the 'symbols' layer.
+    map.on('click', 'locations', function (e) {
+      map.flyTo({
+        center: e.features[0].geometry.coordinates,
+      });
+    });
+
+    // Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
+    map.on('mouseenter', 'locations', function () {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'locations', function () {
+      map.getCanvas().style.cursor = '';
+    });
+
     // When a click event occurs on a feature in the places layer, open a popup at the
     // location of the feature, with description HTML from its properties.
     map.on('click', 'locations', (e) => {
