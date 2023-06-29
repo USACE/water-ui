@@ -1,7 +1,7 @@
 import Breadcrumb from '../app-components/breadcrumb';
 import PageHead from '../app-components/page-head';
 import PageTitle from '../app-components/page-title';
-import BarLoader from 'react-spinners/BarLoader';
+import { LoadingBar } from '../app-components/loading';
 
 export default function PageWrapper({
   title,
@@ -25,15 +25,7 @@ export default function PageWrapper({
         {!isLoading ? 'loading...' : null}
       </div> */}
       <div className="bg-gray-300 text-center align-bottom">
-        <BarLoader
-          cssOverride={{ width: '100%' }}
-          height={4}
-          color={'#457be6'}
-          loading={isLoading}
-          speedMultiplier={1.5}
-          aria-label="Loading Bar"
-          data-testid="loader"
-        />
+        <LoadingBar isLoading={isLoading} />
       </div>
 
       {/* Main Page Content */}

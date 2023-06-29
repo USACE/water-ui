@@ -7,6 +7,7 @@ import PageHead from './page-head';
 import ProjectTimeseriesCharts from './charts/location-timeseries-charts';
 import { hasRequiredLevels } from '../helpers/project-helper';
 import { Placeholder } from './content-placeholder';
+import { LoadingBar } from '../app-components/loading';
 
 export default function DetailPanel() {
   const [setOpen] = useState(true);
@@ -67,6 +68,10 @@ export default function DetailPanel() {
               title={location?.public_name}
               subTitle={`provided by ${provider?.name}`}
             />
+          </div>
+
+          <div className="bg-gray-300 text-center align-bottom">
+            <LoadingBar isLoading={!location} />
           </div>
 
           {location?.kind === 'PROJECT' && hasRequiredLevels(location) ? (
