@@ -73,7 +73,7 @@ export default function Map({ controls, children, mapRef }) {
       map.addSource('location_points', {
         type: 'geojson',
         // data: 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_populated_places_simple.geojson',
-        data: `${apiUrl}/providers/lrh/locations?fmt=geojson`,
+        data: `${apiUrl}/providers/nwdm/locations?fmt=geojson`,
       });
       map.loadImage(
         'https://cdn4.iconfinder.com/data/icons/evil-icons-user-interface/64/location-512.png',

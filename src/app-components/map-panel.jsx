@@ -6,6 +6,7 @@ import LocationSideBarAccordian from './location-detail/sidebar-accordian';
 import PageHead from './page-head';
 import ProjectTimeseriesCharts from './charts/location-timeseries-charts';
 import { hasRequiredLevels } from '../helpers/project-helper';
+import { Placeholder } from './content-placeholder';
 
 export default function DetailPanel() {
   const [setOpen] = useState(true);
@@ -70,7 +71,12 @@ export default function DetailPanel() {
 
           {location?.kind === 'PROJECT' && hasRequiredLevels(location) ? (
             <div className="my-5 w-full">
-              <DamProfileChart location={location} />
+              <Placeholder
+                ready={location?.levels?.length}
+                className="h-96 w-full"
+              >
+                <DamProfileChart location={location} />
+              </Placeholder>
             </div>
           ) : null}
 
