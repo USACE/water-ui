@@ -5,18 +5,19 @@ import DetailPanel from '../app-components/map-panel';
 export default function MapHome() {
   const mapRef = useRef(null);
 
-  useEffect(() => {
-    if (!mapRef.current) return null;
-    const map = mapRef.current;
-    map.on('load', () => {
-      window.map = map;
-    });
-  }, []);
+  // useEffect(() => {
+  //   if (!mapRef.current) return null;
+  //   const map = mapRef.current;
+  //   map.on('load', () => {
+  //     window.map = map;
+  //   });
+  // }, []);
   return (
     <>
       {/* <div className="relative mx-0 h-[500px] w-auto"> */}
-      <div className="">
-        <div className="relative h-[500px] w-auto lg:h-[900px]">
+
+      <div className="flex h-[89vh] bg-gray-200">
+        <div className="relative w-auto flex-1 bg-gray-50">
           <Map
             controls={{
               navigation: true,
@@ -30,6 +31,11 @@ export default function MapHome() {
             <DetailPanel />
           </Map>
         </div>
+        {/* <div className="relative w-1/3">
+         
+        </div> */}
+
+        {/* <div className="bg-green-200">test</div> */}
       </div>
     </>
   );

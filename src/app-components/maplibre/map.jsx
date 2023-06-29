@@ -65,7 +65,7 @@ export default function Map({ controls, children, mapRef }) {
     );
 
     if (controls.basemaps) {
-      map.addControl(new BasemapControl({ apiKey: '' }), 'bottom-right');
+      map.addControl(new BasemapControl({ apiKey: '' }), 'bottom-left');
     }
     setMap(map);
 
@@ -120,10 +120,10 @@ export default function Map({ controls, children, mapRef }) {
 
       doUpdateUrl(`/map/${provider}/locations/${slug}`);
 
-      new maplibregl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(description)
-        .addTo(map);
+      // new maplibregl.Popup()
+      //   .setLngLat(coordinates)
+      //   .setHTML(description)
+      //   .addTo(map);
     });
 
     if (mapRef) {

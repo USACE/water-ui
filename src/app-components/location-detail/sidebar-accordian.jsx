@@ -7,7 +7,10 @@ import { GrDocumentDownload } from 'react-icons/gr';
 import { BsFiletypeJson, BsFiletypeCsv } from 'react-icons/bs';
 import distance from '@turf/distance';
 
-export default function LocationSideBarAccordian({ location }) {
+export default function LocationSideBarAccordian({
+  location,
+  addonSections = [],
+}) {
   const {
     timeseriesDateRange: dateRange,
     providerLocationsItems,
@@ -266,6 +269,9 @@ export default function LocationSideBarAccordian({ location }) {
 
   if (location?.kind === 'PROJECT' && location?.documents?.length) {
     sections.push(...projectSections);
+  }
+  if (addonSections.length) {
+    sections.push(...addonSections);
   }
 
   return <Accordion sections={sections} />;

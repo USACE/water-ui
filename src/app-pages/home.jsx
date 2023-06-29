@@ -36,7 +36,7 @@ export default function Home() {
 
       <div className="pt-0">
         <div
-          className="flex h-72 max-h-full bg-gray-500 bg-cover bg-center bg-no-repeat px-4 py-16 sm:px-6 sm:pt-20 sm:pb-24 lg:h-128 lg:px-8 lg:pt-8"
+          className="flex h-72 max-h-full bg-gray-500 bg-cover bg-center bg-no-repeat px-4 py-16 sm:px-6 sm:pb-24 sm:pt-20 lg:h-128 lg:px-8 lg:pt-8"
           style={{ backgroundImage: `url(${HomeBgImg.src})` }}
         >
           {/* NOTE: relative and z index styles below are needed to keep the 
@@ -79,19 +79,31 @@ export default function Home() {
       <div className="py-8 opacity-90">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 md:flex md:gap-8 lg:px-8">
           <a href="/overview">
-            <ImageCard title="Locations" imgSrc={Card1ImgSrc}></ImageCard>
+            <ImageCard
+              title="Locations"
+              text="View projects and locations by USACE office with overviews by watershed."
+              imgSrc={Card1ImgSrc}
+            ></ImageCard>
           </a>
           <a href="/map">
-            <ImageCard title="Map View" imgSrc={MapCardSrc}></ImageCard>
+            <ImageCard
+              title="Map View"
+              text="Explore USACE water resource locations using an interactive map."
+              imgSrc={MapCardSrc}
+            ></ImageCard>
           </a>
           <a href="/">
-            <ImageCard title="Data Resources" imgSrc={Card2ImgSrc}></ImageCard>
+            <ImageCard
+              title="Data Resources"
+              text=""
+              imgSrc={Card2ImgSrc}
+            ></ImageCard>
           </a>
         </div>
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:pt-20 sm:pb-24 sm:text-center lg:max-w-7xl lg:px-8 lg:pt-24">
+        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:pb-24 sm:pt-20 sm:text-center lg:max-w-7xl lg:px-8 lg:pt-24">
           <h2 className="text-3xl font-medium tracking-tight text-gray-900">
             Find Water Resources Data across the U.S
           </h2>

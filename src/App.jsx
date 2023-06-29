@@ -14,7 +14,7 @@ export default function App() {
       <Layout.Main>
         <Route />
       </Layout.Main>
-      <Layout.Footer />
+      {!pathname.startsWith('/map') && <Layout.Footer />}
     </Layout>
   );
 }

@@ -1,4 +1,4 @@
-export default function ImageCard({ title, imgSrc }) {
+export default function ImageCard({ title, imgSrc, text }) {
   return (
     <div className="overflow-hidden rounded bg-white shadow-lg md:max-w-sm">
       <img
@@ -9,9 +9,8 @@ export default function ImageCard({ title, imgSrc }) {
       <div className="px-6 py-4">
         <div className="mb-2 text-xl font-bold">{title}</div>
         <p className="text-base text-gray-700">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus
-          quia, nulla! Maiores et perferendis eaque, exercitationem praesentium
-          nihil.
+          {text ||
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.'}
         </p>
       </div>
     </div>
