@@ -12,7 +12,10 @@ import LocationCombobox from './inputs/location-search-input';
 // }
 
 export default function Header() {
-  const { pathname } = useConnect('selectPathname');
+  const { pathname, providerLocationByRoute: providerLocation } = useConnect(
+    'selectPathname',
+    'selectProviderLocationByRoute'
+  );
   //const [name, setName] = useState(null);
   //const [type, setType] = useState(null);
   const [location, setLocation] = useState(null);
@@ -24,9 +27,13 @@ export default function Header() {
     location ? true : false
   );
 
+  const directMapLocation = providerLocation
+    ? `/map/${providerLocation?.provider}/locations/${providerLocation?.slug}`
+    : null;
+
   const nav_links = [
     { name: 'Home', path: '/' },
-    { name: 'Map', path: '/map' },
+    { name: 'Map', path: directMapLocation || '/map' },
     { name: 'Locations', path: '/overview' },
     { name: 'Help', path: '/' },
   ];
@@ -136,7 +143,7 @@ export default function Header() {
             </div>
 
             <Disclosure.Panel className="lg:hidden">
-              <div className="space-y-1 px-2 pt-2 pb-3">
+              <div className="space-y-1 px-2 pb-3 pt-2">
                 {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
 
                 {nav_links.map((item) => {

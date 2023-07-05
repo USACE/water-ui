@@ -8,17 +8,24 @@ import ProjectTimeseriesCharts from './charts/location-timeseries-charts';
 import { hasRequiredLevels } from '../helpers/project-helper';
 import { Placeholder } from './content-placeholder';
 import { LoadingBar } from '../app-components/loading';
+import { BiExpandHorizontal } from 'react-icons/bi';
 
 export default function DetailPanel() {
-  const [setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [timeseriesIds, setTimeseriesId] = useState([]);
 
-  const { providerLocationByRoute: location, providerByRoute: provider } =
-    useConnect(
-      'selectMapLocationSelected',
-      'selectProviderLocationByRoute',
-      'selectProviderByRoute'
-    );
+  const {
+    mapLocationSelected,
+    providerLocationByRoute: location,
+    providerByRoute: provider,
+    doUpdateUrl,
+  } = useConnect(
+    'selectMapLocationSelected',
+    'selectProviderLocationByRoute',
+    'selectProviderByRoute',
+    'doUpdateUrl'
+  );
 
   /** Load specific timeseries ids into state when new configurations are loaded */
   useEffect(() => {
@@ -30,6 +37,14 @@ export default function DetailPanel() {
 
     setTimeseriesId(timeseriesIdArray);
   }, [location]);
+
+  useEffect(() => {
+    // Note: using location could delay the panel from opening
+    // if the API is slow to produce location results.  This is why
+    // mapLocationSelected is being used.
+    (mapLocationSelected?.slug || location) && setOpen(true);
+    console.log(mapLocationSelected);
+  }, [mapLocationSelected, location]);
 
   const addonSections = [
     {
@@ -46,7 +61,13 @@ export default function DetailPanel() {
   ];
 
   return (
-    <div className="absolute bottom-0 z-10 h-3/4 w-full border-t-2 border-gray-400 bg-blue-100 text-base lg:right-0 lg:top-0 lg:top-24 lg:h-full lg:w-1/3 lg:border-white">
+    <div
+      className={`${
+        open ? 'absolute' : 'hidden'
+      } bottom-0 z-10 h-3/4 w-full border-t-2 border-gray-400 bg-blue-100 text-base lg:right-0 lg:top-0 lg:h-full ${
+        expanded ? 'lg:w-1/2' : 'lg:w-1/3'
+      } lg:border-white`}
+    >
       <div className="flex h-full flex-col overflow-y-scroll bg-white py-2 shadow-xl">
         <div className="bg-white">
           <div className="flex items-start justify-between">
@@ -58,6 +79,24 @@ export default function DetailPanel() {
               >
                 <span className="sr-only">Close panel</span>
                 <HiOutlineXMark className="h-6 w-6" aria-hidden="true" />
+              </button>
+              <button onClick={() => setExpanded(!expanded)}>
+                <span className="sr-only">expand panel</span>
+                <BiExpandHorizontal
+                  className="ml-5 hidden h-6 w-6 text-gray-400 lg:inline"
+                  aria-hidden="true"
+                />
+              </button>
+              <button
+                type="button"
+                className="ml-4 hover:cursor-pointer"
+                onClick={() =>
+                  doUpdateUrl(
+                    `/overview/${provider?.slug}/locations/${location?.slug}`
+                  )
+                }
+              >
+                Switch to Detail Page
               </button>
             </div>
           </div>

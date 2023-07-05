@@ -61,12 +61,14 @@ function LocationCombobox({
     doSearchQueryUpdate,
     locationSearchItems,
     doUpdateUrl,
+    pathname,
   } = useConnect(
     'doSearchClear',
     'doSearchFire',
     'doSearchQueryUpdate',
     'selectLocationSearchItems',
-    'doUpdateUrl'
+    'doUpdateUrl',
+    'selectPathname'
   );
 
   // debounced search fire function
@@ -90,7 +92,8 @@ function LocationCombobox({
           //setValue(v);
           //setIsValid(true); // TODO; Automatically setIsValid true when location is selected. May want to add more explicit validation checking
           console.log(v);
-          doUpdateUrl(`/overview/${v.provider}/locations/${v.slug}`);
+          const context = pathname.includes('/map/') ? 'map' : 'overview';
+          doUpdateUrl(`/${context}/${v.provider}/locations/${v.slug}`);
         }}
       >
         <Combobox.Label>{label}</Combobox.Label>

@@ -4,13 +4,19 @@ import maplibregl from 'maplibre-gl';
 import BasemapControl from './maplibre-basemap-switcher';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import 'maplibre-gl-basemaps/lib/basemaps.css';
+import clusterLayer from './layers';
 
 const apiUrl = import.meta.env.VITE_WATER_API_URL;
 
 export default function Map({ controls, children, mapRef }) {
-  const { doMapLocationSelectionUpdate, doUpdateUrl } = useConnect(
+  const {
+    doMapLocationSelectionUpdate,
+    doUpdateUrl,
+    providerByRoute: provider,
+  } = useConnect(
     'doMapLocationSelectionUpdate',
-    'doUpdateUrl'
+    'doUpdateUrl',
+    'selectProviderByRoute'
   );
 
   const mapEl = useRef();
@@ -24,8 +30,8 @@ export default function Map({ controls, children, mapRef }) {
         container: mapEl.current,
         style:
           'https://api.maptiler.com/maps/voyager/style.json?key=UYMc0uOxdLvOXIuWttnQ',
-        center: [-96, 39],
-        zoom: 5,
+        center: [-86, 39],
+        zoom: 4,
       },
       [mapEl.current]
     );
@@ -69,79 +75,68 @@ export default function Map({ controls, children, mapRef }) {
     }
     setMap(map);
 
-    map.on('load', () => {
-      map.addSource('location_points', {
-        type: 'geojson',
-        // data: 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_populated_places_simple.geojson',
-        data: `${apiUrl}/providers/nwdm/locations?fmt=geojson`,
-      });
-      map.loadImage(
-        'https://cdn4.iconfinder.com/data/icons/evil-icons-user-interface/64/location-512.png',
-        function (error, image) {
-          if (error) throw error;
-          map.addImage('location_icon', image);
-        }
-      );
-      map.addLayer({
-        id: 'locations',
-        type: 'symbol',
-        source: 'location_points',
-        // interactive: true,
-        layout: {
-          'icon-image': 'location_icon',
-          'icon-size': 0.07,
-          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-          // get the name from the source's "name" property
-          'text-field': ['get', 'public_name'],
-          'text-offset': [0, 1.25],
-          'text-anchor': 'top',
-        },
-      });
-    });
+    clusterLayer(
+      map,
+      'locations',
+      `${apiUrl}/providers/${provider?.slug}/locations?fmt=geojson`,
+      doUpdateUrl
+    );
 
     // Center the map on the coordinates of any clicked symbol from the 'symbols' layer.
-    map.on('click', 'locations', function (e) {
-      map.flyTo({
-        center: e.features[0].geometry.coordinates,
-      });
-    });
-
-    // Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
-    map.on('mouseenter', 'locations', function () {
-      map.getCanvas().style.cursor = 'pointer';
-    });
-
-    // Change it back to a pointer when it leaves.
-    map.on('mouseleave', 'locations', function () {
-      map.getCanvas().style.cursor = '';
-    });
-
-    // When a click event occurs on a feature in the places layer, open a popup at the
-    // location of the feature, with description HTML from its properties.
-    map.on('click', 'locations', (e) => {
-      // Copy coordinates array.
-      const coordinates = e.features[0].geometry.coordinates.slice();
-      const description = e.features[0].properties.public_name;
-      const provider = e.features[0].properties.provider;
+    map.on('click', 'unclustered-point', function (e) {
+      // map.flyTo({
+      //   center: e.features[0].geometry.coordinates,
+      // });
+      const _provider = e.features[0].properties.provider;
       const slug = e.features[0].properties.slug;
 
-      // Ensure that if the map is zoomed out such that multiple
-      // copies of the feature are visible, the popup appears
-      // over the copy being pointed to.
-      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-      }
-      console.log(coordinates);
-
-      doMapLocationSelectionUpdate(provider, slug);
-
-      doUpdateUrl(`/map/${provider}/locations/${slug}`);
-
-      // new maplibregl.Popup()
-      //   .setLngLat(coordinates)
-      //   .setHTML(description)
-      //   .addTo(map);
+      doMapLocationSelectionUpdate(_provider, slug);
+      doUpdateUrl(`/map/${_provider}/locations/${slug}`);
     });
+
+    //  // Center the map on the coordinates of any clicked symbol from the 'symbols' layer.
+    //  map.on('click', 'locations', function (e) {
+    //   map.flyTo({
+    //     center: e.features[0].geometry.coordinates,
+    //   });
+    // });
+
+    // // Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
+    // map.on('mouseenter', 'locations', function () {
+    //   map.getCanvas().style.cursor = 'pointer';
+    // });
+
+    // // Change it back to a pointer when it leaves.
+    // map.on('mouseleave', 'locations', function () {
+    //   map.getCanvas().style.cursor = '';
+    // });
+
+    // // When a click event occurs on a feature in the places layer, open a popup at the
+    // // location of the feature, with description HTML from its properties.
+    // map.on('click', 'locations', (e) => {
+    //   // Copy coordinates array.
+    //   const coordinates = e.features[0].geometry.coordinates.slice();
+    //   const description = e.features[0].properties.public_name;
+    //   const provider = e.features[0].properties.provider;
+    //   const slug = e.features[0].properties.slug;
+
+    //   // Ensure that if the map is zoomed out such that multiple
+    //   // copies of the feature are visible, the popup appears
+    //   // over the copy being pointed to.
+    //   while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+    //     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+    //   }
+    //   console.log(coordinates);
+
+    //   doMapLocationSelectionUpdate(provider, slug);
+
+    //   doUpdateUrl(`/map/${provider}/locations/${slug}`);
+
+    //   // new maplibregl.Popup()
+    //   //   .setLngLat(coordinates)
+    //   //   .setHTML(description)
+    //   //   .addTo(map);
+    // });
 
     if (mapRef) {
       mapRef.current = map;
