@@ -150,6 +150,7 @@ export default function Map({ controls, children, mapRef }) {
     mapRef,
     doMapLocationSelectionUpdate,
     doUpdateUrl,
+    provider,
   ]);
 
   let elements = React.Children.toArray(children);

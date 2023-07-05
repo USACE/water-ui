@@ -14,6 +14,8 @@ import ProviderQA from '../app-pages/provider/provider-qa.jsx';
 export default createRouteBundle({
   '/': Home,
   '/map/:provider_slug/locations/:location_slug': MapHome,
+  '/map/:provider_slug/locations': MapHome,
+  '/map/:provider_slug': MapHome,
   '/map': MapHome,
   '/overview': ProviderList,
   '/overview/:provider_slug': ProviderHome,
