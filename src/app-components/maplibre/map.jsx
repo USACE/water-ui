@@ -13,14 +13,19 @@ export default function Map({ controls, children, mapRef }) {
     doMapLocationSelectionUpdate,
     doUpdateUrl,
     providerByRoute: provider,
+    providerLocationByRoute: location,
+    mapLocationSelected,
   } = useConnect(
     'doMapLocationSelectionUpdate',
     'doUpdateUrl',
-    'selectProviderByRoute'
+    'selectProviderByRoute',
+    'selectProviderLocationByRoute',
+    'selectMapLocationSelected'
   );
 
   const mapEl = useRef();
   const [map, setMap] = useState();
+
   useEffect(() => {
     if (!mapEl.current) return;
 
@@ -89,10 +94,27 @@ export default function Map({ controls, children, mapRef }) {
       // });
       const _provider = e.features[0].properties.provider;
       const slug = e.features[0].properties.slug;
+      const geometry = e.features[0].properties.geometry;
 
-      doMapLocationSelectionUpdate(_provider, slug);
+      doMapLocationSelectionUpdate(_provider, slug, geometry);
       doUpdateUrl(`/map/${_provider}/locations/${slug}`);
     });
+
+    // mapLocationSelected?.geometry?.coordinates?.length &&
+    //   map.flyTo({
+    //     center: mapLocationSelected?.geometry?.coordinates,
+    //   });
+    // console.log('----------');
+    // console.log(mapLocationSelected?.geometry?.coordinates);
+    // console.log('----------');
+
+    // map.on('click', 'unclustered-point', function (e) {
+    //   console.log('yo dawg');
+    //   console.log(e.features[0].geometry.coordinates);
+    //   map.flyTo({
+    //     center: e.features[0].geometry.coordinates,
+    //   });
+    // });
 
     //  // Center the map on the coordinates of any clicked symbol from the 'symbols' layer.
     //  map.on('click', 'locations', function (e) {
@@ -152,6 +174,47 @@ export default function Map({ controls, children, mapRef }) {
     doUpdateUrl,
     provider,
   ]);
+
+  // set the map location selection if coming in from url
+  useEffect(() => {
+    doMapLocationSelectionUpdate(
+      location?.provider,
+      location?.slug,
+      location?.geometry
+    );
+  }, [location, doMapLocationSelectionUpdate]);
+
+  useEffect(() => {
+    // const map = map.current;
+
+    if (!mapLocationSelected.geometry || !map) {
+      return;
+    }
+
+    mapLocationSelected?.geometry?.coordinates?.length &&
+      map.flyTo({
+        center: mapLocationSelected?.geometry?.coordinates,
+        zoom: 8,
+        bearing: 0,
+        essential: true,
+
+        // These options control the flight curve, making it move
+        // slowly and zoom out almost completely before starting
+        // to pan.
+        speed: 0.9, // make the flying slow
+        curve: 1, // change the speed at which it zooms out
+
+        // This can be any easing function: it takes a number between
+        // 0 and 1 and returns another number between 0 and 1.
+        easing: function (t) {
+          return t;
+        },
+      });
+    //setMap(map);
+    // console.log('----------');
+    // console.log(mapLocationSelected?.geometry?.coordinates);
+    // console.log('----------');
+  }, [mapLocationSelected, map]);
 
   let elements = React.Children.toArray(children);
   elements = elements.map((el) => {

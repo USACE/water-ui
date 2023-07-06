@@ -7,6 +7,7 @@ const mapLocationBundle = {
     const initialData = {
       provider: null,
       slug: null,
+      geometry: null,
     };
 
     return (state = initialData, { type, payload }) => {
@@ -25,20 +26,24 @@ const mapLocationBundle = {
   selectMapLocationSelectedSlug: (state) => {
     return state.mapLocation.slug;
   },
+  selectMapLocationSelectedGeometry: (state) => {
+    return state.mapLocation.geometry;
+  },
 
   selectMapLocationSelected: createSelector(
     'selectMapLocationSelectedProvider',
     'selectMapLocationSelectedSlug',
-    (provider, slug) => {
-      return { provider, slug };
+    'selectMapLocationSelectedGeometry',
+    (provider, slug, geometry) => {
+      return { provider, slug, geometry };
     }
   ),
 
-  doMapLocationSelectionUpdate: (provider, slug) => {
+  doMapLocationSelectionUpdate: (provider, slug, geometry) => {
     return ({ dispatch }) => {
       dispatch({
         type: 'MAP_SELECTED_LOCATION_UPDATED',
-        payload: { provider, slug },
+        payload: { provider, slug, geometry },
       });
     };
   },
