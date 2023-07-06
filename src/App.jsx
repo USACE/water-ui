@@ -5,8 +5,9 @@ export default function App() {
   const {
     route: Route,
     pathname,
+    isMapView,
     //authIsLoggedIn: isLoggedIn,
-  } = useConnect('selectRoute', 'selectPathname');
+  } = useConnect('selectRoute', 'selectPathname', 'selectIsMapView');
 
   return (
     <Layout>
@@ -14,7 +15,7 @@ export default function App() {
       <Layout.Main>
         <Route />
       </Layout.Main>
-      {!pathname.startsWith('/map') && <Layout.Footer />}
+      {!isMapView && <Layout.Footer />}
     </Layout>
   );
 }

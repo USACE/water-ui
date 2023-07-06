@@ -1,25 +1,41 @@
 import { useConnect } from 'redux-bundler-hook';
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import Accordion from '../accordion';
 import { SimpleTable, TableLink } from '../table-simple';
 import StackedParameterList from '../stacked-parameter-list';
 import { GrDocumentDownload } from 'react-icons/gr';
 import { BsFiletypeJson, BsFiletypeCsv } from 'react-icons/bs';
 import distance from '@turf/distance';
+import ProjectTimeseriesCharts from '../charts/location-timeseries-charts';
 
 export default function LocationSideBarAccordian({
   location,
-  addonSections = [],
+  // addonSections = [],
 }) {
   const {
     timeseriesDateRange: dateRange,
     providerLocationsItems,
     pathname,
+    isMapView,
   } = useConnect(
     'selectTimeseriesDateRange',
     'selectProviderLocationsItems',
-    'selectPathname'
+    'selectPathname',
+    'selectIsMapView'
   );
+
+  const [timeseriesIds, setTimeseriesId] = useState([]);
+
+  /** Load specific timeseries ids into state when new configurations are loaded */
+  useEffect(() => {
+    const timeseriesIdArray = location?.timeseries
+      ? location?.timeseries?.map((ts) => {
+          return ts.tsid;
+        })
+      : [];
+
+    setTimeseriesId(timeseriesIdArray);
+  }, [location]);
 
   const Metadata = ({ metadata }) => {
     //convert object into list with key pairs
@@ -225,18 +241,34 @@ export default function LocationSideBarAccordian({
       title: 'Current Values',
       content: <StackedParameterList parameters={location?.timeseries} />,
       defaultOpen: true,
+      display: true,
+    },
+    {
+      title: 'Timeseries Charts',
+      content: (
+        <div className="pt-5">
+          {timeseriesIds?.length ? (
+            <ProjectTimeseriesCharts location={location} />
+          ) : null}
+        </div>
+      ),
+      defaultOpen: false,
+      display: isMapView,
     },
     {
       title: 'Metadata',
       content: <Metadata metadata={location} />,
+      display: true,
     },
     {
       title: 'Location Data',
       content: JSON.stringify(location?.geometry),
+      display: !isMapView, //hide in map view
     },
     {
       title: 'Levels',
       content: <Levels levels={location?.levels} />,
+      display: true,
     },
     {
       title: 'Timeseries Sources',
@@ -247,6 +279,7 @@ export default function LocationSideBarAccordian({
           provider={location?.provider}
         />
       ),
+      display: true,
     },
     {
       title: 'Nearby Locations',
@@ -256,23 +289,29 @@ export default function LocationSideBarAccordian({
           locations={providerLocationsItems}
         />
       ),
+      display: !isMapView,
+    },
+    {
+      title: 'Documents',
+      content: <Documents docs={location?.documents} />,
+      display: location?.kind === 'PROJECT',
     },
   ];
 
   // Project only sections
-  const projectSections = [
-    {
-      title: 'Documents',
-      content: <Documents docs={location?.documents} />,
-    },
-  ];
+  // const projectSections = [
+  //   {
+  //     title: 'Documents',
+  //     content: <Documents docs={location?.documents} />,
+  //   },
+  // ];
 
-  if (location?.kind === 'PROJECT' && location?.documents?.length) {
-    sections.push(...projectSections);
-  }
-  if (addonSections.length) {
-    sections.push(...addonSections);
-  }
+  // if (location?.kind === 'PROJECT' && location?.documents?.length) {
+  //   sections.push(...projectSections);
+  // }
+  // if (addonSections.length) {
+  //   sections.push(...addonSections);
+  // }
 
-  return <Accordion sections={sections} />;
+  return <Accordion sections={sections.filter((s) => s.display)} />;
 }

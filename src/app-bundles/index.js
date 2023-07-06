@@ -39,6 +39,7 @@ import timeseriesDateRangeBundle from './timeseries-date-range-bundle';
 import providerLocationsFloodBundle from './provider-locations-flood-bundle';
 import providerProjectsBundle from './provider-projects-bundles';
 import mapLocationBundle from './map-location-bundle';
+import utilsBundle from './utils-bundle';
 
 const mockTokens = {
   ADMIN:
@@ -106,6 +107,6 @@ export default composeBundles(
   timeseriesDateRangeBundle,
   providerLocationsFloodBundle,
   providerProjectsBundle,
-  mapLocationBundle
-  //unitBundle
+  mapLocationBundle,
+  utilsBundle
 );
