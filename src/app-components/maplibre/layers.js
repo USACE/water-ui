@@ -1,5 +1,6 @@
 // import maplibregl from 'maplibre-gl';
 // import { useConnect } from 'redux-bundler-hook';
+import LocationIcon from '../../images/map/location-icon1.png';
 
 export default function clusterLayer(map, layerName, sourceData) {
   //const { doUpdateUrl } = useConnect('doUpdateUrl');
@@ -56,7 +57,9 @@ export default function clusterLayer(map, layerName, sourceData) {
     });
 
     map.loadImage(
-      'https://cdn4.iconfinder.com/data/icons/evil-icons-user-interface/64/location-512.png',
+      // 'https://cdn4.iconfinder.com/data/icons/evil-icons-user-interface/64/location-512.png',
+      // 'https://cdn0.iconfinder.com/data/icons/phosphor-bold-vol-3-1/256/map-pin-duotone-512.png',
+      LocationIcon,
       function (error, image) {
         if (error) throw error;
         map.addImage('location_icon', image);

@@ -194,7 +194,7 @@ export default function Map({ controls, children, mapRef }) {
     mapLocationSelected?.geometry?.coordinates?.length &&
       map.flyTo({
         center: mapLocationSelected?.geometry?.coordinates,
-        zoom: 8,
+        zoom: 12,
         bearing: 0,
         essential: true,
 
