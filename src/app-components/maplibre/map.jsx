@@ -201,7 +201,7 @@ export default function Map({ controls, children, mapRef }) {
         // These options control the flight curve, making it move
         // slowly and zoom out almost completely before starting
         // to pan.
-        speed: 0.9, // make the flying slow
+        speed: 1.5, // make the flying slow
         curve: 1, // change the speed at which it zooms out
 
         // This can be any easing function: it takes a number between

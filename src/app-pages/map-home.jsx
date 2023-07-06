@@ -14,10 +14,8 @@ export default function MapHome() {
   }, []);
   return (
     <>
-      {/* <div className="relative mx-0 h-[500px] w-auto"> */}
-
-      <div className="flex h-[89vh] bg-gray-200">
-        <div className="relative w-auto flex-1 bg-gray-50">
+      <div className="absolute bottom-0 left-0 right-0 top-24 flex flex-col lg:flex-row ">
+        <div className="relative h-full w-full">
           <Map
             controls={{
               navigation: true,
@@ -27,15 +25,9 @@ export default function MapHome() {
               basemaps: true,
             }}
             mapRef={mapRef}
-          >
-            <DetailPanel />
-          </Map>
+          ></Map>
         </div>
-        {/* <div className="relative w-1/3">
-         
-        </div> */}
-
-        {/* <div className="bg-green-200">test</div> */}
+        <DetailPanel />
       </div>
     </>
   );

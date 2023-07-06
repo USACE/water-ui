@@ -62,11 +62,9 @@ export default function DetailPanel() {
 
   return (
     <div
-      className={`${
-        open ? 'absolute' : 'hidden'
-      } bottom-0 z-10 h-3/4 w-full border-t-2 border-gray-400 bg-blue-100 text-base lg:right-0 lg:top-0 lg:h-full ${
-        expanded ? 'lg:w-1/2' : 'lg:w-1/3'
-      } lg:border-white`}
+      className={`bottom-0 h-2/3 border-t-2 border-t-gray-400 lg:h-full lg:border-t-0 ${
+        !open ? 'hidden' : null
+      } ${expanded ? 'lg:w-2/3' : 'lg:w-2/5'}`}
     >
       <div className="flex h-full flex-col overflow-y-scroll bg-white py-2 shadow-xl">
         <div className="bg-white">
