@@ -39,10 +39,7 @@ export default function DetailPanel() {
   }, [location]);
 
   useEffect(() => {
-    // Note: using location could delay the panel from opening
-    // if the API is slow to produce location results.  This is why
-    // mapLocationSelected is being used.
-    (mapLocationSelected?.slug || location) && setOpen(true);
+    mapLocationSelected?.slug && location && setOpen(true);
     console.log(mapLocationSelected);
   }, [mapLocationSelected, location]);
 
