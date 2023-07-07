@@ -1,6 +1,8 @@
 import { useConnect } from 'redux-bundler-hook';
 //import SimpleTable from '../../app-components/table-simple';
 import PageWrapper from '../page-wrapper';
+import { providerLinks } from '../../helpers/provider-links';
+import { FiExternalLink } from 'react-icons/fi';
 
 export default function ProviderList() {
   const { providerItems: providers } = useConnect('selectProviderItems');
@@ -26,6 +28,9 @@ export default function ProviderList() {
                   </td>
                   <td className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Name
+                  </td>
+                  <td className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    Office Link
                   </td>
                 </tr>
               </thead>
@@ -53,6 +58,21 @@ export default function ProviderList() {
                           `${p.slug?.toLowerCase()}`
                         )}
                       />
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {providerLinks[p?.slug?.toLowerCase()] && (
+                        <a
+                          target="_blank"
+                          rel="noreferrer"
+                          title="external link to office website"
+                          href={providerLinks[p.slug.toLowerCase()].wm}
+                        >
+                          <FiExternalLink
+                            className="h-4 w-4"
+                            aria-hidden="true"
+                          />
+                        </a>
+                      )}
                     </td>
                   </tr>
                 ))}

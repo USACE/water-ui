@@ -7,6 +7,7 @@ import { GrDocumentDownload } from 'react-icons/gr';
 import { BsFiletypeJson, BsFiletypeCsv } from 'react-icons/bs';
 import distance from '@turf/distance';
 import ProjectTimeseriesCharts from '../charts/location-timeseries-charts';
+import { mapObjectArrayByKey } from '../../helpers/misc-helpers';
 
 export default function LocationSideBarAccordian({
   location,
@@ -17,14 +18,17 @@ export default function LocationSideBarAccordian({
     providerLocationsItems,
     pathname,
     isMapView,
+    providerLocationsFloodObject: locationFloodObj,
   } = useConnect(
     'selectTimeseriesDateRange',
     'selectProviderLocationsItems',
     'selectPathname',
-    'selectIsMapView'
+    'selectIsMapView',
+    'selectProviderLocationsFloodObject'
   );
 
   const [timeseriesIds, setTimeseriesId] = useState([]);
+  const [alertCount, setAlertCount] = useState();
 
   /** Load specific timeseries ids into state when new configurations are loaded */
   useEffect(() => {
@@ -36,6 +40,27 @@ export default function LocationSideBarAccordian({
 
     setTimeseriesId(timeseriesIdArray);
   }, [location]);
+
+  const Alerts = ({ location }) => {
+    if (locationFloodObj[location?.slug]) {
+      const floodLevel = mapObjectArrayByKey(location?.levels, 'slug')[
+        'stage.flood'
+      ].latest_value;
+      const stageValue = mapObjectArrayByKey(location?.timeseries, 'label')[
+        'Stage'
+      ].latest_value;
+      console.log(stageValue);
+      if (stageValue >= floodLevel) {
+        return (
+          <div className="bg-red-500 p-2 text-white">
+            {`Current stage of ${stageValue} (ft) has exceeded flood stage of ${floodLevel} (ft).`}
+          </div>
+        );
+      }
+    }
+    setAlertCount(0);
+    return null;
+  };
 
   const Metadata = ({ metadata }) => {
     //convert object into list with key pairs
@@ -236,10 +261,18 @@ export default function LocationSideBarAccordian({
   // general location sections
   let sections = [
     {
+      title: 'Alerts',
+      content: <Alerts location={location} />,
+      defaultOpen: false,
+      display: alertCount > 0,
+      count: { value: 1, className: 'bg-red-500' },
+    },
+    {
       title: 'Current Values',
       content: <StackedParameterList parameters={location?.timeseries} />,
       defaultOpen: true,
       display: true,
+      count: { value: location?.timeseries?.length },
     },
     {
       title: 'Timeseries Charts',
@@ -252,6 +285,7 @@ export default function LocationSideBarAccordian({
       ),
       defaultOpen: false,
       display: isMapView,
+      count: { value: location?.timeseries?.length },
     },
     {
       title: 'Metadata',
@@ -266,7 +300,8 @@ export default function LocationSideBarAccordian({
     {
       title: 'Levels',
       content: <Levels levels={location?.levels} />,
-      display: true,
+      display: location?.levels?.length,
+      count: { value: location?.levels?.length },
     },
     {
       title: 'Timeseries Sources',
@@ -278,6 +313,7 @@ export default function LocationSideBarAccordian({
         />
       ),
       display: true,
+      count: { value: location?.timeseries?.length },
     },
     {
       title: 'Nearby Locations',
