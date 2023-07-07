@@ -3,11 +3,8 @@ import { subDays } from 'date-fns';
 
 // use env var if defined for testing, otherwise use current datetime
 const defaultEndDate =
-  (import.meta.env.VITE_APP_TS_DEFAULT_END_DATE &&
-    new Date(import.meta.env.VITE_APP_TS_DEFAULT_END_DATE)) ||
+  (import.meta.env.VITE_APP_TS_DEFAULT_END_DATE && new Date(import.meta.env.VITE_APP_TS_DEFAULT_END_DATE)) ||
   new Date();
-
-console.log(defaultEndDate);
 
 const timeseriesDateRangeBundle = {
   name: 'timeseriesDateRange',

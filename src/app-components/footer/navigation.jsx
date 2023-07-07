@@ -1,22 +1,37 @@
+import { useConnect } from 'redux-bundler-hook';
+import DisclaimerModal from '../../app-pages/disclaimer-modal';
+
 export default function FooterNavigation() {
+  const { doModalOpen } = useConnect('doModalOpen');
+
+  const handleDisclaimer = () => {
+    // e.preventDefault();
+    const userInitiatedDisclaimerModal = () => <DisclaimerModal show={true} />;
+    doModalOpen(userInitiatedDisclaimerModal);
+  };
+
   const navigation = {
     features: [
       { name: 'Location Search', href: '#' },
       { name: 'Data Resources', href: '#' },
-      { name: 'Interactive Map', href: '#' },
-      { name: 'Water Quality', href: '#' },
+      { name: 'Interactive Map', href: '/map' },
+      // { name: 'Water Quality', href: '#' },
     ],
     support: [
       { name: 'Documentation', href: '#' },
       { name: 'Guides', href: '#' },
-      { name: 'API Status', href: '#' },
-      { name: 'Contact', href: 'water@usace.army.mil' },
+      {
+        name: 'API Docs',
+        href: 'https://cwms-data.usace.army.mil/cwms-data/swagger-ui.html',
+      },
+      { name: 'Contact', href: 'mailto:water@usace.army.mil' },
     ],
-    related: [{ name: 'USACE HQ', href: '#' }],
+    related: [{ name: 'USACE HQ', href: 'https://www.usace.army.mil' }],
     legal: [
       {
-        name: 'Link Disclaimer',
-        href: 'https://www.usace.army.mil/LinkDisclaimer.aspx',
+        name: 'Disclaimer',
+        href: '#',
+        onClickHandler: handleDisclaimer,
       },
       {
         name: 'Privacy Policy',
@@ -27,18 +42,18 @@ export default function FooterNavigation() {
   };
 
   return (
-    <div className="mt-8 grid grid-cols-2 gap-8 xl:col-span-2">
+    <div className='mt-8 grid grid-cols-2 gap-8 xl:col-span-2'>
       {/* Grid column 1 */}
-      <div className="md:grid md:grid-cols-2 md:gap-8">
+      <div className='md:grid md:grid-cols-2 md:gap-8'>
         {/* Link column container */}
         <div>
-          <h3 className="text-base font-medium text-white">Site Features</h3>
-          <ul className="mt-4 space-y-4">
+          <h3 className='text-base font-medium text-white'>Site Features</h3>
+          <ul className='mt-4 space-y-4'>
             {navigation.features.map((item) => (
               <li key={item.name}>
                 <a
                   href={item.href}
-                  className="text-base text-gray-300 hover:text-white"
+                  className='text-base text-gray-300 hover:text-white'
                 >
                   {item.name}
                 </a>
@@ -46,14 +61,14 @@ export default function FooterNavigation() {
             ))}
           </ul>
         </div>
-        <div className="mt-12 md:mt-0">
-          <h3 className="text-base font-medium text-white">Support</h3>
-          <ul className="mt-4 space-y-4">
+        <div className='mt-12 md:mt-0'>
+          <h3 className='text-base font-medium text-white'>Support</h3>
+          <ul className='mt-4 space-y-4'>
             {navigation.support.map((item) => (
               <li key={item.name}>
                 <a
                   href={item.href}
-                  className="text-base text-gray-300 hover:text-white"
+                  className='text-base text-gray-300 hover:text-white'
                 >
                   {item.name}
                 </a>
@@ -63,16 +78,16 @@ export default function FooterNavigation() {
         </div>
       </div>
       {/* Grid column 2 */}
-      <div className="md:grid md:grid-cols-2 md:gap-8">
+      <div className='md:grid md:grid-cols-2 md:gap-8'>
         {/* Link column container */}
         <div>
-          <h3 className="text-base font-medium text-white">Related</h3>
-          <ul className="mt-4 space-y-4">
+          <h3 className='text-base font-medium text-white'>Related</h3>
+          <ul className='mt-4 space-y-4'>
             {navigation.related.map((item) => (
               <li key={item.name}>
                 <a
                   href={item.href}
-                  className="text-base text-gray-300 hover:text-white"
+                  className='text-base text-gray-300 hover:text-white'
                 >
                   {item.name}
                 </a>
@@ -80,15 +95,16 @@ export default function FooterNavigation() {
             ))}
           </ul>
         </div>
-        <div className="mt-12 md:mt-0">
+        <div className='mt-12 md:mt-0'>
           <div>
-            <h3 className="text-base font-medium text-white">Legal</h3>
-            <ul className="mt-4 space-y-4">
+            <h3 className='text-base font-medium text-white'>Legal</h3>
+            <ul className='mt-4 space-y-4'>
               {navigation.legal.map((item) => (
                 <li key={item.name}>
                   <a
+                    onClick={item.onClickHandler || undefined}
                     href={item.href}
-                    className="text-base text-gray-300 hover:text-white"
+                    className='text-base text-gray-300 hover:text-white'
                   >
                     {item.name}
                   </a>
