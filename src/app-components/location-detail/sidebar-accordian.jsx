@@ -5,7 +5,6 @@ import { SimpleTable, TableLink } from '../table-simple';
 import StackedParameterList from '../stacked-parameter-list';
 import { GrDocumentDownload } from 'react-icons/gr';
 import { BsFiletypeJson, BsFiletypeCsv } from 'react-icons/bs';
-import distance from '@turf/distance';
 import ProjectTimeseriesCharts from '../charts/location-timeseries-charts';
 import { mapObjectArrayByKey } from '../../helpers/misc-helpers';
 
@@ -19,12 +18,14 @@ export default function LocationSideBarAccordian({
     pathname,
     isMapView,
     providerLocationsFloodObject: locationFloodObj,
+    providerLocationsNearby,
   } = useConnect(
     'selectTimeseriesDateRange',
     'selectProviderLocationsItems',
     'selectPathname',
     'selectIsMapView',
-    'selectProviderLocationsFloodObject'
+    'selectProviderLocationsFloodObject',
+    'selectProviderLocationsNearby'
   );
 
   const [timeseriesIds, setTimeseriesId] = useState([]);
@@ -202,28 +203,7 @@ export default function LocationSideBarAccordian({
     );
   };
 
-  const NearbyLocations = ({ locationCoords, locations }) => {
-    const allowedKinds = ['SITE', 'PROJECT', 'STREAM_LOCATION'];
-
-    const filteredLocsWithDistance = locations
-      .filter(
-        (l) =>
-          l.public_name &&
-          l.timeseries?.length &&
-          l.state !== '00' &&
-          allowedKinds.includes(l.kind) &&
-          l.geometry?.coordinates?.length === 2
-      )
-      .map((l) => {
-        l['distance'] = distance(locationCoords, l.geometry?.coordinates, {
-          units: 'miles',
-        });
-
-        return l;
-      })
-      .filter((l) => l.distance > 0 && l.distance <= 15)
-      .sort((a, b) => (a.distance > b.distance ? 1 : -1));
-
+  const NearbyLocations = () => {
     return (
       <SimpleTable
         headers={[
@@ -231,7 +211,7 @@ export default function LocationSideBarAccordian({
           { text: 'State' },
           { text: 'Distance (mi)' },
         ]}
-        items={filteredLocsWithDistance}
+        items={providerLocationsNearby}
         itemFields={[
           {
             key: 'public_name',
@@ -324,6 +304,7 @@ export default function LocationSideBarAccordian({
         />
       ),
       display: !isMapView,
+      count: { value: providerLocationsNearby?.length },
     },
     {
       title: 'Documents',

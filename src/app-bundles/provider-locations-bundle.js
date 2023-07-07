@@ -1,4 +1,6 @@
 import createRestBundle from '@usace/create-rest-bundle';
+import { createSelector } from 'redux-bundler';
+import distance from '@turf/distance';
 
 const apiUrl = import.meta.env.VITE_WATER_API_URL;
 
@@ -22,5 +24,39 @@ export default createRestBundle({
   sortBy: '',
   sortAsc: false,
   reduceFurther: null,
-  addons: {},
+  addons: {
+    selectProviderLocationsNearby: createSelector(
+      'selectProviderLocationsItems',
+      'selectProviderLocationByRoute',
+      (providerLocations, location) => {
+        if (!providerLocations || !location) {
+          return [];
+        }
+        const allowedKinds = ['SITE', 'PROJECT', 'STREAM_LOCATION'];
+
+        return providerLocations
+          .filter(
+            (l) =>
+              l.public_name &&
+              l.timeseries?.length &&
+              l.state !== '00' &&
+              allowedKinds.includes(l.kind) &&
+              l.geometry?.coordinates?.length === 2
+          )
+          .map((l) => {
+            l['distance'] = distance(
+              location.geometry.coordinates,
+              l.geometry?.coordinates,
+              {
+                units: 'miles',
+              }
+            );
+
+            return l;
+          })
+          .filter((l) => l.distance > 0 && l.distance <= 15)
+          .sort((a, b) => (a.distance > b.distance ? 1 : -1));
+      }
+    ),
+  },
 });
