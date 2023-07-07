@@ -20,7 +20,9 @@ export default function StackedParameterList({ parameters }) {
       <ul className="divide-y divide-gray-200">
         {params?.length &&
           params
-            .filter((p) => p.hasOwnProperty('latest_value'))
+            .filter((p) =>
+              Object.prototype.hasOwnProperty.call(p, 'latest_value')
+            )
             .sort((a, b) => (a.sort_order > b.sort_order ? 1 : -1))
             .map((p, idx) => (
               <li key={idx}>

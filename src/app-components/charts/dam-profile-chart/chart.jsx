@@ -4,6 +4,7 @@ import DamProfileChart from '../../../_charts/dam-profile-chart/dam-profile-char
 import { mapObjectArrayByKey } from '../../../helpers/misc-helpers';
 
 export default function ReactDamProfileChart({ location }) {
+  const debug = parseInt(import.meta.env.VITE_APP_DEBUG);
   const ref = createRef(); // element where DamProfileChart will be rendered
   const [info, setInfo] = useState(null); // information DamProfileChart needs to draw itself
 
@@ -95,8 +96,10 @@ export default function ReactDamProfileChart({ location }) {
 
   useEffect(() => {
     if (info) {
-      console.log('--info--');
-      console.log(info);
+      if (debug) {
+        console.log('--Dam Profile Chart info--');
+        console.log(info);
+      }
       DamProfileChart(info, ref.current);
     }
   }, [info, ref]);

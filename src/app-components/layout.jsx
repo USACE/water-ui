@@ -13,32 +13,12 @@ function Layout({ children }) {
   );
 }
 
-function Header({ showBreadcrumb = true, children }) {
-  return (
-    // <header style={{ marginTop: 32 }} className="container bg-slate-300">
-    //   <ConditionalWrapper
-    //     condition={showBreadcrumb}
-    //     wrapper={(children) => <hgroup>{children}</hgroup>}
-    //   >
-    //     <h3>Access to Water</h3>
-
-    //     {showBreadcrumb && <Breadcrumb />}
-    //   </ConditionalWrapper>
-    //   {children}
-    // </header>
-    <MyHeader />
-  );
+function Header() {
+  return <MyHeader />;
 }
 
-function Footer({ children }) {
-  return (
-    // <footer className="container">
-    //   <footer>
-    //     <cite> - footer</cite>
-    //   </footer>
-    //   {children}
-    <MyFooter />
-  );
+function Footer() {
+  return <MyFooter />;
 }
 
 function Main({ children }) {

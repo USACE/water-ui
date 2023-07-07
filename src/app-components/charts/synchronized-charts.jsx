@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import HighchartsWrapper from './highchart-wrapper';
 import { useConnect } from 'redux-bundler-hook';
 import { subDays } from 'date-fns';

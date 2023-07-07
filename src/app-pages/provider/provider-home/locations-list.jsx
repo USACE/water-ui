@@ -18,6 +18,7 @@ import {
 } from '../../../app-components/table-simple';
 
 export default function ProviderLocationList2({ locations }) {
+  const debug = parseInt(import.meta.env.VITE_APP_DEBUG);
   const [displayedLocations, setDisplayedLocations] = useState(locations);
   const [searchQuery, setQuery] = useState('');
 
@@ -42,7 +43,9 @@ export default function ProviderLocationList2({ locations }) {
     const query = e.target.value;
     setQuery(query);
     if (query.length > 1) {
-      console.log(e);
+      if (debug) {
+        console.log(e);
+      }
 
       const results = locations?.filter((item) => {
         return (

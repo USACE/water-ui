@@ -14,6 +14,7 @@ export default function ProjectStats({ location }) {
     return;
   }
 
+  const debug = parseInt(import.meta.env.VITE_APP_DEBUG);
   const FloodStorageUtilized = GetProjectFloodStorage(location);
   const ConservationStorageUtilized = GetProjectConStorage(location);
   const TotalProjectStorageUtilized = GetProjectTotalStorage(location);
@@ -39,8 +40,11 @@ export default function ProjectStats({ location }) {
       ? TotalProjectStorageUtilized?.toFixed(0) + '%'
       : 'N/A';
 
-  console.log('--TotalProjectStorageUtilized--');
-  console.log(TotalProjectStorageUtilized);
+  if (debug) {
+    console.log(
+      `Project Stats: TotalProjectStorageUtilized is: ${TotalProjectStorageUtilized}`
+    );
+  }
 
   const stats = [
     {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useConnect } from 'redux-bundler-hook';
 //import SimpleTable from '../../app-components/table-simple';
 import PageWrapper from '../page-wrapper';

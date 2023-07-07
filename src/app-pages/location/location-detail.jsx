@@ -37,8 +37,6 @@ export default function ProjectDetail() {
     // 'selectTimeseriesDateRange'
   );
 
-  console.log('############# LOCATION DETAIL RENDER #################');
-
   // const [location, setLocation] = useState(_location);
   const [expanded, setExpanded] = useState(false);
   const [timeseriesIds, setTimeseriesId] = useState([]);

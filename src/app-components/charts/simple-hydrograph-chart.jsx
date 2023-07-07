@@ -1,5 +1,5 @@
 //import SimpleStageHydrographChart from '../../images/mockup/simple-stage-hydrograph-chart.png';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 import { subDays } from 'date-fns';
 import Highcharts from 'highcharts';

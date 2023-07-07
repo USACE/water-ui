@@ -4,7 +4,6 @@ import { HiOutlineXMark } from 'react-icons/hi2';
 import DamProfileChart from './charts/dam-profile-chart/chart';
 import LocationSideBarAccordian from './location-detail/sidebar-accordian';
 import PageHead from './page-head';
-import ProjectTimeseriesCharts from './charts/location-timeseries-charts';
 import { hasRequiredLevels } from '../helpers/project-helper';
 import { Placeholder } from './content-placeholder';
 import { LoadingBar } from '../app-components/loading';
@@ -15,7 +14,6 @@ import { FcExpand } from 'react-icons/fc';
 export default function DetailPanel() {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const [timeseriesIds, setTimeseriesId] = useState([]);
 
   const {
     mapLocationSelected,
@@ -29,35 +27,10 @@ export default function DetailPanel() {
     'doUpdateUrl'
   );
 
-  /** Load specific timeseries ids into state when new configurations are loaded */
-  // useEffect(() => {
-  //   const timeseriesIdArray = location?.timeseries
-  //     ? location?.timeseries?.map((ts) => {
-  //         return ts.tsid;
-  //       })
-  //     : [];
-
-  //   setTimeseriesId(timeseriesIdArray);
-  // }, [location]);
-
   useEffect(() => {
     mapLocationSelected?.slug && location && setOpen(true);
     console.log(mapLocationSelected);
   }, [mapLocationSelected, location]);
-
-  // const addonSections = [
-  //   {
-  //     title: 'Timeseries Charts',
-  //     content: (
-  //       <div className="pt-5">
-  //         {timeseriesIds?.length ? (
-  //           <ProjectTimeseriesCharts location={location} />
-  //         ) : null}
-  //       </div>
-  //     ),
-  //     defaultOpen: false,
-  //   },
-  // ];
 
   const ExpandToggle = () => {
     return (

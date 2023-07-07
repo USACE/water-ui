@@ -61,7 +61,6 @@ export default function LocationSideBarAccordian({
   };
 
   const Levels = ({ levels }) => {
-    console.log('hello from levels');
     return (
       <SimpleTable
         headers={[
@@ -93,11 +92,10 @@ export default function LocationSideBarAccordian({
     );
   };
 
-  const DataSources = ({ sources, type, provider }) => {
+  const DataSources = ({ sources, provider }) => {
     // 'https://cwms-data.usace.army.mil/cwms-data/timeseries?name=BEND.Precip.Inst.1Hour.0.Best-MRBWM&office=NWDM&begin=2023-04-10T14%3A49%3A52%2B00%3A00&end=2023-04-16T14%3A49%3A52%2B00%3A00';
 
     const createApiUrl = (tsid) => {
-      // const cdaHost = 'https://cwms-data.usace.army.mil/cwms-data';
       const apiUrl = import.meta.env.VITE_WATER_API_URL;
 
       return (
@@ -297,21 +295,6 @@ export default function LocationSideBarAccordian({
       display: location?.kind === 'PROJECT',
     },
   ];
-
-  // Project only sections
-  // const projectSections = [
-  //   {
-  //     title: 'Documents',
-  //     content: <Documents docs={location?.documents} />,
-  //   },
-  // ];
-
-  // if (location?.kind === 'PROJECT' && location?.documents?.length) {
-  //   sections.push(...projectSections);
-  // }
-  // if (addonSections.length) {
-  //   sections.push(...addonSections);
-  // }
 
   return <Accordion sections={sections.filter((s) => s.display)} />;
 }

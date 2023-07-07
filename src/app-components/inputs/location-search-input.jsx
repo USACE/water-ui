@@ -21,11 +21,9 @@ const LocationItem = ({
   kind,
   public_name,
   code,
-  provider,
   provider_name,
   slug,
   state,
-  state_name,
 }) => {
   return (
     <div key={slug} className="flex">
@@ -49,9 +47,9 @@ function LocationCombobox({
   label,
   value,
   setValue,
-  isValid,
-  setIsValid,
-  isRequired,
+  // isValid,
+  // setIsValid,
+  // isRequired,
   placeholder,
   className,
 }) {

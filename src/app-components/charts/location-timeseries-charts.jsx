@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 // import { subDays } from 'date-fns';
 import MultiParamChart from './highchart-multiparam';
@@ -135,7 +135,7 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
 
       // Loop over each label (aka parameter) for each chart
       // ----------
-      chartCfg.forEach((cfgObj, idx) => {
+      chartCfg.forEach((cfgObj) => {
         // tsObj will be null if the label key not found in mapped object
 
         const _tsObj = mapObjectArrayByKey(location?.timeseries, 'label');
@@ -169,7 +169,10 @@ export default function ProjectTimeseriesCharts({ location: _location }) {
 
           // default is visble unless specified as false in config above
           tsObj['chartVisible'] =
-            cfgObj?.hasOwnProperty('visible') && !cfgObj.visible ? false : true;
+            Object.prototype.hasOwnProperty.call(cfgObj, 'visible') &&
+            !cfgObj.visible
+              ? false
+              : true;
 
           chartParams.push(tsObj);
         } else {

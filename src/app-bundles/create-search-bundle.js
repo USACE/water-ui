@@ -1,5 +1,7 @@
 import { createSelector } from 'redux-bundler';
 
+const debug = parseInt(import.meta.env.VITE_APP_DEBUG);
+
 // Helper Function; Uppercase first letter of camel case
 const camelHelper = (name) => `${name[0].toUpperCase().concat(name.slice(1))}`;
 // Action Name Patterns for Search Bundles
@@ -22,7 +24,9 @@ const register = (m) => {
     return false;
   }
   // Registration passed
-  console.log(`Register with Search Bundle Success: ${m.name}`);
+  if (debug) {
+    console.log(`Register with Search Bundle Success: ${m.name}`);
+  }
   return true;
 };
 
