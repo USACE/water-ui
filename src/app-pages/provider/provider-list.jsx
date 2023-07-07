@@ -66,6 +66,7 @@ export default function ProviderList() {
                           rel="noreferrer"
                           title="external link to office website"
                           href={providerLinks[p.slug.toLowerCase()].wm}
+                          className="inline-block"
                         >
                           <FiExternalLink
                             className="h-4 w-4"

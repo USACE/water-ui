@@ -50,6 +50,63 @@ const providerLinks = {
   nae: {
     wm: 'https://reservoircontrol.usace.army.mil',
   },
+  nao: {
+    wm: 'https://www.nao-wc.usace.army.mil',
+  },
+  nap: {
+    wm: 'https://www.nap-wc.usace.army.mil',
+  },
+  nwd: {
+    wm: 'https://www.nwd.usace.army.mil/Missions/Water/',
+  },
+  nwdm: {
+    wm: 'https://www.nwd.usace.army.mil/mrwm/',
+  },
+  nwdp: {
+    wm: 'https://www.nwd.usace.army.mil/CRWM/',
+  },
+  sad: {
+    wm: 'https://www.sad.usace.army.mil/Missions/Civil-Works/Water-Management/',
+  },
+  saj: {
+    wm: 'https://www.saj.usace.army.mil/WaterManagement/',
+  },
+  sam: {
+    wm: 'https://www.sam.usace.army.mil/Missions/Civil-Works/Water-Management/',
+  },
+  sas: {
+    wm: 'https://www.sas.usace.army.mil',
+  },
+  saw: {
+    wm: 'https://www.saw.usace.army.mil/Missions/Water-Management-Multi-Purpose-Reservoirs/',
+  },
+  spd: {
+    wm: 'https://www.spd.usace.army.mil/',
+  },
+  spa: {
+    wm: 'https://www.spa.usace.army.mil/Missions/Civil-Works/Water-Control/',
+  },
+  spk: {
+    wm: 'https://www.spk-wc.usace.army.mil',
+  },
+  spl: {
+    wm: 'https://www.spl.usace.army.mil',
+  },
+  swd: {
+    wm: 'https://www.swd.usace.army.mil',
+  },
+  swf: {
+    wm: 'https://www.swf-wc.usace.army.mil',
+  },
+  swg: {
+    wm: 'https://www.swg-wc.usace.army.mil',
+  },
+  swl: {
+    wm: 'https://www.swl-wc.usace.army.mil',
+  },
+  swt: {
+    wm: 'https://www.swt-wc.usace.army.mil',
+  },
 };
 
 export { providerLinks };
