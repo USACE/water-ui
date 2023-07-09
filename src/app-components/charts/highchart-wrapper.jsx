@@ -3,6 +3,7 @@ import HighchartsReact from 'highcharts-react-official';
 import highchartsExport from 'highcharts/modules/exporting';
 import highchartsExportData from 'highcharts/modules/export-data';
 import highchartsAccessibility from 'highcharts/modules/accessibility';
+import { isMobile } from 'react-device-detect';
 
 const HighchartsWrapper = (props) => {
   // init the module
@@ -61,6 +62,11 @@ const HighchartsWrapper = (props) => {
       text: 'No title set',
       align: 'center',
     },
+    subtitle: !isMobile
+      ? {
+          text: 'Click and drag to zoom in. Hold down shift key to pan.',
+        }
+      : null,
     legend: props.chartOptions?.legend || { enabled: false },
     xAxis: {
       type: 'datetime',

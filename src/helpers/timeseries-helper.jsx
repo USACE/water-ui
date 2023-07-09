@@ -83,13 +83,13 @@ const DeltaChange = ({ delta }, { title = '24 hour change' }) => {
     <>
       {delta > 0 ? (
         <HiArrowUp
-          className="h-5 w-5 flex-shrink-0 self-center text-green-500"
-          aria-hidden="true"
+          className='h-5 w-5 flex-shrink-0 self-center text-green-500'
+          aria-hidden='true'
         />
       ) : (
         <HiArrowDown
-          className="h-5 w-5 flex-shrink-0 self-center text-red-500"
-          aria-hidden="true"
+          className='h-5 w-5 flex-shrink-0 self-center text-red-500'
+          aria-hidden='true'
         />
       )}
       {/* <span className="">
@@ -99,7 +99,7 @@ const DeltaChange = ({ delta }, { title = '24 hour change' }) => {
                                 : '24hr decrease'}{' '}
                               of
                             </span> */}
-      <span className="ml-1 cursor-default" aria-label={title} title={title}>
+      <span className='ml-1 cursor-default' aria-label={title} title={title}>
         {delta}
       </span>
     </>
@@ -193,7 +193,8 @@ const displayValue = (tsObj) => {
     });
   }
   return tsObj?.latest_value?.toLocaleString(undefined, {
-    maximumFractionDigits: 1,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   });
 };
 

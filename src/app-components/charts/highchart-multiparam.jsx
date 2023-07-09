@@ -108,6 +108,7 @@ export default function MultiParamChart({ chartParams }) {
           enabled: true,
           radius: 2,
         },
+        pointWidth: 2, //used by column type
         accessibility: {
           description: `${chartParamObj?.label} measured in ${chartParamObj?.unit}`,
         },
