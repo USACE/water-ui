@@ -10,6 +10,7 @@ import { LoadingBar } from '../app-components/loading';
 // import { BiExpandHorizontal } from 'react-icons/bi';
 import { TbTableShortcut } from 'react-icons/tb';
 import { FcExpand } from 'react-icons/fc';
+import PageTitle from './page-title';
 
 export default function DetailPanel() {
   const [open, setOpen] = useState(false);
@@ -49,6 +50,7 @@ export default function DetailPanel() {
 
   return (
     <>
+      <PageTitle title={location?.public_name} />
       <ExpandToggle />
       <div
         className={`bottom-0 h-2/3 border-t-2 border-t-gray-400 lg:h-full lg:border-t-0 ${

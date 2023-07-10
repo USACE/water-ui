@@ -14,8 +14,8 @@ export default function MapHome() {
   }, []);
   return (
     <>
-      <div className="absolute bottom-0 left-0 right-0 top-24 flex flex-col lg:flex-row ">
-        <div className="relative h-full w-full">
+      <div className='absolute bottom-0 left-0 right-0 top-24 flex flex-col lg:flex-row '>
+        <div className='relative h-full w-full'>
           <Map
             controls={{
               navigation: true,
