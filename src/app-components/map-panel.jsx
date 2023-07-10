@@ -50,7 +50,7 @@ export default function DetailPanel() {
 
   return (
     <>
-      <PageTitle title={location?.public_name} />
+      <PageTitle title={location?.public_name || 'Map'} />
       <ExpandToggle />
       <div
         className={`bottom-0 h-2/3 border-t-2 border-t-gray-400 lg:h-full lg:border-t-0 ${
