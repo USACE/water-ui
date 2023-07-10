@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Map } from '../app-components/maplibre';
-import DetailPanel from '../app-components/map-panel';
+import DetailPanel from '../app-components/map/map-panel';
 
 export default function MapHome() {
   const mapRef = useRef(null);

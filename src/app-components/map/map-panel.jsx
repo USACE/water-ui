@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 import { HiOutlineXMark } from 'react-icons/hi2';
-import DamProfileChart from './charts/dam-profile-chart/chart';
-import LocationSideBarAccordian from './location-detail/sidebar-accordian';
-import PageHead from './page-head';
-import { hasRequiredLevels } from '../helpers/project-helper';
-import { Placeholder } from './content-placeholder';
-import { LoadingBar } from '../app-components/loading';
-// import { BiExpandHorizontal } from 'react-icons/bi';
-import { TbTableShortcut } from 'react-icons/tb';
+import DamProfileChart from '../charts/dam-profile-chart/chart';
+import LocationSideBarAccordian from '../location-detail/sidebar-accordian';
+import PageHead from '../page-head';
+import { hasRequiredLevels } from '../../helpers/project-helper';
+import { Placeholder } from '../content-placeholder';
+import { LoadingBar } from '../loading';
 import { FcExpand } from 'react-icons/fc';
-import PageTitle from './page-title';
+import PageTitle from '../page-title';
+import MapOverviewToggle from './map-overview-toggle';
 
 export default function DetailPanel() {
   const [open, setOpen] = useState(false);
@@ -20,12 +19,10 @@ export default function DetailPanel() {
     mapLocationSelected,
     providerLocationByRoute: location,
     providerByRoute: provider,
-    doUpdateUrl,
   } = useConnect(
     'selectMapLocationSelected',
     'selectProviderLocationByRoute',
     'selectProviderByRoute',
-    'doUpdateUrl',
     'selectProviderLocationTimeseriesLatestValues'
   );
 
@@ -59,7 +56,7 @@ export default function DetailPanel() {
       >
         <div className='flex h-full flex-col overflow-y-scroll bg-white py-2'>
           <div className='bg-white'>
-            <div className='flex items-start justify-between'>
+            <div className='flex items-stretch justify-between'>
               <div className='ml-3 flex h-7 items-center'>
                 <button
                   type='button'
@@ -69,29 +66,9 @@ export default function DetailPanel() {
                   <span className='sr-only'>Close panel</span>
                   <HiOutlineXMark className='h-6 w-6' aria-hidden='true' />
                 </button>
-                {/* <button onClick={() => setExpanded(!expanded)}>
-                  <span className="sr-only">expand panel</span>
-                  <BiExpandHorizontal
-                    className="ml-5 hidden h-6 w-6 text-gray-400 lg:inline"
-                    aria-hidden="true"
-                  />
-                </button> */}
-                <button
-                  type='button'
-                  className='ml-4 hover:cursor-pointer'
-                  title='Switch to Details View'
-                  onClick={() =>
-                    doUpdateUrl(
-                      `/overview/${provider?.slug}/locations/${location?.slug}`
-                    )
-                  }
-                >
-                  <span className='sr-only'>Switch to Details View</span>
-                  <TbTableShortcut
-                    className='h-6 w-6 text-gray-400'
-                    aria-hidden='true'
-                  />
-                </button>
+              </div>
+              <div className=''>
+                <MapOverviewToggle />
               </div>
             </div>
           </div>
