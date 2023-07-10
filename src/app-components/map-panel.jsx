@@ -24,7 +24,8 @@ export default function DetailPanel() {
     'selectMapLocationSelected',
     'selectProviderLocationByRoute',
     'selectProviderByRoute',
-    'doUpdateUrl'
+    'doUpdateUrl',
+    'selectProviderLocationTimeseriesLatestValues'
   );
 
   useEffect(() => {
@@ -34,12 +35,12 @@ export default function DetailPanel() {
 
   const ExpandToggle = () => {
     return (
-      <div className="hidden h-full w-4 flex-col justify-center bg-gray-100 lg:flex">
-        <button className="h-full" onClick={() => setExpanded(!expanded)}>
-          <span className="sr-only">resize panel</span>
+      <div className='hidden h-full w-4 flex-col justify-center bg-gray-100 lg:flex'>
+        <button className='h-full' onClick={() => setExpanded(!expanded)}>
+          <span className='sr-only'>resize panel</span>
           <FcExpand
             className={`h-4 w-4 ${expanded ? '-rotate-90' : 'rotate-90'}`}
-            aria-hidden="true"
+            aria-hidden='true'
           />
         </button>
       </div>
@@ -54,17 +55,17 @@ export default function DetailPanel() {
           !open ? 'hidden' : null
         } ${expanded ? 'lg:w-2/3' : 'lg:w-2/5'}`}
       >
-        <div className="flex h-full flex-col overflow-y-scroll bg-white py-2">
-          <div className="bg-white">
-            <div className="flex items-start justify-between">
-              <div className="ml-3 flex h-7 items-center">
+        <div className='flex h-full flex-col overflow-y-scroll bg-white py-2'>
+          <div className='bg-white'>
+            <div className='flex items-start justify-between'>
+              <div className='ml-3 flex h-7 items-center'>
                 <button
-                  type="button"
-                  className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  type='button'
+                  className='rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
                   onClick={() => setOpen(false)}
                 >
-                  <span className="sr-only">Close panel</span>
-                  <HiOutlineXMark className="h-6 w-6" aria-hidden="true" />
+                  <span className='sr-only'>Close panel</span>
+                  <HiOutlineXMark className='h-6 w-6' aria-hidden='true' />
                 </button>
                 {/* <button onClick={() => setExpanded(!expanded)}>
                   <span className="sr-only">expand panel</span>
@@ -74,41 +75,41 @@ export default function DetailPanel() {
                   />
                 </button> */}
                 <button
-                  type="button"
-                  className="ml-4 hover:cursor-pointer"
-                  title="Switch to Details View"
+                  type='button'
+                  className='ml-4 hover:cursor-pointer'
+                  title='Switch to Details View'
                   onClick={() =>
                     doUpdateUrl(
                       `/overview/${provider?.slug}/locations/${location?.slug}`
                     )
                   }
                 >
-                  <span className="sr-only">Switch to Details View</span>
+                  <span className='sr-only'>Switch to Details View</span>
                   <TbTableShortcut
-                    className="h-6 w-6 text-gray-400"
-                    aria-hidden="true"
+                    className='h-6 w-6 text-gray-400'
+                    aria-hidden='true'
                   />
                 </button>
               </div>
             </div>
           </div>
-          <div className="relative mt-2 flex-1 overflow-auto px-4">
-            <div className="mb-5">
+          <div className='relative mt-2 flex-1 overflow-auto px-4'>
+            <div className='mb-5'>
               <PageHead
                 title={location?.public_name}
                 subTitle={`provided by ${provider?.name}`}
               />
             </div>
 
-            <div className="bg-gray-300 text-center align-bottom">
+            <div className='bg-gray-300 text-center align-bottom'>
               <LoadingBar isLoading={!location} />
             </div>
 
             {location?.kind === 'PROJECT' && hasRequiredLevels(location) ? (
-              <div className="my-5 w-full">
+              <div className='my-5 w-full'>
                 <Placeholder
                   ready={location?.levels?.length}
-                  className="h-96 w-full"
+                  className='h-96 w-full'
                 >
                   <DamProfileChart location={location} />
                 </Placeholder>
@@ -120,7 +121,7 @@ export default function DetailPanel() {
               <ProjectTimeseriesCharts location={location} />
             ) : null}
           </div> */}
-            <div className="">
+            <div className=''>
               <LocationSideBarAccordian
                 location={location}
                 // addonSections={addonSections}

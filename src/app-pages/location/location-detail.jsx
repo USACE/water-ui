@@ -10,130 +10,77 @@ import LocationSideBarAccordian from '../../app-components/location-detail/sideb
 import ProjectStats from '../../app-components/location-detail/project-stats';
 // import { subDays, subHours, parseJSON, differenceInDays } from 'date-fns';
 // import { formatInTimeZone } from 'date-fns-tz';
-import {
-  LastValueSet,
-  LookBackValueSet,
-} from '../../helpers/timeseries-helper';
+// import {
+//   LastValueSet,
+//   LookBackValueSet,
+// } from '../../helpers/timeseries-helper';
 import { Placeholder } from '../../app-components/content-placeholder';
 import { mapObjectArrayByKey } from '../../helpers/misc-helpers';
 import { hasRequiredLevels } from '../../helpers/project-helper';
 import { FcDam, FcAreaChart } from 'react-icons/fc';
-import { PrecipTotal } from '../../helpers/timeseries-helper';
+// import { PrecipTotal } from '../../helpers/timeseries-helper';
 
 export default function ProjectDetail() {
   const {
     providerByRoute: provider,
     providerLocationByRoute: location,
     providerLocationIsLoading,
-    providerTimeseriesValuesItemsObject: tsvObj,
-    // doProviderTimeseriesValuesFetchById,
-    // timeseriesDateRange: dateRange,
+    // providerTimeseriesValuesItemsObject: tsvObj,
   } = useConnect(
     'selectProviderByRoute',
     'selectProviderLocationByRoute',
     'selectProviderLocationIsLoading',
-    'selectProviderTimeseriesValuesItemsObject'
-    // 'doProviderTimeseriesValuesFetchById',
-    // 'selectTimeseriesDateRange'
+    'selectProviderLocationTimeseriesLatestValues'
+    // 'selectProviderTimeseriesValuesItemsObject'
   );
 
-  // const [location, setLocation] = useState(_location);
   const [expanded, setExpanded] = useState(false);
-  const [timeseriesIds, setTimeseriesId] = useState([]);
-  //const [measurements, setMeasurements] = useState([]);
-  // const [dateRange, setDateRange] = useState([
-  //   subDays(new Date(), 7),
-  //   new Date(),
-  // ]);
-
-  // console.log('----DATE RANGE---');
-  // console.log(dateRange);
-  // console.log(differenceInDays(dateRange[1], dateRange[0]));
+  // const [timeseriesIds, setTimeseriesId] = useState([]);
 
   /** Load specific timeseries ids into state when new configurations are loaded */
-  useEffect(() => {
-    const timeseriesIdArray = location?.timeseries
-      ? location?.timeseries?.map((ts) => {
-          return ts.tsid;
-        })
-      : [];
-
-    setTimeseriesId(timeseriesIdArray);
-  }, [location]);
-
-  /** Fetch the timeseries measurements in regards to date range */
   // useEffect(() => {
-  //   location &&
-  //     timeseriesIds &&
-  //     timeseriesIds.forEach((id) => {
-  //       // console.log(`fetching ${id}`);
-  //       doProviderTimeseriesValuesFetchById({ timeseriesId: id, dateRange });
-  //       //doProviderTimeseriesValuesFetch();
-  //     });
-  // }, [location, timeseriesIds, dateRange, doProviderTimeseriesValuesFetchById]);
+  //   const timeseriesIdArray = location?.timeseries
+  //     ? location?.timeseries?.map((ts) => {
+  //         return ts.tsid;
+  //       })
+  //     : [];
+
+  //   setTimeseriesId(timeseriesIdArray);
+  // }, [location]);
 
   // useEffect(() => {
-  //   // Note: timeSeriesValues may contain the more tsids than we want for this location
-  //   // Filter is down by the "timeseriesIds" array which only includes tsids for the
-  //   // current location
+  //   if (!tsvObj || !location?.timeseries?.length) {
+  //     console.log('--returning--');
+  //     return;
+  //   }
 
-  //   console.log('--filtering timeseries values--');
-  //   const locationTsValues = timeSeriesValues.filter((v) =>
-  //     timeseriesIds.includes(v.key)
-  //   );
-  //   console.log(locationTsValues);
+  //   let updated_timeseries = location?.timeseries?.map((obj) => {
+  //     const tsvArray = tsvObj ? tsvObj[obj.tsid]?.values : null;
 
-  //   setMeasurements(locationTsValues);
-  // }, [timeSeriesValues, timeseriesIds]);
+  //     if (tsvArray?.length) {
+  //       const lastRecord = LastValueSet(tsvArray);
+  //       obj['latest_time'] = lastRecord.latest_time || null;
+  //       obj['latest_value'] = !isNaN(lastRecord.latest_value)
+  //         ? lastRecord.latest_value
+  //         : null;
+  //       const lookBackRecord = LookBackValueSet(tsvArray, 24);
+  //       obj['delta24hr'] =
+  //         lookBackRecord &&
+  //         (lastRecord.latest_value - lookBackRecord.latest_value)?.toFixed(2);
+  //       obj['unit'] = tsvObj[obj.tsid]?.unit;
+  //       obj['precip_total'] = PrecipTotal(obj, tsvArray);
+  //     }
 
-  useEffect(() => {
-    // console.log('--hello world--');
-    // console.log(location?.timeseries);
-    // console.log('--tsvObj--');
-    // console.log(tsvObj);
+  //     return obj;
+  //   });
 
-    if (!tsvObj || !location?.timeseries?.length) {
-      console.log('--returning--');
-      return;
-    }
-
-    let updated_timeseries = location?.timeseries?.map((obj) => {
-      // console.log('--obj--');
-      // console.log(obj);
-
-      // console.log('--tsvObj[obj.tsid]--');
-      // console.log(tsvObj && tsvObj[obj.tsid]);
-      const tsvArray = tsvObj ? tsvObj[obj.tsid]?.values : null;
-
-      if (tsvArray?.length) {
-        const lastRecord = LastValueSet(tsvArray);
-        obj['latest_time'] = lastRecord.latest_time || null;
-        obj['latest_value'] = !isNaN(lastRecord.latest_value)
-          ? lastRecord.latest_value
-          : null;
-        const lookBackRecord = LookBackValueSet(tsvArray, 24);
-        obj['delta24hr'] =
-          lookBackRecord &&
-          (lastRecord.latest_value - lookBackRecord.latest_value)?.toFixed(2);
-        obj['unit'] = tsvObj[obj.tsid]?.unit;
-        obj['precip_total'] = PrecipTotal(obj, tsvArray);
-      }
-
-      return obj;
-    });
-
-    location.timeseries = updated_timeseries;
-    // temp_location.timeseries = temp_timeseries;
-    // // console.log('--temp location--');
-    // // console.log(temp_location);
-    // location.timeseries = temp_timeseries;
-    // //setLocation(temp_location);
-  }, [location, location?.timeseries, tsvObj]);
+  //   location.timeseries = updated_timeseries;
+  // }, [location, location?.timeseries, tsvObj]);
 
   if (!location && !providerLocationIsLoading) {
     return (
-      <PageWrapper title="404 - Location Not Found" subTitle="">
-        <div className="mx-auto h-96">Unable to find your location.</div>
+      <PageWrapper title='404 - Location Not Found' subTitle=''>
+        <div className='mx-auto h-96'>Unable to find your location.</div>
       </PageWrapper>
     );
   }
@@ -151,7 +98,7 @@ export default function ProjectDetail() {
     const poolDirection = elevObj?.delta24hr > 0 ? 'increased' : 'decreased';
 
     return (
-      <p className="sr-only bg-blue-100 p-5" aria-label="Project Status">
+      <p className='sr-only bg-blue-100 p-5' aria-label='Project Status'>
         {l?.public_name} is located in the state of {l?.state}. The current pool
         elevation is {poolElev} feet and has {poolDirection} in elevation{' '}
         {elevObj?.delta24hr} feet in the last 24 hours.
@@ -167,7 +114,7 @@ export default function ProjectDetail() {
         <>
           <ProjectStatusDescription location={location} />
 
-          <Placeholder ready={location?.levels?.length} className="h-96 w-full">
+          <Placeholder ready={location?.levels?.length} className='h-96 w-full'>
             <DamProfileChart location={location} />
           </Placeholder>
         </>
@@ -179,7 +126,7 @@ export default function ProjectDetail() {
       name: 'Timeseries',
       content:
         location && location?.timeseries?.length ? (
-          <div className="bg-white pt-5">
+          <div className='bg-white pt-5'>
             <LocationTimeseriesCharts location={location} />
           </div>
         ) : null,
@@ -196,11 +143,11 @@ export default function ProjectDetail() {
 
   const ToggleExpandButton = () => {
     return (
-      <div className="mb-2 hidden w-full lg:flex ">
+      <div className='mb-2 hidden w-full lg:flex '>
         <BiExpandHorizontal
           size={32}
-          title="Expand or Collapse this section"
-          className="-mb-0 ml-auto cursor-pointer rounded-md border-2 border-gray-100 bg-white px-1 text-gray-400 shadow-md hover:text-gray-900"
+          title='Expand or Collapse this section'
+          className='-mb-0 ml-auto cursor-pointer rounded-md border-2 border-gray-100 bg-white px-1 text-gray-400 shadow-md hover:text-gray-900'
           onClick={handleExpandToggle}
         />
       </div>
@@ -227,15 +174,18 @@ export default function ProjectDetail() {
 
           {isProject && hasRequiredLevels(location) ? (
             <>
-              <div className="mb-5">
+              <div className='mb-5'>
                 {isProject && <ProjectStats location={location} />}
               </div>
-              <div className="">
+              <div className=''>
                 <TabsComponent tabs={tabs} />
               </div>
             </>
           ) : (
-            <Placeholder ready={timeseriesIds.length} className="h-96 w-full">
+            <Placeholder
+              ready={location?.timeseries?.length}
+              className='h-96 w-full'
+            >
               <LocationTimeseriesCharts location={location} />
             </Placeholder>
           )}

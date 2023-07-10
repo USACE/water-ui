@@ -19,27 +19,33 @@ export default function LocationSideBarAccordian({
     isMapView,
     providerLocationsFloodObject: locationFloodObj,
     providerLocationsNearby,
+    doProviderLocationTimeseriesFetchAll,
+    providerLocationTimeseriesLatestValues: latestTimeseriesObj,
   } = useConnect(
     'selectTimeseriesDateRange',
     'selectProviderLocationsItems',
     'selectPathname',
     'selectIsMapView',
     'selectProviderLocationsFloodObject',
-    'selectProviderLocationsNearby'
+    'selectProviderLocationsNearby',
+    'doProviderLocationTimeseriesFetchAll',
+    'selectProviderLocationTimeseriesLatestValues'
   );
 
-  const [timeseriesIds, setTimeseriesId] = useState([]);
+  // const [timeseriesIds, setTimeseriesId] = useState([]);
   const [alertCount, setAlertCount] = useState();
 
   /** Load specific timeseries ids into state when new configurations are loaded */
   useEffect(() => {
-    const timeseriesIdArray = location?.timeseries
-      ? location?.timeseries?.map((ts) => {
-          return ts.tsid;
-        })
-      : [];
+    location && doProviderLocationTimeseriesFetchAll(location);
 
-    setTimeseriesId(timeseriesIdArray);
+    // const timeseriesIdArray = location?.timeseries
+    //   ? location?.timeseries?.map((ts) => {
+    //       return ts.tsid;
+    //     })
+    //   : [];
+
+    // setTimeseriesId(timeseriesIdArray);
   }, [location]);
 
   const Alerts = ({ location }) => {
@@ -53,7 +59,7 @@ export default function LocationSideBarAccordian({
       console.log(stageValue);
       if (stageValue >= floodLevel) {
         return (
-          <div className="bg-red-500 p-2 text-white">
+          <div className='bg-red-500 p-2 text-white'>
             {`Current stage of ${stageValue} (ft) has exceeded flood stage of ${floodLevel} (ft).`}
           </div>
         );
@@ -147,7 +153,7 @@ export default function LocationSideBarAccordian({
                   text={<BsFiletypeJson size={18} />}
                   title={p.label}
                   href={createApiUrl(p.tsid)}
-                  target="_blank"
+                  target='_blank'
                 />
               );
             },
@@ -160,7 +166,7 @@ export default function LocationSideBarAccordian({
                   text={<BsFiletypeCsv size={18} />}
                   title={p.label}
                   href={createApiUrl(p.tsid) + '&format=csv'}
-                  target="_blank"
+                  target='_blank'
                   download={createApiUrl(p.tsid) + '&format=csv'}
                 />
               );
@@ -175,8 +181,8 @@ export default function LocationSideBarAccordian({
   const DocumentLink = ({ href, title }) => {
     return (
       <>
-        <a className="hover:underline" href={href}>
-          <span className="mr-2 inline-block">
+        <a className='hover:underline' href={href}>
+          <span className='mr-2 inline-block'>
             <GrDocumentDownload size={16} />
           </span>
           {title}
@@ -249,7 +255,11 @@ export default function LocationSideBarAccordian({
     },
     {
       title: 'Current Values',
-      content: <StackedParameterList parameters={location?.timeseries} />,
+      content: (
+        <StackedParameterList
+          parameters={latestTimeseriesObj?.length && latestTimeseriesObj}
+        />
+      ),
       defaultOpen: true,
       display: true,
       count: { value: location?.timeseries?.length },
@@ -257,8 +267,8 @@ export default function LocationSideBarAccordian({
     {
       title: 'Timeseries Charts',
       content: (
-        <div className="pt-5">
-          {timeseriesIds?.length ? (
+        <div className='pt-5'>
+          {latestTimeseriesObj?.length ? (
             <ProjectTimeseriesCharts location={location} />
           ) : null}
         </div>
@@ -288,7 +298,7 @@ export default function LocationSideBarAccordian({
       content: (
         <DataSources
           sources={location?.timeseries}
-          type="timeseries"
+          type='timeseries'
           provider={location?.provider}
         />
       ),
