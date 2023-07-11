@@ -66,10 +66,15 @@ export default function StackedParameterList({ parameters }) {
                           />
                           <time dateTime={p.latest_time}>
                             {p.latest_time &&
-                              format(
-                                parseISO(p.latest_time),
-                                'dd-LLL-yyyy @ p'
-                              )}
+                              parseISO(p.latest_time).toLocaleString('en-US', {
+                                day: 'numeric',
+                                year: 'numeric', // numeric, 2-digit
+                                month: 'short', // numeric, 2-digit, long, short, narrow
+                                hour: 'numeric', // numeric, 2-digit
+                                minute: 'numeric', // numeric, 2-digit
+                                // second: 'numeric', // numeric, 2-digit
+                                timeZoneName: 'short',
+                              })}
                           </time>
                         </Placeholder>
                       </p>

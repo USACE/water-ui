@@ -87,11 +87,32 @@ const HighchartsWrapper = (props) => {
         fontWeight: 'bold',
         fontSize: '14px',
       },
-      // formatter: function () {
-      //   return this.points.reduce(function (s, point) {
-      //     return s + '<br/>' + point.series.name + ': ' + point.y + 'm';
-      //   }, '<b>' + this.x + '</b>');
-      // },
+
+      formatter: function () {
+        return this.points.reduce(
+          function (s, point) {
+            return (
+              s +
+              `<br/><span style="color:${point.color}">\u25CF&nbsp;</span>` +
+              point.series.name +
+              ': ' +
+              point.y.toLocaleString()
+            );
+          },
+          '<span style="font-size:smaller;font-weight:bold;">' +
+            new Date(this.x).toLocaleString('en-US', {
+              weekday: 'long',
+              day: 'numeric',
+              year: 'numeric', // numeric, 2-digit
+              month: 'short', // numeric, 2-digit, long, short, narrow
+              hour: 'numeric', // numeric, 2-digit
+              minute: 'numeric', // numeric, 2-digit
+              // second: 'numeric', // numeric, 2-digit
+              timeZoneName: 'short',
+            }) +
+            '</span>'
+        );
+      },
     },
   };
 
