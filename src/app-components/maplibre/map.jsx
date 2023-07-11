@@ -69,11 +69,13 @@ export default function Map({ controls, children, mapRef }) {
       map.addControl(new maplibregl.FullscreenControl());
     }
 
-    map.addControl(
-      new maplibregl.AttributionControl({
-        compact: true,
-      })
-    );
+    if (controls.attribution) {
+      map.addControl(
+        new maplibregl.AttributionControl({
+          compact: true,
+        })
+      );
+    }
 
     if (controls.basemaps) {
       map.addControl(new BasemapControl({ apiKey: '' }), 'bottom-left');
@@ -201,7 +203,7 @@ export default function Map({ controls, children, mapRef }) {
         // These options control the flight curve, making it move
         // slowly and zoom out almost completely before starting
         // to pan.
-        speed: 1.5, // make the flying slow
+        speed: 1.7, // make the flying slow
         curve: 1, // change the speed at which it zooms out
 
         // This can be any easing function: it takes a number between

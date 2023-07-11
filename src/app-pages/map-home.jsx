@@ -23,6 +23,7 @@ export default function MapHome() {
               scale: true,
               fullscreen: true,
               basemaps: true,
+              attribution: true,
             }}
             mapRef={mapRef}
           ></Map>

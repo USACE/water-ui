@@ -138,21 +138,27 @@ export default createRestBundle({
       'selectProviderLocationByRoute',
       'selectProviderTimeseriesValuesItemsObject',
       (location, selectProviderTimeseriesValuesItemsObject) => {
+        if (!location || !location?.timeseries) {
+          console.log(
+            'selectProviderLocationTimeseriesLatestValues: location or timeseries not available'
+          );
+          return null;
+        }
         // foundKeys will serve as a check to see if any of the timeseries
         // is in state (selectProviderTimeseriesValuesItemsObject).
         // If not, bail early as it hasn't been loaded yet
-        const foundKeys = location?.timeseries.filter((e) =>
+        const foundKeys = location?.timeseries?.filter((e) =>
           Object.keys(selectProviderTimeseriesValuesItemsObject).includes(
             e.tsid
           )
         );
 
-        if (!location || !foundKeys.length) {
+        if (!foundKeys.length) {
           console.log(
-            'bailing early from selectProviderLocationTimeseriesLatestValues'
+            'selectProviderLocationTimeseriesLatestValues: tsid(s) not found in state'
           );
 
-          return;
+          return null;
         }
 
         const updated_timeseries = location?.timeseries?.map((tsObj) => {

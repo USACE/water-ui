@@ -33,7 +33,7 @@ export default function ProviderQA() {
   const [locationIssues, setLocationIssues] = useState();
 
   const SectionInstructions = ({ instructions }) => {
-    return <div className="bg-yellow-100 p-2 font-medium">{instructions}</div>;
+    return <div className='bg-yellow-100 p-2 font-medium'>{instructions}</div>;
   };
 
   const ProjectsLevelsTable = ({ dataArray }) => (
@@ -76,10 +76,13 @@ export default function ProviderQA() {
 
   const LocationIssueHelp = () => {
     return (
-      <ul className="list-inside list-disc">
+      <ul className='list-inside list-disc'>
         <li>
           project levels missing - Flood Control projects need appropraite
-          levels set. Nav only Projects can ignore.
+          levels set.{' '}
+          <span className='bg-green-200 px-1 text-green-700'>
+            Navigation only Projects can ignore missing levels.
+          </span>
         </li>
         <li>
           timeseries missing - upward reporting paths have been set, but have no
@@ -97,6 +100,7 @@ export default function ProviderQA() {
           { text: 'Location' },
           { text: 'Kind' },
           { text: 'Public Name' },
+          { text: 'Coordinates' },
           { text: 'State' },
           { text: 'Timeseries' },
           { text: 'Levels' },
@@ -126,6 +130,12 @@ export default function ProviderQA() {
           },
           {
             key: 'public_name',
+          },
+          {
+            key: null,
+            render: (l) => {
+              return JSON.stringify(l.geometry?.coordinates) || 'missing';
+            },
           },
           {
             key: 'state',
@@ -165,6 +175,12 @@ export default function ProviderQA() {
               if (l.state === null || l.state === '' || l.state === '00') {
                 issues.push('state missing');
               }
+              if (
+                !Object.hasOwn(l, 'geometry') ||
+                l?.geometry?.coordinates.includes(0)
+              ) {
+                issues.push('coordinates missing');
+              }
 
               return issues.join('; ');
             },
@@ -196,7 +212,7 @@ export default function ProviderQA() {
             levelsMap[item.slug] ? 'text-green-600' : 'text-red-500'
           }`}
         >
-          <span className="mr-2 inline-block align-middle">
+          <span className='mr-2 inline-block align-middle'>
             {levelsMap[item.slug] ? (
               <AiFillCheckCircle size={18} />
             ) : (
@@ -238,7 +254,8 @@ export default function ProviderQA() {
             l.public_name === null ||
             (l.kind === 'PROJECT' && l.public_name?.split(' ')?.length === 1) ||
             l.timeseries === null ||
-            (l.kind === 'PROJECT' && l.levels === null)
+            (l.kind === 'PROJECT' && l.levels === null) ||
+            l?.geometry?.coordinates === null
         )
       : [];
 
@@ -266,10 +283,10 @@ export default function ProviderQA() {
   return (
     <PageWrapper
       title={provider?.name}
-      subTitle=""
+      subTitle=''
       isLoading={providerLocationsIsLoading}
     >
-      <ul className="mt-5">
+      <ul className='mt-5'>
         {providers
           .filter((p) => p.type === 'dis' || p.type === 'mscr')
           .map((p) => (
@@ -283,7 +300,7 @@ export default function ProviderQA() {
             </li>
           ))}
       </ul>
-      <div className="mt-5">
+      <div className='mt-5'>
         <Accordion sections={sections} />
       </div>
     </PageWrapper>

@@ -7,6 +7,7 @@ import { GrDocumentDownload } from 'react-icons/gr';
 import { BsFiletypeJson, BsFiletypeCsv } from 'react-icons/bs';
 import ProjectTimeseriesCharts from '../charts/location-timeseries-charts';
 import { mapObjectArrayByKey } from '../../helpers/misc-helpers';
+import MapPreview from '../map/map-preview';
 
 export default function LocationSideBarAccordian({
   location,
@@ -261,7 +262,7 @@ export default function LocationSideBarAccordian({
         />
       ),
       defaultOpen: true,
-      display: true,
+      display: latestTimeseriesObj?.length,
       count: { value: location?.timeseries?.length },
     },
     {
@@ -274,7 +275,7 @@ export default function LocationSideBarAccordian({
         </div>
       ),
       defaultOpen: false,
-      display: isMapView,
+      display: isMapView && location?.timeseries?.length,
       count: { value: location?.timeseries?.length },
     },
     {
@@ -284,7 +285,23 @@ export default function LocationSideBarAccordian({
     },
     {
       title: 'Location Data',
-      content: JSON.stringify(location?.geometry),
+      // content: JSON.stringify(location?.geometry),
+      content: location?.geometry?.coordinates?.length ? (
+        <>
+          <div className=' h-40 w-full bg-green-100'>
+            <MapPreview />
+          </div>
+          <div className='py-1 text-center'>
+            Lat, Lon:{' '}
+            {location?.geometry?.coordinates[1] +
+              ',' +
+              location?.geometry?.coordinates[0]}
+            {/* {JSON.stringify(location?.geometry)} */}
+          </div>
+        </>
+      ) : (
+        'coordinates not available'
+      ),
       display: !isMapView, //hide in map view
     },
     {
@@ -302,7 +319,7 @@ export default function LocationSideBarAccordian({
           provider={location?.provider}
         />
       ),
-      display: true,
+      display: location?.timeseries?.length,
       count: { value: location?.timeseries?.length },
     },
     {
