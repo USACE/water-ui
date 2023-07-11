@@ -38,22 +38,22 @@ function classNames(...classes) {
 export default function StatsWIcon({ stats }) {
   return (
     <div>
-      <dl className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <dl className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
         {stats.map((item) => (
           <div
             key={item.id}
-            className="relative overflow-hidden rounded-lg bg-white px-4 pt-5 pb-0 shadow sm:px-6 sm:pt-6"
+            className='relative overflow-hidden rounded-lg bg-white px-4 pb-0 pt-5 shadow sm:px-6 sm:pt-6'
           >
             <dt>
-              <div className="absolute rounded-md bg-gray-400 p-3">
-                <item.icon className="h-6 w-6 text-white" aria-hidden="true" />
+              <div className='absolute rounded-md bg-gray-400 p-3'>
+                <item.icon className='h-6 w-6 text-white' aria-hidden='true' />
               </div>
-              <p className="ml-16 truncate text-sm font-medium text-gray-500">
+              <p className='ml-16 truncate text-sm font-medium text-gray-500'>
                 {item.name}
               </p>
             </dt>
-            <dd className="ml-16 flex items-baseline pb-6">
-              <p className="text-2xl font-semibold text-gray-900">
+            <dd className='ml-16 flex items-baseline pb-6'>
+              <p className='text-2xl font-semibold text-gray-900'>
                 {item.stat}
               </p>
               <p
@@ -66,17 +66,17 @@ export default function StatsWIcon({ stats }) {
               >
                 {item.changeType === 'increase' ? (
                   <HiArrowUp
-                    className="h-5 w-5 flex-shrink-0 self-center text-green-500"
-                    aria-hidden="true"
+                    className='h-5 w-5 flex-shrink-0 self-center text-green-500'
+                    aria-hidden='true'
                   />
                 ) : item.changeType === 'decrease' ? (
                   <HiArrowDown
-                    className="h-5 w-5 flex-shrink-0 self-center text-red-500"
-                    aria-hidden="true"
+                    className='h-5 w-5 flex-shrink-0 self-center text-red-500'
+                    aria-hidden='true'
                   />
                 ) : null}
 
-                <span className="sr-only">
+                <span className='sr-only'>
                   {' '}
                   {item.changeType === 'increase'
                     ? 'Increased by '

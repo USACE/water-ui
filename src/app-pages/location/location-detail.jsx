@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 import TabsComponent from '../../app-components/tabs';
 import PageWrapper from '../page-wrapper';
@@ -8,17 +8,10 @@ import DamProfileChart from '../../app-components/charts/dam-profile-chart/chart
 import { BiExpandHorizontal } from 'react-icons/bi';
 import LocationSideBarAccordian from '../../app-components/location-detail/sidebar-accordian';
 import ProjectStats from '../../app-components/location-detail/project-stats';
-// import { subDays, subHours, parseJSON, differenceInDays } from 'date-fns';
-// import { formatInTimeZone } from 'date-fns-tz';
-// import {
-//   LastValueSet,
-//   LookBackValueSet,
-// } from '../../helpers/timeseries-helper';
 import { Placeholder } from '../../app-components/content-placeholder';
 import { mapObjectArrayByKey } from '../../helpers/misc-helpers';
 import { hasRequiredLevels } from '../../helpers/project-helper';
 import { FcDam, FcAreaChart } from 'react-icons/fc';
-// import { PrecipTotal } from '../../helpers/timeseries-helper';
 
 export default function ProjectDetail() {
   const {
@@ -35,47 +28,6 @@ export default function ProjectDetail() {
   );
 
   const [expanded, setExpanded] = useState(false);
-  // const [timeseriesIds, setTimeseriesId] = useState([]);
-
-  /** Load specific timeseries ids into state when new configurations are loaded */
-  // useEffect(() => {
-  //   const timeseriesIdArray = location?.timeseries
-  //     ? location?.timeseries?.map((ts) => {
-  //         return ts.tsid;
-  //       })
-  //     : [];
-
-  //   setTimeseriesId(timeseriesIdArray);
-  // }, [location]);
-
-  // useEffect(() => {
-  //   if (!tsvObj || !location?.timeseries?.length) {
-  //     console.log('--returning--');
-  //     return;
-  //   }
-
-  //   let updated_timeseries = location?.timeseries?.map((obj) => {
-  //     const tsvArray = tsvObj ? tsvObj[obj.tsid]?.values : null;
-
-  //     if (tsvArray?.length) {
-  //       const lastRecord = LastValueSet(tsvArray);
-  //       obj['latest_time'] = lastRecord.latest_time || null;
-  //       obj['latest_value'] = !isNaN(lastRecord.latest_value)
-  //         ? lastRecord.latest_value
-  //         : null;
-  //       const lookBackRecord = LookBackValueSet(tsvArray, 24);
-  //       obj['delta24hr'] =
-  //         lookBackRecord &&
-  //         (lastRecord.latest_value - lookBackRecord.latest_value)?.toFixed(2);
-  //       obj['unit'] = tsvObj[obj.tsid]?.unit;
-  //       obj['precip_total'] = PrecipTotal(obj, tsvArray);
-  //     }
-
-  //     return obj;
-  //   });
-
-  //   location.timeseries = updated_timeseries;
-  // }, [location, location?.timeseries, tsvObj]);
 
   if (!location && !providerLocationIsLoading) {
     return (

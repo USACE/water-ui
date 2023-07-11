@@ -171,6 +171,7 @@ export default function Map({ controls, children, mapRef }) {
     controls.scale,
     controls.fullscreen,
     controls.basemaps,
+    controls.attribution,
     mapRef,
     doMapLocationSelectionUpdate,
     doUpdateUrl,

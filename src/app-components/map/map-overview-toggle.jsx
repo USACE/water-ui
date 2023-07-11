@@ -1,7 +1,5 @@
 import { useConnect } from 'redux-bundler-hook';
 import { TbTableShortcut } from 'react-icons/tb';
-import { GrMap } from 'react-icons/gr';
-import { TbMap } from 'react-icons/tb';
 import { HiMapPin } from 'react-icons/hi2';
 
 export default function MapOverviewToggle({ showLabels }) {
