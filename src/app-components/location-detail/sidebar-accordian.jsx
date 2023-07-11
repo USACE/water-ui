@@ -288,7 +288,7 @@ export default function LocationSideBarAccordian({
       // content: JSON.stringify(location?.geometry),
       content: location?.geometry?.coordinates?.length ? (
         <>
-          <div className=' h-40 w-full bg-green-100'>
+          <div className='h-64 w-full bg-green-100 lg:h-48'>
             <MapPreview />
           </div>
           <div className='py-1 text-center'>
