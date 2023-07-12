@@ -35,7 +35,7 @@ export default function Header() {
     { name: 'Home', path: '/' },
     { name: 'Map', path: directMapLocation || '/map' },
     { name: 'Locations', path: '/overview' },
-    { name: 'Help', path: '/' },
+    { name: 'Help', path: '/help' },
   ];
 
   return (

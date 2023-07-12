@@ -10,6 +10,7 @@ import WatershedDetail from '../app-pages/watershed/watershed-detail.jsx';
 import MapHome from '../app-pages/map-home';
 import ProviderLocationList from '../app-pages/provider/provider-location-list.jsx';
 import ProviderQA from '../app-pages/provider/provider-qa.jsx';
+import Help from '../app-pages/help.jsx';
 
 export default createRouteBundle({
   '/': Home,
@@ -24,5 +25,6 @@ export default createRouteBundle({
   '/overview/:provider_slug/locations/:location_slug': LocationDetail,
   '/overview/:provider_slug/locations': ProviderLocationList,
   '/overview/:provider_slug/qa': ProviderQA,
+  '/help': Help,
   '*': fourOhFour,
 });
