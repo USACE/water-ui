@@ -2,7 +2,13 @@ import { useConnect } from 'redux-bundler-hook';
 import TermsOfServiceModal from '../../app-pages/terms-service-modal';
 
 export default function FooterNavigation() {
-  const { doModalOpen } = useConnect('doModalOpen');
+  const {
+    doModalOpen,
+    // doUpdateUrl
+  } = useConnect(
+    'doModalOpen'
+    // 'doUpdateUrl'
+  );
 
   const handleTosClick = () => {
     // e.preventDefault();
@@ -24,13 +30,18 @@ export default function FooterNavigation() {
         name: 'API Docs',
         href: 'https://cwms-data.usace.army.mil/cwms-data/swagger-ui.html',
       },
-      { name: 'Contact', href: 'mailto:water@usace.army.mil' },
+      { name: 'Contact', href: '/help#contact' },
     ],
     related: [{ name: 'USACE HQ', href: 'https://www.usace.army.mil' }],
     legal: [
       {
         name: 'Disclaimer',
         href: '/help#disclaimer',
+        // onClickHandler: (e) => {
+        //   console.log('hi');
+        //   e.preventDefault();
+        //   doUpdateUrl('/help#disclaimer');
+        // },
       },
       {
         name: 'Privacy Policy',
