@@ -2,10 +2,10 @@ import { useConnect } from 'redux-bundler-hook';
 import AcknowledgeModal from '../app-components/modals/acknowledge-modal';
 import { PiWarningCircleBold } from 'react-icons/pi';
 
-export default function DisclaimereModal({ show }) {
-  const { doModalClose, doDisclaimerAcknowledge } = useConnect(
+export default function TermsOfServiceModal({ show }) {
+  const { doModalClose, doTermsOfServiceAcknowledge } = useConnect(
     'doModalClose',
-    'doDisclaimerAcknowledge'
+    'doTermsOfServiceAcknowledge'
   );
   if (!show) {
     // console.log('not showing the disclaimer');
@@ -13,7 +13,7 @@ export default function DisclaimereModal({ show }) {
   }
 
   const handleSubmit = () => {
-    doDisclaimerAcknowledge();
+    doTermsOfServiceAcknowledge();
     doModalClose();
   };
   const content = (
@@ -60,7 +60,7 @@ export default function DisclaimereModal({ show }) {
 
   return (
     <AcknowledgeModal
-      title='Disclaimer'
+      title='Terms of Service'
       content={content}
       buttonText='Agree'
       icon={<PiWarningCircleBold className='h-8 w-8 text-gray-600' />}

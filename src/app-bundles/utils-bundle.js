@@ -26,14 +26,14 @@ const utilsBundle = {
     return false;
   }),
 
-  selectIsDisclaimerAcknowledged: () => {
-    if (localStorage.getItem('disclaimer_acknowledged')) {
+  selectIsTermsOfServiceAcknowledged: () => {
+    if (localStorage.getItem('tos_acknowledged')) {
       return true;
     }
   },
 
-  doDisclaimerAcknowledge: () => {
-    localStorage.setItem('disclaimer_acknowledged', true);
+  doTermsOfServiceAcknowledge: () => {
+    localStorage.setItem('tos_acknowledged', true);
     return ({ dispatch }) => {
       dispatch({
         type: null,

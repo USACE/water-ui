@@ -1,13 +1,13 @@
 import { useConnect } from 'redux-bundler-hook';
-import DisclaimerModal from '../../app-pages/disclaimer-modal';
+import TermsOfServiceModal from '../../app-pages/terms-service-modal';
 
 export default function FooterNavigation() {
   const { doModalOpen } = useConnect('doModalOpen');
 
-  const handleDisclaimer = () => {
+  const handleTosClick = () => {
     // e.preventDefault();
-    const userInitiatedDisclaimerModal = () => <DisclaimerModal show={true} />;
-    doModalOpen(userInitiatedDisclaimerModal);
+    const userInitiatedTosModal = () => <TermsOfServiceModal show={true} />;
+    doModalOpen(userInitiatedTosModal);
   };
 
   const navigation = {
@@ -30,14 +30,13 @@ export default function FooterNavigation() {
     legal: [
       {
         name: 'Disclaimer',
-        href: '#',
-        onClickHandler: handleDisclaimer,
+        href: '/help#disclaimer',
       },
       {
         name: 'Privacy Policy',
         href: 'https://www.usace.army.mil/PrivacyandSecurity.aspx',
       },
-      { name: 'Terms of Service', href: '#' },
+      { name: 'Terms of Service', href: '#', onClickHandler: handleTosClick },
     ],
   };
 

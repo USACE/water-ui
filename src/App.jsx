@@ -1,19 +1,19 @@
 import Layout from './app-components/layout.jsx';
 import { useConnect } from 'redux-bundler-hook';
-import DisclaimereModal from './app-pages/disclaimer-modal.jsx';
+import TermsOfServiceModal from './app-pages/terms-service-modal.jsx';
 
 export default function App() {
   const {
     route: Route,
     pathname,
     isMapView,
-    isDisclaimerAcknowledged,
+    isTermsOfServiceAcknowledged,
     //authIsLoggedIn: isLoggedIn,
   } = useConnect(
     'selectRoute',
     'selectPathname',
     'selectIsMapView',
-    'selectIsDisclaimerAcknowledged'
+    'selectIsTermsOfServiceAcknowledged'
   );
 
   return (
@@ -22,7 +22,7 @@ export default function App() {
       <Layout.Main>
         <Route />
       </Layout.Main>
-      <DisclaimereModal show={!isDisclaimerAcknowledged} />
+      <TermsOfServiceModal show={!isTermsOfServiceAcknowledged} />
       {!isMapView && <Layout.Footer />}
     </Layout>
   );
