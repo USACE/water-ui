@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 // import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/solid';
 import { HiArrowUp, HiArrowDown } from 'react-icons/hi';
 import { PiClockThin } from 'react-icons/pi';
-import { parseISO, format } from 'date-fns';
+import { parseISO } from 'date-fns';
 import { Placeholder } from './content-placeholder';
 import { Tooltip } from 'react-tooltip';
 import { displayValue } from '../helpers/timeseries-helper';
@@ -32,7 +32,7 @@ export default function StackedParameterList({ parameters }) {
             .map((p, idx) => (
               <li key={idx}>
                 {/* <a href="/" className="block hover:bg-gray-50"> */}
-                <div className='px-4 py-4 sm:px-6'>
+                <div className='px-4 py-3 sm:px-6'>
                   <div className='flex items-center justify-between'>
                     <p className='font-lg truncate text-lg font-semibold text-black'>
                       {p.label}
