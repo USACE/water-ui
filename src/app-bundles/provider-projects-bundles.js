@@ -17,7 +17,10 @@ const providerProjectsBundle = {
         const levelsMap = mapObjectArrayByKey(p?.levels, 'slug');
         if (
           levelsMap['stor.bottom of flood'] ||
-          levelsMap['stor.top of flood']
+          levelsMap['stor.top of flood'] ||
+          levelsMap['stor.top of flood control'] ||
+          levelsMap['elev.top of flood'] ||
+          levelsMap['elev.top of flood control']
         ) {
           return p;
         }

@@ -61,10 +61,11 @@ export default function ProviderLocationList2({ locations }) {
   const LocationFilterInput = () => {
     return (
       <input
-        type="search"
+        type='search'
         value={searchQuery}
-        placeholder="Name Filter"
+        placeholder='Name Filter'
         onChange={filterBySearch}
+        className='rounded'
       />
     );
   };
@@ -97,12 +98,12 @@ export default function ProviderLocationList2({ locations }) {
           icons.push(<SlEnergy key={ts?.label} title={ts?.label} size={20} />);
         }
       });
-    return <div className="flex space-x-2 text-gray-400">{icons}</div>;
+    return <div className='flex space-x-2 text-gray-400'>{icons}</div>;
   };
 
   return (
     <>
-      <div className="my-5">{LocationFilterInput()}</div>
+      <div className='bg-gray-100 pb-3'>{LocationFilterInput()}</div>
       <SimpleTable
         headers={[
           { text: 'Kind' },
@@ -119,13 +120,13 @@ export default function ProviderLocationList2({ locations }) {
             key: 'kind',
             render: (l) => {
               return l.kind === 'PROJECT' ? (
-                <FcDam size="32" alt={l.kind} title={l.kind} />
+                <FcDam size='32' alt={l.kind} title={l.kind} />
               ) : isPrecipOnly(l) ? (
-                <BsCloudRain size="28" alt={l.kind} title={l.kind} />
+                <BsCloudRain size='28' alt={l.kind} title={l.kind} />
               ) : (
                 <HiOutlineLocationMarker
-                  size="28"
-                  className="text-gray-400"
+                  size='28'
+                  className='text-gray-400'
                   alt={l.kind}
                   title={l.kind}
                 />
@@ -182,7 +183,7 @@ export default function ProviderLocationList2({ locations }) {
                 'Stage'
               )?.delta24hr;
               return (
-                <div className="flex items-baseline text-sm">
+                <div className='flex items-baseline text-sm'>
                   {elevChange ? (
                     <DeltaChange delta={elevChange} />
                   ) : (

@@ -50,7 +50,7 @@ export default function ProjectsTable({ projects }) {
     };
 
     return (
-      <Switch.Group as="div" className="flex items-center bg-slate-100 p-2">
+      <Switch.Group as='div' className='flex items-center bg-slate-100 p-2'>
         <Switch
           checked={floodStorageEnabled}
           onChange={FloodStorageToggle}
@@ -59,17 +59,19 @@ export default function ProjectsTable({ projects }) {
             'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2'
           )}
         >
-          <span className="sr-only">Use setting</span>
+          <span className='sr-only'>Use setting</span>
           <span
-            aria-hidden="true"
+            aria-hidden='true'
             className={classNames(
               floodStorageEnabled ? 'translate-x-5' : 'translate-x-0',
               'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out'
             )}
           />
         </Switch>
-        <Switch.Label as="span" className="ml-3 text-sm">
-          <span className="font-medium text-gray-900">Has Flood Storage</span>{' '}
+        <Switch.Label as='span' className='ml-3 text-sm'>
+          <span className='font-medium text-gray-900'>
+            Projects with Flood Storage
+          </span>{' '}
           {/* <span className="text-gray-500">(Save 10%)</span> */}
         </Switch.Label>
       </Switch.Group>
@@ -84,7 +86,7 @@ export default function ProjectsTable({ projects }) {
     const pString = p?.toFixed(0);
 
     return (
-      <div className="flex w-2/3 bg-gray-200 text-right shadow">
+      <div className='flex w-2/3 bg-gray-200 text-right shadow'>
         <div
           style={{ width: `${p}%` }}
           className={`bg-blue-400  py-1 text-center text-xs leading-none text-white`}
@@ -92,7 +94,7 @@ export default function ProjectsTable({ projects }) {
           {p >= 20 ? pString + '%' : null}
         </div>
 
-        {p < 20 ? <div className="w-full text-center">{pString}%</div> : null}
+        {p < 20 ? <div className='w-full text-center'>{pString}%</div> : null}
       </div>
     );
   };
@@ -116,7 +118,7 @@ export default function ProjectsTable({ projects }) {
             key: 'kind',
             className: 'hidden lg:table-cell',
             render: (l) => {
-              return <FcDam size="32" alt={l.kind} title={l.kind} />;
+              return <FcDam size='32' alt={l.kind} title={l.kind} />;
             },
           },
           {
@@ -167,7 +169,7 @@ export default function ProjectsTable({ projects }) {
                 'Stage'
               )?.delta24hr;
               return (
-                <div className="flex items-baseline text-sm">
+                <div className='flex items-baseline text-sm'>
                   {elevChange ? (
                     <DeltaChange delta={elevChange} />
                   ) : (
