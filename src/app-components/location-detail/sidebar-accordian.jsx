@@ -258,11 +258,12 @@ export default function LocationSideBarAccordian({
       title: 'Current Values',
       content: (
         <StackedParameterList
-          parameters={latestTimeseriesObj?.length && latestTimeseriesObj}
+          // parameters={latestTimeseriesObj?.length && latestTimeseriesObj}
+          parameters={location?.timeseries}
         />
       ),
       defaultOpen: true,
-      display: latestTimeseriesObj?.length,
+      display: location?.timeseries?.length,
       count: { value: location?.timeseries?.length },
     },
     {

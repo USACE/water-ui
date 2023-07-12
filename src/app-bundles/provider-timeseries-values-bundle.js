@@ -142,7 +142,7 @@ export default createRestBundle({
           console.log(
             'selectProviderLocationTimeseriesLatestValues: location or timeseries not available'
           );
-          return null;
+          return [];
         }
         // foundKeys will serve as a check to see if any of the timeseries
         // is in state (selectProviderTimeseriesValuesItemsObject).
@@ -158,7 +158,7 @@ export default createRestBundle({
             'selectProviderLocationTimeseriesLatestValues: tsid(s) not found in state'
           );
 
-          return null;
+          return [];
         }
 
         const updated_timeseries = location?.timeseries?.map((tsObj) => {

@@ -38,7 +38,7 @@ function classNames(...classes) {
 export default function StatsWIcon({ stats }) {
   return (
     <div>
-      <dl className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
+      <dl className='grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3'>
         {stats.map((item) => (
           <div
             key={item.id}

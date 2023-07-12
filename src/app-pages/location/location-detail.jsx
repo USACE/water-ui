@@ -115,7 +115,7 @@ export default function ProjectDetail() {
       <div
         className={`mt-0 duration-300 ease-in-out md:gap-x-8 ${
           expanded ? 'lg:flex-wrap' : 'lg:flex'
-        } flex flex-col-reverse lg:flex-row`}
+        } flex flex-col-reverse md:flex-col lg:flex-row`}
       >
         <div
           className={`mt-5 flex-auto lg:mt-0 ${
