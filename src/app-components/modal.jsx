@@ -1,6 +1,6 @@
 import { useConnect } from 'redux-bundler-hook';
 
-function Modal() {
+export default function Modal() {
   const { modalContent: ModalContent, modalProps } = useConnect(
     'selectModalContent',
     'selectModalProps',
@@ -14,5 +14,3 @@ function Modal() {
     </dialog>
   ) : null;
 }
-
-export { Modal };
