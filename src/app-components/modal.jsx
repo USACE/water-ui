@@ -9,10 +9,10 @@ function Modal() {
   );
 
   return ModalContent ? (
-    <dialog id="modal" open>
+    <dialog id='modal' open>
       {ModalContent && <ModalContent {...modalProps} />}
     </dialog>
   ) : null;
 }
 
-export { Modal, Modal as default };
+export { Modal };

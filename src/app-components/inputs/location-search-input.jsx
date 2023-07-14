@@ -26,18 +26,18 @@ const LocationItem = ({
   state,
 }) => {
   return (
-    <div key={slug} className="flex">
-      <div className="flex-none">
+    <div key={slug} className='flex'>
+      <div className='flex-none'>
         <LocationIcon kind={kind} size={25} />
       </div>
-      <div className="flex-auto pl-2">
+      <div className='flex-auto pl-2'>
         <div
           className={`font-bold ${public_name?.length > 15 ? 'text-sm' : null}`}
         >
           {public_name || code}
         </div>
-        <div className="text-sm">Office: {provider_name}</div>
-        <div className="text-sm">State: {state}</div>
+        <div className='text-sm'>Office: {provider_name}</div>
+        <div className='text-sm'>State: {state}</div>
       </div>
     </div>
   );
@@ -77,10 +77,10 @@ function LocationCombobox({
 
   return (
     <>
-      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+      <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
         <HiMagnifyingGlass
-          className="h-5 w-5 text-gray-400"
-          aria-hidden="true"
+          className='h-5 w-5 text-gray-400'
+          aria-hidden='true'
         />
       </div>
 
@@ -103,7 +103,7 @@ function LocationCombobox({
           }
           //placeholder={isRequired ? label : `${label} (optional)`}
           placeholder={placeholder}
-          autoComplete="off"
+          autoComplete='off'
           onChange={(event) => {
             // only show search results if more than 3 characters are typed in input
             if (event.target.value?.length < 3) {
@@ -119,17 +119,17 @@ function LocationCombobox({
           }}
         />
         {/* Styles below apply to the unordered list (ul) element */}
-        <Combobox.Options className="absolute mt-1 max-h-96 w-full overflow-y-auto bg-white p-0 shadow-xl">
+        <Combobox.Options className='absolute mt-1 max-h-96 w-full overflow-y-auto bg-white p-0 shadow-xl'>
           {locationSearchItems.map((l) => (
             <Combobox.Option
-              autoComplete="off"
+              autoComplete='off'
               key={l.provider + '_' + l.slug}
               value={l}
               // styles below are for the list item (li) element
-              className="cursor-pointer border-b-2 border-gray-100"
+              className='cursor-pointer border-b-2 border-gray-100'
             >
               {({ active, selected }) => (
-                <div className="bg-white p-2 text-black ui-active:bg-blue-500 ui-active:text-white">
+                <div className='bg-white p-2 text-black ui-active:bg-blue-500 ui-active:text-white'>
                   <LocationItem {...l} />
                 </div>
               )}

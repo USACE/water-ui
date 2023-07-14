@@ -9,7 +9,9 @@ export default function Help() {
 
   const AnswerWrapper = ({ children }) => {
     return (
-      <div className='border-2 border-gray-200 p-4 text-base'>{children}</div>
+      <div className='border-2 border-gray-200 bg-white p-4 text-base'>
+        {children}
+      </div>
     );
   };
 
@@ -79,8 +81,10 @@ export default function Help() {
 
   return (
     <PageWrapper title='Help Topics' subTitle={null} isLoading={false}>
-      <div className='mx-auto max-w-7xl py-4'>
-        <Accordion sections={faqs} />
+      <div className='px-2 py-2'>
+        <div className='mx-auto max-w-7xl py-4'>
+          <Accordion sections={faqs} />
+        </div>
       </div>
     </PageWrapper>
   );

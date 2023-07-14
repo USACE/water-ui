@@ -180,13 +180,13 @@ const PrecipTotal = (paramObj, tsvArray) => {
   return precipTotal?.toFixed(2);
 };
 
-const getTsObjByLabel = (timeseries, label) => {
+const GetTsObjByLabel = (timeseries, label) => {
   const tsMap = mapObjectArrayByKey(timeseries, 'label');
   return tsMap[label];
 };
 
 // display timeseries values with different precision based on parameter
-const displayValue = (tsObj) => {
+const DisplayValue = (tsObj) => {
   if (tsObj?.base_parameter === 'Flow' || tsObj?.base_parameter === 'Stor') {
     return tsObj?.latest_value?.toLocaleString(undefined, {
       maximumFractionDigits: 0,
@@ -203,6 +203,6 @@ export {
   LookBackValueSet,
   DeltaChange,
   PrecipTotal,
-  getTsObjByLabel,
-  displayValue,
+  GetTsObjByLabel,
+  DisplayValue,
 };

@@ -16,27 +16,33 @@ const HighchartsWrapper = (props) => {
   // console.log(props.chartOptions?.series);
 
   // Hack to get the max data value from a chart with multiple yAxis
-  const maxVal = Math.max(
-    ...props?.chartOptions?.series?.map((axis) => {
-      var max = 0;
-      var _newMax = Math.max(...axis?.data?.map((item) => item[1]));
-      if (_newMax > max) {
-        max = _newMax;
-      }
-      return max;
-    })
-  );
+  const maxVal =
+    props?.chartOptions?.series?.length &&
+    Math.max(
+      ...props.chartOptions.series.map((axis) => {
+        var max = 0;
+        var _newMax =
+          axis?.data?.length && Math.max(...axis.data.map((item) => item[1]));
+        if (_newMax > max) {
+          max = _newMax;
+        }
+        return max;
+      })
+    );
 
-  const minVal = Math.min(
-    ...props?.chartOptions?.series?.map((axis) => {
-      var min = 0;
-      var _newMin = Math.min(...axis?.data?.map((item) => item[1]));
-      if (_newMin > min) {
-        min = _newMin;
-      }
-      return min;
-    })
-  );
+  const minVal =
+    props?.chartOptions?.series?.length &&
+    Math.min(
+      ...props.chartOptions.series.map((axis) => {
+        var min = 0;
+        var _newMin =
+          axis?.data?.length && Math.min(...axis.data.map((item) => item[1]));
+        if (_newMin > min) {
+          min = _newMin;
+        }
+        return min;
+      })
+    );
 
   // Set or update the "max" property with the computed property above
   props.chartOptions?.yAxis.forEach((axis) => {

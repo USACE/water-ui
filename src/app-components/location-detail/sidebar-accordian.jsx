@@ -47,7 +47,7 @@ export default function LocationSideBarAccordian({
     //   : [];
 
     // setTimeseriesId(timeseriesIdArray);
-  }, [location]);
+  }, [location, doProviderLocationTimeseriesFetchAll]);
 
   const Alerts = ({ location }) => {
     if (locationFloodObj[location?.slug]) {

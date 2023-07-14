@@ -3,8 +3,8 @@ import { useConnect } from 'redux-bundler-hook';
 import { SimpleTable, TableLink, TableValueWithTime } from './table-simple';
 import {
   DeltaChange,
-  getTsObjByLabel,
-  displayValue,
+  GetTsObjByLabel,
+  DisplayValue,
 } from '../helpers/timeseries-helper';
 import { GetProjectFloodStorage } from '../helpers/project-helper';
 import { FcDam } from 'react-icons/fc';
@@ -142,8 +142,8 @@ export default function ProjectsTable({ projects }) {
             key: null,
             className: 'w-14 lg:w-auto',
             render: (l) => {
-              const elev = getTsObjByLabel(l?.timeseries, 'Elevation');
-              const stage = getTsObjByLabel(l?.timeseries, 'Stage');
+              const elev = GetTsObjByLabel(l?.timeseries, 'Elevation');
+              const stage = GetTsObjByLabel(l?.timeseries, 'Stage');
               return elev ? (
                 <TableValueWithTime tsObj={elev} />
               ) : (
@@ -151,7 +151,7 @@ export default function ProjectsTable({ projects }) {
               );
             },
             // return (
-            //   getTsObjByLabel(
+            //   GetTsObjByLabel(
             //     l?.timeseries,
             //     'Elevation'
             //   )?.latest_value?.toFixed(1) || null
@@ -160,11 +160,11 @@ export default function ProjectsTable({ projects }) {
           {
             key: null,
             render: (l) => {
-              const elevChange = getTsObjByLabel(
+              const elevChange = GetTsObjByLabel(
                 l?.timeseries,
                 'Elevation'
               )?.delta24hr;
-              const stageChange = getTsObjByLabel(
+              const stageChange = GetTsObjByLabel(
                 l?.timeseries,
                 'Stage'
               )?.delta24hr;
@@ -193,13 +193,13 @@ export default function ProjectsTable({ projects }) {
           {
             key: null,
             render: (l) => {
-              return displayValue(getTsObjByLabel(l?.timeseries, 'Inflow'));
+              return DisplayValue(GetTsObjByLabel(l?.timeseries, 'Inflow'));
             },
           },
           {
             key: null,
             render: (l) => {
-              return displayValue(getTsObjByLabel(l?.timeseries, 'Outflow'));
+              return DisplayValue(GetTsObjByLabel(l?.timeseries, 'Outflow'));
             },
           },
         ]}

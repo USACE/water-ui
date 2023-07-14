@@ -40,8 +40,8 @@ export default function MultiParamChart({ chartParams }) {
     let chartTitle = null;
     let chartSeries = [];
     let yAxis = [];
-    let yMin = null;
-    let yMax = null;
+    // let yMin = null;
+    // let yMax = null;
 
     //const allEqual = (arr) => arr.every((val) => val === arr[0]);
     //const equalUnits = allEqual(chartParams?.map((item) => item?.unit));
@@ -75,15 +75,16 @@ export default function MultiParamChart({ chartParams }) {
       });
 
       // determine yAxis miniumum value
-      const minValue = data && Math.min(...data?.map((item) => item[1]));
-      if (yMin === null || minValue < yMin) {
-        yMin = minValue;
-      }
+      // const minValue = data?.length && Math.min(...data.map((item) => item[1]));
+      // if (yMin === null || minValue < yMin) {
+      //   yMin = minValue;
+      // }
+
       // determine yAxis max value
-      const maxValue = data && Math.max(...data?.map((item) => item[1]));
-      if (yMax === null || maxValue > yMax) {
-        yMax = maxValue;
-      }
+      // const maxValue = data?.length && Math.max(...data.map((item) => item[1]));
+      // if (yMax === null || maxValue > yMax) {
+      //   yMax = maxValue;
+      // }
 
       const levelColor = (label) => {
         switch (label) {

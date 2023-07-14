@@ -6,7 +6,7 @@ import { BsCloudRain, BsWater } from 'react-icons/bs';
 import { isPrecipOnly } from '../../../helpers/location-helper';
 import {
   DeltaChange,
-  getTsObjByLabel,
+  GetTsObjByLabel,
 } from '../../../helpers/timeseries-helper';
 import { CiTempHigh } from 'react-icons/ci';
 import { GiWaterfall } from 'react-icons/gi';
@@ -162,8 +162,8 @@ export default function ProviderLocationList2({ locations }) {
           {
             key: null,
             render: (l) => {
-              const elev = getTsObjByLabel(l?.timeseries, 'Elevation');
-              const stage = getTsObjByLabel(l?.timeseries, 'Stage');
+              const elev = GetTsObjByLabel(l?.timeseries, 'Elevation');
+              const stage = GetTsObjByLabel(l?.timeseries, 'Stage');
               return elev ? (
                 <TableValueWithTime tsObj={elev} />
               ) : (
@@ -174,11 +174,11 @@ export default function ProviderLocationList2({ locations }) {
           {
             key: null,
             render: (l) => {
-              const elevChange = getTsObjByLabel(
+              const elevChange = GetTsObjByLabel(
                 l?.timeseries,
                 'Elevation'
               )?.delta24hr;
-              const stageChange = getTsObjByLabel(
+              const stageChange = GetTsObjByLabel(
                 l?.timeseries,
                 'Stage'
               )?.delta24hr;

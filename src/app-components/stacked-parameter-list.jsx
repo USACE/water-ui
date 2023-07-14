@@ -6,7 +6,7 @@ import { PiClockThin } from 'react-icons/pi';
 import { parseISO } from 'date-fns';
 import { Placeholder } from './content-placeholder';
 import { Tooltip } from 'react-tooltip';
-import { displayValue } from '../helpers/timeseries-helper';
+import { DisplayValue } from '../helpers/timeseries-helper';
 
 export default function StackedParameterList({ parameters }) {
   const [params, setParams] = useState();
@@ -44,7 +44,7 @@ export default function StackedParameterList({ parameters }) {
                           className={'w-20 rounded-lg'}
                         >
                           {p.base_parameter !== 'Precip'
-                            ? displayValue(p)
+                            ? DisplayValue(p)
                             : (p.precip_total && p.precip_total) || '-'}
                           <span className='ml-1 text-sm font-normal text-gray-400'>
                             {p.unit}
