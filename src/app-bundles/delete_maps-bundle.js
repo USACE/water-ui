@@ -1,4 +1,5 @@
-/* eslint-disable no-mixed-operators */
+/* eslint-disable */
+
 import { createSelector } from 'redux-bundler';
 import olMap from 'ol/Map.js';
 import View from 'ol/View';
