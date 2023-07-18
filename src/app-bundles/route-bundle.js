@@ -11,6 +11,7 @@ import MapHome from '../app-pages/map-home';
 import ProviderLocationList from '../app-pages/provider/provider-location-list.jsx';
 import ProviderQA from '../app-pages/provider/provider-qa.jsx';
 import Help from '../app-pages/help.jsx';
+import DataResources from '../app-pages/data-resources.jsx';
 
 export default createRouteBundle({
   '/': Home,
@@ -26,5 +27,6 @@ export default createRouteBundle({
   '/overview/:provider_slug/locations': ProviderLocationList,
   '/overview/:provider_slug/qa': ProviderQA,
   '/help': Help,
+  '/data': DataResources,
   '*': fourOhFour,
 });

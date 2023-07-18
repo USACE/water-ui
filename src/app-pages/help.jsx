@@ -64,7 +64,7 @@ export default function Help() {
         content: (
           <AnswerWrapper>
             Please see the {''}
-            <a href='/data-resources' className='text-blue-500 hover:underline'>
+            <a href='/data' className='text-blue-500 hover:underline'>
               data resources page
             </a>
             .
