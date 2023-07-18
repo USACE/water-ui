@@ -35,7 +35,7 @@ export default function Home() {
   //   'https://images.unsplash.com/photo-1451988336904-b1a6e8846746?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=60';
   return (
     <>
-      <PageTitle useDefault={true} />
+      <PageTitle title='A2W' />
 
       <div className='pt-0'>
         <div
