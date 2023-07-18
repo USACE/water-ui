@@ -6,7 +6,7 @@ import { GrLocation } from 'react-icons/gr';
 import { BsCloudRain } from 'react-icons/bs';
 import { isPrecipOnly } from '../helpers/location-helper';
 import MapOverviewToggle from './map/map-overview-toggle';
-export default function PageHead({ title, subTitle }) {
+export default function PageHead({ title, subTitle, Icon }) {
   const {
     providerByRoute: provider,
     providerLocationByRoute: location,
@@ -32,7 +32,9 @@ export default function PageHead({ title, subTitle }) {
               alt=""
             /> */}
 
-            {provider && location?.kind === 'PROJECT' ? (
+            {Icon ? (
+              <Icon size={50} />
+            ) : provider && location?.kind === 'PROJECT' ? (
               <FcDam size={50} />
             ) : !location && !watershed ? (
               <HiOutlineBuildingOffice2 size={50} />

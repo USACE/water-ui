@@ -19,7 +19,7 @@ export default function FooterNavigation() {
   const navigation = {
     features: [
       { name: 'Location Search', href: '#' },
-      { name: 'Data Resources', href: '#' },
+      { name: 'Data Resources', href: '/data-resources' },
       { name: 'Interactive Map', href: '/map' },
       // { name: 'Water Quality', href: '#' },
     ],

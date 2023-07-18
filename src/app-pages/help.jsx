@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 import PageWrapper from '../app-pages/page-wrapper';
 import Accordion from '../app-components/accordion';
+import { BiHelpCircle } from 'react-icons/bi';
 
 export default function Help() {
   const { urlObject } = useConnect('selectUrlObject');
@@ -59,6 +60,20 @@ export default function Help() {
         display: true,
       },
       {
+        title: 'How can I download timeseries data from this website?',
+        content: (
+          <AnswerWrapper>
+            Please see the {''}
+            <a href='/data-resources' className='text-blue-500 hover:underline'>
+              data resources page
+            </a>
+            .
+          </AnswerWrapper>
+        ),
+        defaultOpen: false,
+        display: true,
+      },
+      {
         title: 'Who should I contact for more questions?',
         content: (
           <AnswerWrapper>
@@ -80,7 +95,12 @@ export default function Help() {
   }, [urlObject]);
 
   return (
-    <PageWrapper title='Help Topics' subTitle={null} isLoading={false}>
+    <PageWrapper
+      title='Help Topics'
+      subTitle={null}
+      isLoading={false}
+      Icon={BiHelpCircle}
+    >
       <div className='px-2 py-2'>
         <div className='mx-auto max-w-7xl py-4'>
           <Accordion sections={faqs} />

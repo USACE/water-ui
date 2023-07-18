@@ -95,10 +95,10 @@ export default function Home() {
               imgSrc={MapCardSrc}
             ></ImageCard>
           </a>
-          <a href='/'>
+          <a href='/data-resources'>
             <ImageCard
               title='Data Resources'
-              text=''
+              text='Details on how to download or export timeseries data for a location.'
               imgSrc={DataResourcesCardSrc}
             ></ImageCard>
           </a>
