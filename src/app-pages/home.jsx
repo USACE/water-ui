@@ -66,7 +66,7 @@ export default function Home() {
           <h2 className='text-xl font-medium tracking-tight text-white md:text-3xl'>
             U.S. Army Corps of Engineers - Water Management
           </h2>
-          <p className='mt-2 font-normal text-gray-400 md:text-lg'>
+          <p className='mt-2 font-normal text-gray-300 md:text-lg'>
             The United States Army Corps of Engineers (USACE) is responsible for
             operating and maintaining more than 700 lock and dam projects
             nationwide. The Access to Water Resources Data - Corps Water
