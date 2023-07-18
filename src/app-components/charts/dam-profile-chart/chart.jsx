@@ -107,17 +107,14 @@ export default function ReactDamProfileChart({ location }) {
   return (
     <>
       {/* <img src={DamProfileMockup} className="w-full" alt="Dam Profile Chart" /> */}
-      <div
-        className="p-2 shadow dark:bg-orange-50 dark:invert"
-        aria-details="hello there"
-      >
+      <div className='p-2 shadow dark:bg-orange-50 dark:invert'>
         <svg
           ref={ref}
           aria-hidden={true}
           // title="Dam Profile Chart"
           // description="this is my description"
-          preserveAspectRatio="xMinYMin meet"
-          viewBox="0 0 1240 650"
+          preserveAspectRatio='xMinYMin meet'
+          viewBox='0 0 1240 650'
         ></svg>
       </div>
     </>
