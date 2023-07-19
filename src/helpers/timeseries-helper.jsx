@@ -65,6 +65,9 @@ const LookBackValueSet = (tsvArray, hoursBack = 24) => {
   );
   if (lookBackDateTimeIndex === -1) {
     // no match found
+    console.log(
+      `Could not find lookback time: ${lookBackDateTimeSearchString} = ${lookBackDateTime}`
+    );
     return null;
   }
 
@@ -140,18 +143,18 @@ const PrecipTotal = (paramObj, tsvArray) => {
   let precipTotal = 0;
 
   if (pathParts.parameter_type === 'Total') {
-    // if no timeseries in state, make a request
-    // if (tsvObj[tsid] === undefined) {
-    //   doProviderTimeseriesValuesFetchById({
-    //     timeseriesId: tsid,
-    //     dateRange,
-    //   });
-    // }
-
     //const tsvArray = tsvObj[tsid]?.values;
 
     const lookBackRecord = LookBackValueSet(tsvArray, 24);
+    if (!lookBackRecord) {
+      // unable to find the correct record
+      // bail on this attempt
+      console.log(`unable to compute total precip for ${tsid}`);
+      return null;
+    }
     const index = TsvIndexFromTime(tsvArray, lookBackRecord?.latest_time);
+    // console.log('--tsvArray--');
+    // console.log(tsvArray);
     // console.log('--lookbackRecord--');
     // console.log(lookBackRecord);
     // console.log('--index--');
