@@ -265,7 +265,7 @@ export default function ProviderQA() {
   useEffect(() => {
     const _sections = [
       {
-        title: `Locations with Issues (${locationIssues?.length})`,
+        title: `Locations with Possible Issues (${locationIssues?.length})`,
         content: <LocationIssuesTable dataArray={locationIssues} />,
         defaultOpen: locationIssues?.length > 0 ? true : false,
       },
