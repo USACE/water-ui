@@ -10,6 +10,7 @@ import { LoadingBar } from '../loading';
 import { FcExpand } from 'react-icons/fc';
 import PageTitle from '../page-title';
 import MapOverviewToggle from './map-overview-toggle';
+import { locationTitle } from '../../helpers/location-helper';
 
 export default function DetailPanel() {
   const [open, setOpen] = useState(false);
@@ -47,7 +48,7 @@ export default function DetailPanel() {
 
   return (
     <>
-      <PageTitle title={location?.public_name || 'Map'} />
+      <PageTitle title={locationTitle(location) || 'Map'} />
       <ExpandToggle />
       <div
         className={`bottom-0 h-2/3 border-t-2 border-t-gray-400 lg:h-full lg:min-w-[400px] lg:border-t-0 ${
@@ -75,7 +76,7 @@ export default function DetailPanel() {
           <div className='relative mt-2 flex-1 overflow-auto px-4'>
             <div className='mb-5'>
               <PageHead
-                title={location?.public_name}
+                title={locationTitle(location)}
                 subTitle={`provided by ${provider?.name}`}
               />
             </div>

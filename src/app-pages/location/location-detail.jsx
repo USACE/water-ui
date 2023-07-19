@@ -12,6 +12,7 @@ import { Placeholder } from '../../app-components/content-placeholder';
 import { mapObjectArrayByKey } from '../../helpers/misc-helpers';
 import { hasRequiredLevels } from '../../helpers/project-helper';
 import { FcDam, FcAreaChart } from 'react-icons/fc';
+import { locationTitle } from '../../helpers/location-helper';
 
 export default function ProjectDetail() {
   const {
@@ -108,7 +109,7 @@ export default function ProjectDetail() {
 
   return (
     <PageWrapper
-      title={location?.public_name}
+      title={locationTitle(location)}
       subTitle={`provided by ${provider?.name}`}
       isLoading={providerLocationIsLoading}
     >
