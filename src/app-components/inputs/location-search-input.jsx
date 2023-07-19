@@ -89,7 +89,7 @@ function LocationCombobox({
         onChange={(v) => {
           //setValue(v);
           //setIsValid(true); // TODO; Automatically setIsValid true when location is selected. May want to add more explicit validation checking
-          console.log(v);
+          //console.log(v);
           const context = isMapView ? 'map' : 'overview';
           doUpdateUrl(`/${context}/${v.provider}/locations/${v.slug}`);
         }}

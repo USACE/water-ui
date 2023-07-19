@@ -17,8 +17,6 @@ export default function StackedParameterList({ parameters }) {
       return;
     }
     setParams(parameters);
-    console.log('parameters');
-    console.log(parameters);
   }, [parameters]);
   return (
     <div className='overflow-hidden bg-white shadow'>
