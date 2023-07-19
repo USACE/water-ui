@@ -7,6 +7,7 @@ import {
 } from '../helpers/timeseries-helper';
 
 const apiUrl = import.meta.env.VITE_WATER_API_URL;
+const debug = parseInt(import.meta.env.VITE_APP_DEBUG);
 
 export default createRestBundle({
   name: 'providerTimeseriesValues',
@@ -33,6 +34,9 @@ export default createRestBundle({
       default:
         return state;
     }
+  },
+  state: {
+    _lastFetchByUrl: {},
   },
   addons: {
     reactProviderTimeseriesValueShouldClear: (state) => {
@@ -73,6 +77,7 @@ export default createRestBundle({
       ({ dispatch, store, apiGet }) => {
         dispatch({ type: 'TIMESERIES_FETCH_BY_ID_START', payload: {} });
         const { beginDate, endDate } = dateRange;
+        const now = new Date();
 
         const isoAfter = beginDate ? beginDate?.toISOString() : null;
         const isoBefore = endDate ? endDate?.toISOString() : null;
@@ -85,36 +90,58 @@ export default createRestBundle({
         const flags = store['selectProviderTimeseriesValuesFlags']();
         const itemsById = store['selectProviderTimeseriesValuesItemsObject']();
         let fetchCount = store['selectProviderTimeseriesValuesFetchCount']();
+        const lastFetchByUrl = store.selectProviderTimeseriesLastFetchByUrl();
 
-        apiGet(url, (_err, body) => {
-          new Array(body).forEach((item) => {
-            // item can be undefined if the response is a 404
-            if (item === undefined) {
-              console.warn(`${url} returned an error`);
-              return;
-            }
-            return (itemsById[item['key']] = item);
-          });
+        let isStale = true;
+        if (Object.keys(lastFetchByUrl).includes(url)) {
+          debug && console.log(`Found url: ${url}`);
 
-          dispatch({
-            type: 'TIMESERIES_MEASUREMENTS_UPDATED_ITEM',
-            payload: {
-              ...itemsById,
-              ...flags,
-              ...{
-                _isLoading: false,
-                _isSaving: false,
-                _fetchCount: ++fetchCount,
-                _lastFetch: new Date(),
-                _lastResource: url,
-                _abortReason: null,
-                _lastProvider: provider?.slug,
+          // Don't fetch for 5 minutes
+          if (now - lastFetchByUrl[url] < 1000 * 60 * 5) {
+            isStale = false;
+          }
+        } else {
+          debug && console.log(`URL not in state: ${url}`);
+        }
+
+        if (isStale) {
+          apiGet(url, (_err, body) => {
+            new Array(body).forEach((item) => {
+              // item can be undefined if the response is a 404
+              if (item === undefined) {
+                console.warn(`${url} returned an error`);
+                return;
+              }
+              return (itemsById[item['key']] = item);
+            });
+
+            dispatch({
+              type: 'TIMESERIES_MEASUREMENTS_UPDATED_ITEM',
+              payload: {
+                ...itemsById,
+                ...flags,
+                ...{
+                  _isLoading: false,
+                  _isSaving: false,
+                  _fetchCount: ++fetchCount,
+                  _lastFetch: new Date(),
+                  _lastResource: url,
+                  _abortReason: null,
+                  _lastProvider: provider?.slug,
+                  _lastFetchByUrl: {
+                    ...store.selectProviderTimeseriesLastFetchByUrl(),
+                    ...{ [url]: now },
+                  },
+                },
               },
-            },
-          });
+            });
 
-          dispatch({ type: 'TIMESERIES_FETCH_BY_ID_FINISHED', payload: {} });
-        });
+            // dispatch({
+            //   type: 'TIMESERIES_FETCH_BY_ID_FINISHED',
+            //   payload: {},
+            // });
+          });
+        }
       },
 
     doProviderLocationTimeseriesFetchAll:
@@ -126,7 +153,7 @@ export default createRestBundle({
         const dateRange = store['selectTimeseriesDateRange']();
 
         location?.timeseries?.forEach((tsObj) => {
-          console.log(`fetching ${tsObj.tsid}`);
+          debug && console.log(`fetching ${tsObj.tsid}`);
           store.doProviderTimeseriesValuesFetchById({
             timeseriesId: tsObj.tsid,
             dateRange,
@@ -134,14 +161,18 @@ export default createRestBundle({
         });
       },
 
+    selectProviderTimeseriesLastFetchByUrl: (state) => {
+      return state.providerTimeseriesValues._lastFetchByUrl;
+    },
+
     selectProviderLocationTimeseriesLatestValues: createSelector(
       'selectProviderLocationByRoute',
       'selectProviderTimeseriesValuesItemsObject',
       (location, selectProviderTimeseriesValuesItemsObject) => {
         if (!location || !location?.timeseries) {
-          console.log(
-            'selectProviderLocationTimeseriesLatestValues: location or timeseries not available'
-          );
+          // console.log(
+          //   'selectProviderLocationTimeseriesLatestValues: location or timeseries not available'
+          // );
           return [];
         }
         // foundKeys will serve as a check to see if any of the timeseries
@@ -154,19 +185,19 @@ export default createRestBundle({
         );
 
         if (!foundKeys.length) {
-          console.log(
-            'selectProviderLocationTimeseriesLatestValues: tsid(s) not found in state'
-          );
+          // console.log(
+          //   'selectProviderLocationTimeseriesLatestValues: tsid(s) not found in state'
+          // );
 
-          return [];
+          return location?.timeseries;
         }
 
         const updated_timeseries = location?.timeseries?.map((tsObj) => {
           const tsid = tsObj?.tsid;
 
-          console.log(
-            `selectProviderLocationTimeseriesLatestValues: getting latest value for tsid ${tsid}`
-          );
+          // console.log(
+          //   `selectProviderLocationTimeseriesLatestValues: getting latest value for tsid ${tsid}`
+          // );
 
           const stateTsValuesArray =
             selectProviderTimeseriesValuesItemsObject[tsid]?.values || [];
@@ -199,7 +230,7 @@ export default createRestBundle({
 
         // this is mutating the original object which is helpful for all dependancies,
         // but may have unintended consequences.
-        location.timeseries = updated_timeseries;
+        //location.timeseries = updated_timeseries;
 
         return updated_timeseries;
       }

@@ -20,12 +20,19 @@ export default function DetailPanel() {
     mapLocationSelected,
     providerLocationByRoute: location,
     providerByRoute: provider,
+    doProviderLocationTimeseriesFetchAll,
+    providerLocationTimeseriesLatestValues: latestTimeseries,
   } = useConnect(
     'selectMapLocationSelected',
     'selectProviderLocationByRoute',
     'selectProviderByRoute',
+    'doProviderLocationTimeseriesFetchAll',
     'selectProviderLocationTimeseriesLatestValues'
   );
+
+  useEffect(() => {
+    location && doProviderLocationTimeseriesFetchAll(location);
+  }, [doProviderLocationTimeseriesFetchAll, location]);
 
   useEffect(() => {
     mapLocationSelected?.slug && location && setOpen(true);
@@ -91,7 +98,10 @@ export default function DetailPanel() {
                   ready={location?.levels?.length}
                   className='h-96 w-full'
                 >
-                  <DamProfileChart location={location} />
+                  <DamProfileChart
+                    location={location}
+                    timeseries={latestTimeseries}
+                  />
                 </Placeholder>
               </div>
             ) : null}

@@ -1,5 +1,5 @@
 import { useConnect } from 'redux-bundler-hook';
-import { useMemo, useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Accordion from '../accordion';
 import { SimpleTable, TableLink } from '../table-simple';
 import StackedParameterList from '../stacked-parameter-list';
@@ -20,7 +20,7 @@ export default function LocationSideBarAccordian({
     isMapView,
     providerLocationsFloodObject: locationFloodObj,
     providerLocationsNearby,
-    doProviderLocationTimeseriesFetchAll,
+    //doProviderLocationTimeseriesFetchAll,
     providerLocationTimeseriesLatestValues: latestTimeseriesObj,
   } = useConnect(
     'selectTimeseriesDateRange',
@@ -29,7 +29,7 @@ export default function LocationSideBarAccordian({
     'selectIsMapView',
     'selectProviderLocationsFloodObject',
     'selectProviderLocationsNearby',
-    'doProviderLocationTimeseriesFetchAll',
+    //'doProviderLocationTimeseriesFetchAll',
     'selectProviderLocationTimeseriesLatestValues'
   );
 
@@ -37,17 +37,17 @@ export default function LocationSideBarAccordian({
   const [alertCount, setAlertCount] = useState();
 
   /** Load specific timeseries ids into state when new configurations are loaded */
-  useEffect(() => {
-    location && doProviderLocationTimeseriesFetchAll(location);
+  // useEffect(() => {
+  //   location && doProviderLocationTimeseriesFetchAll(location);
 
-    // const timeseriesIdArray = location?.timeseries
-    //   ? location?.timeseries?.map((ts) => {
-    //       return ts.tsid;
-    //     })
-    //   : [];
+  //   // const timeseriesIdArray = location?.timeseries
+  //   //   ? location?.timeseries?.map((ts) => {
+  //   //       return ts.tsid;
+  //   //     })
+  //   //   : [];
 
-    // setTimeseriesId(timeseriesIdArray);
-  }, [location, doProviderLocationTimeseriesFetchAll]);
+  //   // setTimeseriesId(timeseriesIdArray);
+  // }, [location, doProviderLocationTimeseriesFetchAll]);
 
   const Alerts = ({ location }) => {
     if (locationFloodObj[location?.slug]) {

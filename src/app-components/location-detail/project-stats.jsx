@@ -9,10 +9,14 @@ import {
   GetProjectTotalStorage,
 } from '../../helpers/project-helper';
 
-export default function ProjectStats({ location }) {
-  if (!location || !location?.levels?.length || !location?.timeseries?.length) {
+export default function ProjectStats({ location, timeseries }) {
+  if (!location || !location?.levels?.length || !timeseries?.length) {
     return;
   }
+
+  //overwite the timeseries object with the latest timeseries so I don't have
+  // to pass timeseries down to all the calculation functions below
+  location.timeseries = timeseries;
 
   const debug = parseInt(import.meta.env.VITE_APP_DEBUG);
   const FloodStorageUtilized = GetProjectFloodStorage(location);

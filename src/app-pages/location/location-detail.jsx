@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 import TabsComponent from '../../app-components/tabs';
 import PageWrapper from '../page-wrapper';
@@ -19,16 +19,23 @@ export default function ProjectDetail() {
     providerByRoute: provider,
     providerLocationByRoute: location,
     providerLocationIsLoading,
+    doProviderLocationTimeseriesFetchAll,
+    providerLocationTimeseriesLatestValues: latestTimeseries,
     // providerTimeseriesValuesItemsObject: tsvObj,
   } = useConnect(
     'selectProviderByRoute',
     'selectProviderLocationByRoute',
     'selectProviderLocationIsLoading',
+    'doProviderLocationTimeseriesFetchAll',
     'selectProviderLocationTimeseriesLatestValues'
     // 'selectProviderTimeseriesValuesItemsObject'
   );
 
   const [expanded, setExpanded] = useState(false);
+
+  useEffect(() => {
+    location && doProviderLocationTimeseriesFetchAll(location);
+  }, [doProviderLocationTimeseriesFetchAll, location]);
 
   if (!location && !providerLocationIsLoading) {
     return (
@@ -68,7 +75,10 @@ export default function ProjectDetail() {
           <ProjectStatusDescription location={location} />
 
           <Placeholder ready={location?.levels?.length} className='h-96 w-full'>
-            <DamProfileChart location={location} />
+            <DamProfileChart
+              location={location}
+              timeseries={latestTimeseries}
+            />
           </Placeholder>
         </>
       ),
@@ -128,7 +138,12 @@ export default function ProjectDetail() {
           {isProject && hasRequiredLevels(location) ? (
             <>
               <div className='mb-5'>
-                {isProject && <ProjectStats location={location} />}
+                {isProject && (
+                  <ProjectStats
+                    location={location}
+                    timeseries={latestTimeseries}
+                  />
+                )}
               </div>
               <div className=''>
                 <TabsComponent tabs={tabs} />
