@@ -3,7 +3,7 @@ import { createRef, useEffect, useState } from 'react';
 import DamProfileChart from '../../../_charts/dam-profile-chart/dam-profile-chart';
 import { mapObjectArrayByKey } from '../../../helpers/misc-helpers';
 
-export default function ReactDamProfileChart({ location }) {
+export default function ReactDamProfileChart({ location, timeseries }) {
   const debug = parseInt(import.meta.env.VITE_APP_DEBUG);
   const ref = createRef(); // element where DamProfileChart will be rendered
   const [info, setInfo] = useState(null); // information DamProfileChart needs to draw itself
@@ -46,10 +46,8 @@ export default function ReactDamProfileChart({ location }) {
       ),
       'slug'
     );
-    // console.log('-----');
-    // console.log(levelsMap);
 
-    const timeseriesMap = mapObjectArrayByKey(location?.timeseries, 'label');
+    const timeseriesMap = mapObjectArrayByKey(timeseries, 'label');
 
     const _info = {
       // levels: [
@@ -92,7 +90,7 @@ export default function ReactDamProfileChart({ location }) {
         null,
     };
     setInfo(_info);
-  }, [location, location.timeseries]);
+  }, [location, timeseries]);
 
   useEffect(() => {
     if (info) {
@@ -102,7 +100,7 @@ export default function ReactDamProfileChart({ location }) {
       }
       DamProfileChart(info, ref.current);
     }
-  }, [info, ref]);
+  }, [info, ref, debug]);
 
   return (
     <>
