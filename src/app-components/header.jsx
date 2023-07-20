@@ -64,7 +64,12 @@ export default function Header() {
                     </a>
                     {/* <h1 className="text-white">Water Data</h1> */}
                   </div>
-                  <div className='ml-2 hidden max-w-xl lg:block'>
+                  {/* Only keep the site header text on mobile when on home page */}
+                  <div
+                    className={`ml-2 ${
+                      pathname !== '/' ? 'hidden' : null
+                    } max-w-xl lg:block`}
+                  >
                     <h1 className='border-gray-500 text-lg text-white'>
                       Water Management
                     </h1>
