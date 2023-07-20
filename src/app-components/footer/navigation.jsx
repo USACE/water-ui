@@ -18,14 +18,14 @@ export default function FooterNavigation() {
 
   const navigation = {
     features: [
-      { name: 'Location Search', href: '#' },
-      { name: 'Data Resources', href: '/data' },
+      { name: 'Location by Office', href: '/overview' },
       { name: 'Interactive Map', href: '/map' },
+      { name: 'Data Resources', href: '/data' },
       // { name: 'Water Quality', href: '#' },
     ],
     support: [
-      { name: 'Documentation', href: '#' },
-      { name: 'Guides', href: '#' },
+      { name: 'Help Topics', href: '/help' },
+      // { name: 'Guides', href: '#' },
       {
         name: 'API Docs',
         href: 'https://cwms-data.usace.army.mil/cwms-data/swagger-ui.html',
