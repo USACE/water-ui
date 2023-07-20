@@ -50,6 +50,9 @@ const providerLinks = {
   nae: {
     wm: 'https://reservoircontrol.usace.army.mil',
   },
+  nan: {
+    wm: 'https://www.nan.usace.army.mil',
+  },
   nao: {
     wm: 'https://www.nao-wc.usace.army.mil',
   },
