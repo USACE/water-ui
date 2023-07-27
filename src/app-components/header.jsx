@@ -43,7 +43,7 @@ export default function Header() {
   return (
     <header className='sticky top-0 z-50 bg-gray-900 shadow-md'>
       {isDevEnv === 'true' && (
-        <div className='bg-blue-900 px-2 py-1 text-center text-white'>
+        <div className='-mb-2 bg-blue-900 px-2 text-center text-sm text-white'>
           Development Environment: Data may not be current.
         </div>
       )}
