@@ -11,6 +11,8 @@ import LocationCombobox from './inputs/location-search-input';
 //   return classes.filter(Boolean).join(' ');
 // }
 
+const isDevEnv = import.meta.env.VITE_ISDEVELOPMENT;
+
 export default function Header() {
   const { pathname, providerLocationByRoute: providerLocation } = useConnect(
     'selectPathname',
@@ -40,6 +42,11 @@ export default function Header() {
 
   return (
     <header className='sticky top-0 z-50 bg-gray-900 shadow-md'>
+      {isDevEnv === 'true' && (
+        <div className='bg-blue-900 px-2 py-1 text-center text-white'>
+          Development Environment: Data may not be current.
+        </div>
+      )}
       <Disclosure as='nav' className=''>
         {({ open }) => (
           <>
