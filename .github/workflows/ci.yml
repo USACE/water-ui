@@ -12,7 +12,8 @@ jobs:
     env:
       REACT_APP_AUTH_HOST: https://develop-auth.corps.cloud/auth
       REACT_APP_AUTH_REDIRECT_URL: https://develop-water.corps.cloud
-      REACT_APP_WATER_API_URL: https://ml-dev.sec.usace.army.mil/nsi-ml/cwms
+      # REACT_APP_WATER_API_URL: https://ml-dev.sec.usace.army.mil/nsi-ml/cwms
+      REACT_APP_WATER_API_URL: https://a2w-api.rsgis.dev/cwms
       REACT_APP_ISDEVELOPMENT: true
     runs-on: ubuntu-latest
     strategy:
